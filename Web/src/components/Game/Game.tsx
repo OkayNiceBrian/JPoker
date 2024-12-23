@@ -1,7 +1,7 @@
 import GameControls from "./GameControls";
-import "./GameComponent.css";
+import "./Game.css";
 
-const GameComponent = () => {
+const Game = () => {
 
     
 
@@ -12,4 +12,4 @@ const GameComponent = () => {
     );
 };
 
-export default GameComponent;
+export default Game;

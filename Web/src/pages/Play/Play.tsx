@@ -1,11 +1,11 @@
-import GameComponent from "../../components/Game/GameComponent";
+import Game from "../../components/Game/Game";
 import "./Play.css";
 
 const Play = () => {
 
     return (
         <div className="play-container">
-            <GameComponent/>
+            <Game/>
         </div>
     );
 };

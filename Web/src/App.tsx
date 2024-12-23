@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router';
-import Game from './components/Game/Game';
+import Play from './pages/Play/Play';
 import './App.css';
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Game />}/>
+        <Route index element={<Play />}/>
       </Routes>
     </BrowserRouter>
   )

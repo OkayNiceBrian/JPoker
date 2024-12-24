@@ -1,0 +1,26 @@
+.game-container {
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    width: 80vw;
+    height: 40vw;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.gameWindow-container {
+    height: 100%;
+    width: 100%;
+    background-color: #4d4d4d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-table {
+    background-color: #35654d;
+    width: 70%;
+    height: 60%;
+    border-radius: 15% 15%;
+}

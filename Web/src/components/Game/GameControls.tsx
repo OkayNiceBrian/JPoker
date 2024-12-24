@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./styles/GameControls.css"
 
 type ButtonOne = "Check/Fold" | "Fold";
 type ButtonTwo = "Check" | "Call";
@@ -11,9 +12,9 @@ const GameControls = () => {
 
     return (
         <div className="gameControls-container">
-            <button>{buttonOneValue}</button>
-            <button>{buttonTwoValue}</button>
-            <button>{buttonThreeValue}</button>
+            <button className="gameControls-button"><span>{buttonOneValue}</span></button>
+            <button className="gameControls-button"><span>{buttonTwoValue}</span></button>
+            <button className="gameControls-button"><span>{buttonThreeValue}</span></button>
         </div>
     );
 };

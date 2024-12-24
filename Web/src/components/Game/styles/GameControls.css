@@ -1,0 +1,20 @@
+.gameControls-container {
+    display: flex;
+    flex-direction: row;
+    height: 14%;
+    width: 100%;
+    gap: 2%;
+    justify-content: center;
+    align-items: center;
+    border-top: rgba(255, 255, 255, .7) 2px solid;
+    padding-top: 5px;
+}
+
+.gameControls-button {
+    height: 100%;
+    width: 30%;
+}
+
+.gameControls-button span {
+    font-size: 24pt;
+}

@@ -14,13 +14,25 @@
     width: 100%;
     background-color: #4d4d4d;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: start;
     align-items: center;
 }
 
 .game-table {
+    position: absolute;
     background-color: #35654d;
-    width: 70%;
-    height: 60%;
+    width: 60vw;
+    height: 40%;
     border-radius: 15% 15%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    box-shadow: black 5px 5px 0px 0px;
+}
+
+.game-rowOfPlayers {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }

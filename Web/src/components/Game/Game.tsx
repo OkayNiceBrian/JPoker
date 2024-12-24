@@ -1,4 +1,5 @@
 import GameControls from "./GameControls";
+import PlayerZone from "./PlayerZone";
 import "./styles/Game.css";
 
 const Game = () => {
@@ -10,13 +11,16 @@ const Game = () => {
             <div className="gameWindow-container">
                 <div className="game-table"></div>
                 <div className="game-rowOfPlayers">
-                    Hello
+                    <PlayerZone/>
+                    <PlayerZone/>
+                    <PlayerZone/>
+                </div>
+                <div className="game-rowOfPlayers" style={{justifyContent: "space-between"}}>
+                    <PlayerZone/>
+                    <PlayerZone/>
                 </div>
                 <div className="game-rowOfPlayers">
-                    Hello
-                </div>
-                <div className="game-rowOfPlayers">
-                    Hello
+                    <PlayerZone/>
                 </div>
             </div>
             <GameControls/>

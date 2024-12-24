@@ -7,6 +7,7 @@
     display: flex;
     justify-content: start;
     align-items: center;
+    z-index: -200;
 }
 
 .gameWindow-container {
@@ -17,6 +18,7 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
+    z-index: -100;
 }
 
 .game-table {
@@ -29,10 +31,13 @@
     left: 50%;
     transform: translate(-50%, -60%);
     box-shadow: black 5px 5px 0px 0px;
+    z-index: -1;
 }
 
 .game-rowOfPlayers {
     display: flex;
     flex-direction: row;
+    width: 100%;
     justify-content: space-evenly;
+    flex: 1;
 }

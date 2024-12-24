@@ -1,0 +1,8 @@
+.card-container {
+    display: flex;
+    width: 4vw;
+    height: 5vw;
+    background-color: cornflowerblue;
+    border: 2px white solid;
+    border-radius: 5px;
+}

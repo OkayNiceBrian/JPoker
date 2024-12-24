@@ -1,3 +1,4 @@
+import CardPotZone from "./CardPotZone";
 import GameControls from "./GameControls";
 import PlayerZone from "./PlayerZone";
 import "./styles/Game.css";
@@ -17,6 +18,7 @@ const Game = () => {
                 </div>
                 <div className="game-rowOfPlayers" style={{justifyContent: "space-between"}}>
                     <PlayerZone/>
+                    <CardPotZone/>
                     <PlayerZone/>
                 </div>
                 <div className="game-rowOfPlayers">

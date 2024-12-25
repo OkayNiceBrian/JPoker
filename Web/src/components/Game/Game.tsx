@@ -5,8 +5,6 @@ import "./styles/Game.css";
 
 const Game = () => {
 
-    
-
     return (
         <div className="game-container">
             <div className="gameWindow-container">

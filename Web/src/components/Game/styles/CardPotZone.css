@@ -5,3 +5,11 @@
     height: 10vw;
     background-color: rgba(0, 0, 0, .4);
 }
+
+.cardPotZone-communityCards {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 1vw;
+}

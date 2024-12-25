@@ -1,4 +1,4 @@
-import Card from "./Card";
+import CardComponent from "./CardComponent";
 import "./styles/PlayerZone.css";
 
 const PlayerZone = ({}) => {
@@ -6,8 +6,8 @@ const PlayerZone = ({}) => {
     const Cards = () => {
         return (
             <div className="playerCards-container">
-                <Card/>
-                <Card/>
+                <CardComponent/>
+                <CardComponent/>
             </div>
         );
     }

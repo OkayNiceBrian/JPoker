@@ -1,3 +1,4 @@
+using Api.Hubs;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Abstractions;
@@ -20,6 +21,8 @@ namespace Api
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
+            builder.Services.AddSignalR();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -34,6 +37,7 @@ namespace Api
 
 
             app.MapControllers();
+            app.MapHub<GameHub>("/gameHub");
 
             app.Run();
         }

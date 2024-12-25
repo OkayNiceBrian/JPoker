@@ -39,7 +39,7 @@ const CardPotZone = () => {
     const renderCommunityCards = () => {
         return (
             <div className="cardPotZone-communityCards">
-                { communityCards.map((card: Card) => <CardComponent card={card} />) }
+                { communityCards.map((card: Card, index) => <CardComponent key={index} card={card} />) }
             </div>
         );
     };
@@ -47,6 +47,7 @@ const CardPotZone = () => {
     return (
         <div className="cardPotZone-container">
             {renderCommunityCards()}
+            <span>{potTotal}</span>
         </div>
     );
 };

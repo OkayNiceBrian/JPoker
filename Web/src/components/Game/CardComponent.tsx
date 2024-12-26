@@ -1,6 +1,7 @@
+import { CSSProperties, memo } from "react";
+import { Clubs02Icon, Diamond01Icon, FavouriteIcon, SpadesIcon } from "hugeicons-react";
 import { Card } from "@/types/Card";
 import "./styles/CardComponent.css";
-import { CSSProperties, memo } from "react";
 
 interface Props {
     card?: Card;
@@ -15,7 +16,12 @@ const CardComponent = memo(function CardComponent({ card }: Props) {
             { card && (
             <>
                 <span className="card-rank" style={cardColor}>{ card.rank.toChar }</span>
-                <span className="card-suitText" style={cardColor}>{ card.suit }</span>
+                { 
+                    card.suit === "hearts" ? <FavouriteIcon style={cardColor} size={"2vw"}/> :
+                    card.suit === "diamonds" ? <Diamond01Icon style={cardColor} size={"2vw"}/> :
+                    card.suit === "spades" ? <SpadesIcon style={cardColor} size={"2vw"}/> :
+                    card.suit === "clubs" ? <Clubs02Icon style={cardColor} size={"2vw"}/> : null
+                }
             </>
             )}
         </div>

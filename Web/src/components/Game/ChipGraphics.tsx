@@ -14,25 +14,25 @@ const ChipGraphics = memo(function ChipGraphics({ chips }: Props) {
     for (let i = chipsString.length - 3; i > 0; i--) {
         if (i === chipsString.length - 3) {
             const cssStyle: CSSProperties = { backgroundColor: ChipColors[100], height: `${parseInt(chipsString[i])*10}%` };
-            chipsCSSArray.push(cssStyle);
+            chipsCSSArray.unshift(cssStyle);
         } else if (i === chipsString.length - 4) {
             const cssStyle: CSSProperties = { backgroundColor: ChipColors[1000], height: `${parseInt(chipsString[i])*10}%` };
-            chipsCSSArray.push(cssStyle);
-        } else if (i === chipsString.length - 4) {
+            chipsCSSArray.unshift(cssStyle);
+        } else if (i === chipsString.length - 5) {
             const cssStyle: CSSProperties = { backgroundColor: ChipColors[10000], height: `${parseInt(chipsString[i])*10}%` };
-            chipsCSSArray.push(cssStyle);
-        } else if (i === chipsString.length - 4) {
+            chipsCSSArray.unshift(cssStyle);
+        } else if (i === chipsString.length - 6) {
             const cssStyle: CSSProperties = { backgroundColor: ChipColors[100000], height: `${parseInt(chipsString[i])*10}%` };
-            chipsCSSArray.push(cssStyle);
-        } else if (i === chipsString.length - 4) {
+            chipsCSSArray.unshift(cssStyle);
+        } else if (i === chipsString.length - 7) {
             const cssStyle: CSSProperties = { backgroundColor: ChipColors[1000000], height: `${parseInt(chipsString[i])*10}%` };
-            chipsCSSArray.push(cssStyle);
+            chipsCSSArray.unshift(cssStyle);
         }
     }
     
     return (
         <div className="chipGraphics-container">
-            { chipsCSSArray.map((style, index) => <div key={index} style={style} />) }
+            { chipsCSSArray.map((style, index) => <div key={index} style={style} className="chipGraphics-chipStack" />) }
         </div>
     )
 });

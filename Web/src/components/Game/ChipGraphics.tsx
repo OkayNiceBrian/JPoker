@@ -1,4 +1,4 @@
-import { useState, memo, CSSProperties } from "react";
+import { memo, CSSProperties } from "react";
 import "./styles/ChipGraphics.css";
 import { ChipColors } from "@/helpers/ChipColors";
 
@@ -7,12 +7,13 @@ interface Props {
 }
 
 const ChipGraphics = memo(function ChipGraphics({ chips }: Props) {
-    // TODO: dynamic graphical representation of chip total with multiple columns/colors
     const chipsString = chips.toString();
     const chipsCSSArray = [];
 
     for (let i = chipsString.length - 3; i >= 0; i--) {
-        if (i === chipsString.length - 3) {
+        if (chipsString[i] === '0') {
+            // Do Nothing
+        } else if (i === chipsString.length - 3) {
             const cssStyle: CSSProperties = { backgroundColor: ChipColors[100], height: `${parseInt(chipsString[i])*10}%` };
             chipsCSSArray.unshift(cssStyle);
         } else if (i === chipsString.length - 4) {
@@ -28,7 +29,6 @@ const ChipGraphics = memo(function ChipGraphics({ chips }: Props) {
             const cssStyle: CSSProperties = { backgroundColor: ChipColors[1000000], height: `${parseInt(chipsString[i])*10}%` };
             chipsCSSArray.unshift(cssStyle);
         }
-        console.log(chipsCSSArray);
     }
     
     return (

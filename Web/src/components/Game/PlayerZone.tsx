@@ -3,6 +3,7 @@ import { Card } from "@/types/Card";
 import CardComponent from "./CardComponent";
 import { abbreviateChips } from "@/helpers/GameUtil";
 import "./styles/PlayerZone.css";
+import ChipGraphics from "./ChipGraphics";
 
 interface Props {
     playerName: string;
@@ -26,6 +27,7 @@ const PlayerZone = memo(function PlayerZone({ playerName, chips, card1, card2 }:
         return (
             <div className="playerChips-container">
                 <div className="playerChips-image"></div>
+                <ChipGraphics chips={chips} />
                 <span className="playerChips-count">{abbreviateChips(chips)}</span>
             </div>
         );

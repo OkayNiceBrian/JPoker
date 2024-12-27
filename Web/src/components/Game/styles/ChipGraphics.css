@@ -9,4 +9,5 @@
 .chipGraphics-chipStack {
     display: flex;
     width: 2vw;
+    border-radius: 3px;
 }

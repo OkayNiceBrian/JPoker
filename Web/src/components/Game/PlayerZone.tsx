@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { memo } from "react";
 import { Card } from "@/types/Card";
 import CardComponent from "./CardComponent";
 import { abbreviateChips } from "@/helpers/GameUtil";

@@ -1,0 +1,12 @@
+.chipGraphics-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: end;
+    height: 100%;
+}
+
+.chipGraphics-chipStack {
+    display: flex;
+    width: 2vw;
+}

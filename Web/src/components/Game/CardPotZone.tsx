@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { Card } from "@/types/Card";
 import CardComponent from "./CardComponent";
+import ChipGraphics from "./ChipGraphics";
 import { abbreviateChips } from "@/helpers/GameUtil";
 import "./styles/CardPotZone.css";
 
@@ -18,17 +19,10 @@ const CardPotZone = memo(function CardPotZone({ potTotal, communityCards }: Prop
         );
     };
 
-    const renderChipGraphics = () => {
-        // TODO: dynamic graphical representation of chip total with multiple columns/colors
-        return (
-            <div></div>
-        )
-    }
-
     return (
         <div className="cardPotZone-container">
             {renderCommunityCards()}
-            {renderChipGraphics()}
+            <ChipGraphics chips={potTotal} />
             <span>{abbreviateChips(potTotal)}</span>
         </div>
     );

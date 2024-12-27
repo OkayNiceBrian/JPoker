@@ -9,7 +9,7 @@ import "./styles/Game.css";
 const Game = () => {
     const [player1, setPlayer1] = useState<Player>({name: "JPokerStar", cards: [], chips: 10500});
     const [communityCards, setCommunityCards] = useState<Card[]>([]);
-    const [potTotal, setPotTotal] = useState<number>(1200000);
+    const [potTotal, setPotTotal] = useState<number>(1296400);
 
     useEffect(() => {
         setCommunityCards([

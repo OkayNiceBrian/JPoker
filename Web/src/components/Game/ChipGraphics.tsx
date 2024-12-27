@@ -1,0 +1,40 @@
+import { useState, memo, CSSProperties } from "react";
+import "./styles/ChipGraphics.css";
+import { ChipColors } from "@/helpers/ChipColors";
+
+interface Props {
+    chips: number;
+}
+
+const ChipGraphics = memo(function ChipGraphics({ chips }: Props) {
+    // TODO: dynamic graphical representation of chip total with multiple columns/colors
+    const chipsString = chips.toString();
+    const chipsCSSArray = [];
+
+    for (let i = chipsString.length - 3; i > 0; i--) {
+        if (i === chipsString.length - 3) {
+            const cssStyle: CSSProperties = { backgroundColor: ChipColors[100], height: `${parseInt(chipsString[i])*10}%` };
+            chipsCSSArray.push(cssStyle);
+        } else if (i === chipsString.length - 4) {
+            const cssStyle: CSSProperties = { backgroundColor: ChipColors[1000], height: `${parseInt(chipsString[i])*10}%` };
+            chipsCSSArray.push(cssStyle);
+        } else if (i === chipsString.length - 4) {
+            const cssStyle: CSSProperties = { backgroundColor: ChipColors[10000], height: `${parseInt(chipsString[i])*10}%` };
+            chipsCSSArray.push(cssStyle);
+        } else if (i === chipsString.length - 4) {
+            const cssStyle: CSSProperties = { backgroundColor: ChipColors[100000], height: `${parseInt(chipsString[i])*10}%` };
+            chipsCSSArray.push(cssStyle);
+        } else if (i === chipsString.length - 4) {
+            const cssStyle: CSSProperties = { backgroundColor: ChipColors[1000000], height: `${parseInt(chipsString[i])*10}%` };
+            chipsCSSArray.push(cssStyle);
+        }
+    }
+    
+    return (
+        <div className="chipGraphics-container">
+            { chipsCSSArray.map((style, index) => <div key={index} style={style} />) }
+        </div>
+    )
+});
+
+export default ChipGraphics;

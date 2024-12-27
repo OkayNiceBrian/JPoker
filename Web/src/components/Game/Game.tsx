@@ -7,7 +7,7 @@ import PlayerZone from "./PlayerZone";
 import "./styles/Game.css";
 
 const Game = () => {
-    const [player1, setPlayer1] = useState<Player>({name: "JPokerStar", cards: []});
+    const [player1, setPlayer1] = useState<Player>({name: "JPokerStar", cards: [], chips: 10500});
     const [communityCards, setCommunityCards] = useState<Card[]>([]);
     const [potTotal, setPotTotal] = useState<number>(0);
 
@@ -45,17 +45,17 @@ const Game = () => {
             <div className="gameWindow-container">
                 <div className="game-table"></div>
                 <div className="game-rowOfPlayers">
-                    <PlayerZone playerName={player1.name}/>
-                    <PlayerZone playerName={player1.name}/>
-                    <PlayerZone playerName={player1.name}/>
+                    <PlayerZone playerName={player1.name} chips={player1.chips}/>
+                    <PlayerZone playerName={player1.name} chips={player1.chips}/>
+                    <PlayerZone playerName={player1.name} chips={player1.chips}/>
                 </div>
                 <div className="game-rowOfPlayers" style={{justifyContent: "space-between"}}>
-                    <PlayerZone playerName={player1.name}/>
+                    <PlayerZone playerName={player1.name} chips={player1.chips}/>
                     <CardPotZone potTotal={potTotal} communityCards={communityCards}/>
-                    <PlayerZone playerName={player1.name}/>
+                    <PlayerZone playerName={player1.name} chips={player1.chips}/>
                 </div>
                 <div className="game-rowOfPlayers">
-                    <PlayerZone playerName={player1.name} card1={{suit: "hearts", rank: {value: 10, toString: "ten", toChar: "10"}}} card2={{suit: "spades", rank: {value: 10, toString: "ten", toChar: "10"}}}/>
+                    <PlayerZone playerName={player1.name} chips={player1.chips} card1={{suit: "hearts", rank: {value: 10, toString: "ten", toChar: "10"}}} card2={{suit: "spades", rank: {value: 10, toString: "ten", toChar: "10"}}}/>
                 </div>
             </div>
             <GameControls/>

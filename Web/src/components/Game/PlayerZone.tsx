@@ -5,11 +5,12 @@ import "./styles/PlayerZone.css";
 
 interface Props {
     playerName: string;
+    chips: number;
     card1?: Card;
     card2?: Card;
 }
 
-const PlayerZone = memo(function PlayerZone({ playerName, card1, card2 }: Props) {
+const PlayerZone = memo(function PlayerZone({ playerName, chips, card1, card2 }: Props) {
 
     const Cards = () => {
         return (
@@ -24,7 +25,7 @@ const PlayerZone = memo(function PlayerZone({ playerName, card1, card2 }: Props)
         return (
             <div className="playerChips-container">
                 <div className="playerChips-image"></div>
-                <span className="playerChips-count">1.3m</span>
+                <span className="playerChips-count">{chips}</span>
             </div>
         );
     }

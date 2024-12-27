@@ -10,6 +10,23 @@
     border-radius: 5px;
 }
 
+.card-rank-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    width: 100%;
+    margin-top: -1vh;
+    padding-left: .2vw;
+}
+
+.card-suit-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    margin-top: -.7vh;
+}
+
 .card-rank {
     font-weight: bold;
     font-size: 2vw;

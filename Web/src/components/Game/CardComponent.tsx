@@ -15,13 +15,17 @@ const CardComponent = memo(function CardComponent({ card }: Props) {
         <div className="card-container" style={card && {backgroundColor: "#fff"}}>
             { card && (
             <>
-                <span className="card-rank" style={cardColor}>{ card.rank.toChar }</span>
+                <div className="card-rank-container">
+                    <span className="card-rank" style={cardColor}>{ card.rank.toChar }</span>
+                </div>
+                <div className="card-suit-container">
                 { 
                     card.suit === "hearts" ? <FavouriteIcon style={cardColor} size={"2vw"}/> :
                     card.suit === "diamonds" ? <Diamond01Icon style={cardColor} size={"2vw"}/> :
                     card.suit === "spades" ? <SpadesIcon style={cardColor} size={"2vw"}/> :
                     card.suit === "clubs" ? <Clubs02Icon style={cardColor} size={"2vw"}/> : null
                 }
+                </div>
             </>
             )}
         </div>

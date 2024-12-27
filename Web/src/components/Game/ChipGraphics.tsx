@@ -11,7 +11,7 @@ const ChipGraphics = memo(function ChipGraphics({ chips }: Props) {
     const chipsString = chips.toString();
     const chipsCSSArray = [];
 
-    for (let i = chipsString.length - 3; i > 0; i--) {
+    for (let i = chipsString.length - 3; i >= 0; i--) {
         if (i === chipsString.length - 3) {
             const cssStyle: CSSProperties = { backgroundColor: ChipColors[100], height: `${parseInt(chipsString[i])*10}%` };
             chipsCSSArray.unshift(cssStyle);
@@ -28,6 +28,7 @@ const ChipGraphics = memo(function ChipGraphics({ chips }: Props) {
             const cssStyle: CSSProperties = { backgroundColor: ChipColors[1000000], height: `${parseInt(chipsString[i])*10}%` };
             chipsCSSArray.unshift(cssStyle);
         }
+        console.log(chipsCSSArray);
     }
     
     return (

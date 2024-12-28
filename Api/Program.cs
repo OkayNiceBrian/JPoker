@@ -34,8 +34,7 @@ namespace Api
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
-
+            
             app.MapControllers();
             app.MapHub<GameHub>("/gameHub");
 

@@ -14,6 +14,17 @@ public class GameHub : Hub
         this.deck = CardFactory.CreateDeck();
     }
 
+    public async Task JoinGlobal(UserConnection connection)
+    {
+        await Clients.All.SendAsync("ReceiveMessage", "admin", $"{connection.Username} has joined.");
+    }
+
+    public async Task JoinLobby(UserConnection connection)
+    {
+        await Groups.AddToGroupAsync(Context.ConnectionId, connection.LobbyId);
+        await Clients.Group(connection.LobbyId)
+            .SendAsync("ReceiveMessage", "admin", $"{connection.Username} has joined the lobby.");
+    }
     public async Task SendMessage(UserConnection connection, string message)
     {
         await Clients.All.SendAsync("ReceiveMessage", connection.Username, message);

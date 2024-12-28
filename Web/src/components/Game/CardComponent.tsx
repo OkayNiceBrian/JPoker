@@ -27,7 +27,7 @@ const CardComponent = memo(function CardComponent({ card, isDeck = false }: Prop
                     card.suit === "clubs" ? <Clubs02Icon style={cardColor} size={"2vw"}/> : null
                 }
                 {
-                    isDeck && <span className="card-suit-text">Deck</span>
+                    isDeck && <span className="card-suitText">Deck</span>
                 }
                 </div>
             </>

@@ -14,7 +14,6 @@ const CardPotZone = memo(function CardPotZone({ potTotal, communityCards }: Prop
     const renderCommunityCards = () => {
         return (
             <div className="cardPotZone-communityCards">
-                <CardComponent isDeck={true} />
                 { communityCards.map((card: Card, index) => <CardComponent key={index} card={card} />) }
             </div>
         );

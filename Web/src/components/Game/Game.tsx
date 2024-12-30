@@ -5,8 +5,6 @@ import { Card } from "@/types/Card";
 import CardPotZone from "./CardPotZone";
 import GameControls from "./GameControls";
 import PlayerZone from "./PlayerZone";
-import "@/App.css";
-import "@/index.css";
 import "./styles/Game.css";
 
 const Game = () => {
@@ -27,6 +25,7 @@ const Game = () => {
         });
 
         if (send) {
+            console.log("Send!");
             JoinLobby();
         }
 
@@ -34,7 +33,12 @@ const Game = () => {
             connection.send("JoinLobby", { username: "JPokerStar", lobbyId: "3174" });
             setSend(false);
         }
-    });
+    }, [send]);
+
+    const JoinLobby = () => {
+        console.log("Button Pressed")
+        setSend(true);
+    }
 
     useEffect(() => {
         setCommunityCards([
@@ -81,6 +85,7 @@ const Game = () => {
                 </div>
                 <div className="game-rowOfPlayers">
                     <PlayerZone playerName={player1.name} chips={player1.chips} card1={{suit: "hearts", rank: {value: 10, toString: "ten", toChar: "10"}}} card2={{suit: "spades", rank: {value: 10, toString: "ten", toChar: "10"}}}/>
+                    <button onClick={JoinLobby}></button>
                 </div>
             </div>
             <GameControls button1={setSend} />

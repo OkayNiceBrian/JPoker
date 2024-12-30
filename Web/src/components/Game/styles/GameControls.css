@@ -1,4 +1,5 @@
 .gameControls-container {
+    background-color: black;
     display: flex;
     flex-direction: row;
     height: 14%;
@@ -8,6 +9,7 @@
     align-items: center;
     border-top: rgba(255, 255, 255, .7) 2px solid;
     padding-top: 5px;
+    z-index: 0;
 }
 
 .gameControls-button {

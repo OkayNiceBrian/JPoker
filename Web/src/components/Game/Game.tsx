@@ -5,12 +5,15 @@ import { Card } from "@/types/Card";
 import CardPotZone from "./CardPotZone";
 import GameControls from "./GameControls";
 import PlayerZone from "./PlayerZone";
+import "@/App.css";
+import "@/index.css";
 import "./styles/Game.css";
 
 const Game = () => {
     const [player1, setPlayer1] = useState<Player>({name: "JPokerStar", cards: [], chips: 10500});
     const [communityCards, setCommunityCards] = useState<Card[]>([]);
     const [potTotal, setPotTotal] = useState<number>(1296400);
+    const [send, setSend] = useState<boolean>(false);
 
     useEffect(() => { // SignalR WebSockets
         const connection = new signalr.HubConnectionBuilder()
@@ -18,10 +21,19 @@ const Game = () => {
             .build();
 
         connection.start().catch((e) => console.error(e));
-        
+
         connection.on("ReceiveMessage", (username: string, message: string) => {
             console.log(username + ": " + message);
         });
+
+        if (send) {
+            JoinLobby();
+        }
+
+        function JoinLobby() {
+            connection.send("JoinLobby", { username: "JPokerStar", lobbyId: "3174" });
+            setSend(false);
+        }
     });
 
     useEffect(() => {
@@ -71,7 +83,7 @@ const Game = () => {
                     <PlayerZone playerName={player1.name} chips={player1.chips} card1={{suit: "hearts", rank: {value: 10, toString: "ten", toChar: "10"}}} card2={{suit: "spades", rank: {value: 10, toString: "ten", toChar: "10"}}}/>
                 </div>
             </div>
-            <GameControls/>
+            <GameControls button1={setSend} />
         </div>
     );
 };

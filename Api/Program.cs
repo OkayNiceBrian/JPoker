@@ -13,6 +13,19 @@ namespace Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:5173")
+                            .AllowAnyMethod()
+                            .AllowCredentials()
+                            .AllowAnyHeader();
+                    });
+            });
+
             // Add services to the container.
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
@@ -31,8 +44,11 @@ namespace Api
                 app.MapOpenApi();
             }
 
+            app.UseCors(MyAllowSpecificOrigins);
+
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
             
             app.MapControllers();

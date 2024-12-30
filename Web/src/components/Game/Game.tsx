@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import * as signalr from "@microsoft/signalr";
 import { Player } from "@/types/Player";
 import { Card } from "@/types/Card";
 import CardPotZone from "./CardPotZone";
@@ -10,6 +11,18 @@ const Game = () => {
     const [player1, setPlayer1] = useState<Player>({name: "JPokerStar", cards: [], chips: 10500});
     const [communityCards, setCommunityCards] = useState<Card[]>([]);
     const [potTotal, setPotTotal] = useState<number>(1296400);
+
+    useEffect(() => { // SignalR WebSockets
+        const connection = new signalr.HubConnectionBuilder()
+            .withUrl("https://localhost:44392/gameHub")
+            .build();
+
+        connection.start().catch((e) => console.error(e));
+        
+        connection.on("ReceiveMessage", (username: string, message: string) => {
+            console.log(username + ": " + message);
+        });
+    });
 
     useEffect(() => {
         setCommunityCards([

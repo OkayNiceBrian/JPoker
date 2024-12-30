@@ -27,6 +27,6 @@ public class GameHub : Hub
     }
     public async Task SendMessage(UserConnection connection, string message)
     {
-        await Clients.All.SendAsync("ReceiveMessage", connection.Username, message);
+        await Clients.Group(connection.LobbyId).SendAsync("ReceiveMessage", connection.Username, message);
     }
 }

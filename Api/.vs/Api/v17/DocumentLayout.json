@@ -3,20 +3,16 @@
   "WorkspaceRootPath": "D:\\Dev\\JPoker\\Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|d:\\dev\\jpoker\\api\\hubs\\gamehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:hubs\\gamehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|d:\\dev\\jpoker\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|d:\\dev\\jpoker\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|d:\\dev\\jpoker\\api\\hubs\\gamehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:hubs\\gamehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|d:\\dev\\jpoker\\api\\api.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
-      "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:api.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+      "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|d:\\dev\\jpoker\\api\\models\\userconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:models\\userconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,57 +22,45 @@
       "DocumentGroups": [
         {
           "DockedWidth": 186,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\Dev\\JPoker\\Api\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "D:\\Dev\\JPoker\\Api\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-12-25T17:04:34.203Z",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Dev\\JPoker\\Api\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\Dev\\JPoker\\Api\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACsAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-30T00:31:21.728Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "GameHub.cs",
               "DocumentMoniker": "D:\\Dev\\JPoker\\Api\\Hubs\\GameHub.cs",
               "RelativeDocumentMoniker": "Hubs\\GameHub.cs",
               "ToolTip": "D:\\Dev\\JPoker\\Api\\Hubs\\GameHub.cs",
               "RelativeToolTip": "Hubs\\GameHub.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAABqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-25T09:30:11.637Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Api.http",
-              "DocumentMoniker": "D:\\Dev\\JPoker\\Api\\Api.http",
-              "RelativeDocumentMoniker": "Api.http",
-              "ToolTip": "D:\\Dev\\JPoker\\Api\\Api.http",
-              "RelativeToolTip": "Api.http",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2024-12-25T09:23:00.659Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Dev\\JPoker\\Api\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "D:\\Dev\\JPoker\\Api\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAACcAAAAsAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "UserConnection.cs",
+              "DocumentMoniker": "D:\\Dev\\JPoker\\Api\\Models\\UserConnection.cs",
+              "RelativeDocumentMoniker": "Models\\UserConnection.cs",
+              "ToolTip": "D:\\Dev\\JPoker\\Api\\Models\\UserConnection.cs",
+              "RelativeToolTip": "Models\\UserConnection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-21T01:25:04.889Z",
+              "WhenOpened": "2024-12-30T00:09:32.511Z",
               "EditorCaption": ""
             }
           ]

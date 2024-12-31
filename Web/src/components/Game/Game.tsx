@@ -12,19 +12,23 @@ const Game = () => {
     const [communityCards, setCommunityCards] = useState<Card[]>([]);
     const [potTotal, setPotTotal] = useState<number>(1296400);
 
-    const [connection, setConnection] = useState();
+    const [connection, setConnection] = useState<signalr.HubConnection>();
 
     useEffect(() => {
-        const connection = new signalr.HubConnectionBuilder().withUrl("https://localhost:44392/gameHub").build();
-        connection.start().catch((e) => console.error(e));
+        const conn = new signalr.HubConnectionBuilder().withUrl("https://localhost:44392/gameHub").build();
 
-        connection.on("ReceiveMessage", (username: string, message: string) => {
+        conn.on("ReceiveMessage", (username: string, message: string) => {
             console.log(username + ": " + message);
         });
-    });
+        
+        conn.start().catch((e) => console.error(e));
+        setConnection(conn);
+    }, []);
 
     const JoinLobby = () => {
-        connection.send("JoinLobby", { username: "JPokerStar", lobbyId: "3174" });
+        if (connection) {
+            connection.invoke("JoinLobby", { username: "JPokerStar", lobbyId: "3174" });
+        }
     }
 
     useEffect(() => {

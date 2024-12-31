@@ -9,6 +9,7 @@
     align-items: center;
     border-top: rgba(255, 255, 255, .7) 2px solid;
     padding-top: 5px;
+    z-index: 100;
 }
 
 .gameControls-button {

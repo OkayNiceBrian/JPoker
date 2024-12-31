@@ -11,7 +11,7 @@ const Game = () => {
     const [player1, setPlayer1] = useState<Player>({name: "JPokerStar", cards: [], chips: 10500});
     const [communityCards, setCommunityCards] = useState<Card[]>([]);
     const [potTotal, setPotTotal] = useState<number>(1296400);
-    const [send, setSend] = useState<boolean>(false);
+    const [sendJoinLobby, setSendJoinLobby] = useState<boolean>(false);
 
     useEffect(() => { // SignalR WebSockets
         const connection = new signalr.HubConnectionBuilder()
@@ -24,20 +24,20 @@ const Game = () => {
             console.log(username + ": " + message);
         });
 
-        if (send) {
+        if (sendJoinLobby) {
             console.log("Send!");
             JoinLobby();
         }
 
         function JoinLobby() {
             connection.send("JoinLobby", { username: "JPokerStar", lobbyId: "3174" });
-            setSend(false);
+            setSendJoinLobby(false);
         }
-    }, [send]);
+    }, [sendJoinLobby]);
 
     const JoinLobby = () => {
         console.log("Button Pressed")
-        setSend(true);
+        setSendJoinLobby(true);
     }
 
     useEffect(() => {
@@ -85,10 +85,9 @@ const Game = () => {
                 </div>
                 <div className="game-rowOfPlayers">
                     <PlayerZone playerName={player1.name} chips={player1.chips} card1={{suit: "hearts", rank: {value: 10, toString: "ten", toChar: "10"}}} card2={{suit: "spades", rank: {value: 10, toString: "ten", toChar: "10"}}}/>
-                    <button onClick={JoinLobby}></button>
                 </div>
             </div>
-            <GameControls button1={setSend} />
+            <GameControls button1={JoinLobby} />
         </div>
     );
 };

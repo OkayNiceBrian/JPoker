@@ -11,33 +11,20 @@ const Game = () => {
     const [player1, setPlayer1] = useState<Player>({name: "JPokerStar", cards: [], chips: 10500});
     const [communityCards, setCommunityCards] = useState<Card[]>([]);
     const [potTotal, setPotTotal] = useState<number>(1296400);
-    const [sendJoinLobby, setSendJoinLobby] = useState<boolean>(false);
 
-    useEffect(() => { // SignalR WebSockets
-        const connection = new signalr.HubConnectionBuilder()
-            .withUrl("https://localhost:44392/gameHub")
-            .build();
+    const [connection, setConnection] = useState();
 
+    useEffect(() => {
+        const connection = new signalr.HubConnectionBuilder().withUrl("https://localhost:44392/gameHub").build();
         connection.start().catch((e) => console.error(e));
 
         connection.on("ReceiveMessage", (username: string, message: string) => {
             console.log(username + ": " + message);
         });
-
-        if (sendJoinLobby) {
-            console.log("Send!");
-            JoinLobby();
-        }
-
-        function JoinLobby() {
-            connection.send("JoinLobby", { username: "JPokerStar", lobbyId: "3174" });
-            setSendJoinLobby(false);
-        }
-    }, [sendJoinLobby]);
+    });
 
     const JoinLobby = () => {
-        console.log("Button Pressed")
-        setSendJoinLobby(true);
+        connection.send("JoinLobby", { username: "JPokerStar", lobbyId: "3174" });
     }
 
     useEffect(() => {

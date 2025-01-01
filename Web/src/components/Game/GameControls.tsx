@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { ButtonOne, ButtonThree, ButtonTwo } from "@/types/GameButtons";
+import { ButtonOne, ButtonThree, ButtonTwo } from "@/types/GameActions";
 import "./styles/GameControls.css"
 
 interface Props {

@@ -8,9 +8,10 @@ import { Player } from "@/types/Player";
 interface Props {
     player?: Player;
     clientUsername: string;
+    isTurn: boolean;
 }
 
-const PlayerZone = memo(function PlayerZone({ player, clientUsername }: Props) {
+const PlayerZone = memo(function PlayerZone({ player, clientUsername, isTurn }: Props) {
     
     if (!player) {
         return (

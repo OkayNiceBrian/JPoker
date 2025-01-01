@@ -13,7 +13,7 @@ const CardComponent = memo(function CardComponent({ card, isDeck = false }: Prop
     const cardColor: CSSProperties = card?.suit === "hearts" || card?.suit === "diamonds" ? { color: "red" } : { color: "black" }; 
 
     return (
-        <div className="card-container" style={card && {backgroundColor: "#fff"}}>
+        <div className="card-container" style={card ? {backgroundColor: "#fff"} : isDeck ? {alignSelf: "end"} : {}}>
             { card && (
             <>
                 <div className="card-rank-container">

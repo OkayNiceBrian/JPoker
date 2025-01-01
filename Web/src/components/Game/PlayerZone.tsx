@@ -1,24 +1,28 @@
 import { memo } from "react";
-import { Card } from "@/types/Card";
 import CardComponent from "./CardComponent";
 import { abbreviateChips } from "@/helpers/GameUtil";
 import "./styles/PlayerZone.css";
 import ChipGraphics from "./ChipGraphics";
+import { Player } from "@/types/Player";
 
 interface Props {
-    playerName: string;
-    chips: number;
-    card1?: Card;
-    card2?: Card;
+    player?: Player;
+    clientUsername: string;
 }
 
-const PlayerZone = memo(function PlayerZone({ playerName, chips, card1, card2 }: Props) {
+const PlayerZone = memo(function PlayerZone({ player, clientUsername }: Props) {
+    
+    if (!player) {
+        return (
+            <div className="player-container" style={{backgroundColor: "transparent"}}/>
+        );
+    }
 
     const Cards = () => {
         return (
             <div className="playerCards-container">
-                <CardComponent card={card1}/>
-                <CardComponent card={card2}/>
+                <CardComponent card={player?.card1}/>
+                <CardComponent card={player?.card2}/>
             </div>
         );
     }
@@ -27,15 +31,15 @@ const PlayerZone = memo(function PlayerZone({ playerName, chips, card1, card2 }:
         return (
             <div className="playerChips-container">
                 <div className="playerChips-image"></div>
-                <ChipGraphics chips={chips} />
-                <span className="playerChips-count">{abbreviateChips(chips)}</span>
+                <ChipGraphics chips={player?.chips} />
+                <span className="playerChips-count">{abbreviateChips(player?.chips)}</span>
             </div>
         );
     }
 
     return (
         <div className="player-container">
-            <span>{playerName}</span>
+            <span style={clientUsername === player.name ? {color: "green"} : {}}>{player.name}</span>
             <Cards/>
             <Chips/>
         </div>

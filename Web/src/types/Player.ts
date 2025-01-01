@@ -2,7 +2,8 @@ import { Card } from "./Card";
 
 export type Player = {
     name: string;
-    cards: Card[];
+    card1?: Card;
+    card2?: Card;
     chips: number;
-    isActive?: boolean;
+    isActive: boolean;
 }

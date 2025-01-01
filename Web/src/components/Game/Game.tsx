@@ -8,9 +8,12 @@ import GameControls from "./GameControls";
 import PlayerZone from "./PlayerZone";
 import "./styles/Game.css";
 
-const Game = () => {
-    const [clientPlayer] = useState<Player>({name: "JPokerStar", cards: [], chips: 10500, isActive: false});
-    const [otherPlayers, setOtherPlayers] = useState<Array<Player>>([]);
+interface Props {
+    playerUsername: string;
+}
+
+const Game = ({playerUsername}: Props) => {
+    const [players, setPlayers] = useState<Array<Player>>([{name: "JPokerStar", chips: 25000, isActive: false}, {name: "Ronnie", chips: 25000, isActive: false}, {name: "Fanny", chips: 25000, isActive: false}]);
     const [communityCards, setCommunityCards] = useState<Card[]>([]);
     const [potTotal, setPotTotal] = useState<number>(1296400);
 
@@ -80,32 +83,6 @@ const Game = () => {
     };
 
     useEffect(() => {
-        setCommunityCards([
-            {
-                suit: "spades",
-                rank: {
-                    value: 14,
-                    toChar: "A",
-                    toString: "ace",
-                }
-            },
-            {
-                suit: "hearts",
-                rank: {
-                    value: 7,
-                    toChar: "7",
-                    toString: "seven",
-                }
-            },
-            {
-                suit: "clubs",
-                rank: {
-                    value: 12,
-                    toChar: "Q",
-                    toString: "queen",
-                }
-            },
-        ]);
     }, []);
 
     return (
@@ -113,21 +90,42 @@ const Game = () => {
             <div className="gameWindow-container">
                 <div className="game-table"></div>
                 <div className="game-rowOfPlayers">
-                    <PlayerZone playerName={clientPlayer.name} chips={clientPlayer.chips}/>
-                    <PlayerZone playerName={clientPlayer.name} chips={clientPlayer.chips}/>
-                    <PlayerZone playerName={clientPlayer.name} chips={clientPlayer.chips}/>
+                    <PlayerZone 
+                        player={players[3] !== undefined ? players[3] : undefined}
+                        clientUsername={playerUsername}
+                    />
+                    <PlayerZone 
+                        player={players[4] !== undefined ? players[4] : undefined}
+                        clientUsername={playerUsername}
+                    />
+                    <PlayerZone 
+                        player={players[5] !== undefined ? players[5] : undefined}
+                        clientUsername={playerUsername}
+                    />
                 </div>
                 <div className="game-rowOfPlayers" style={{justifyContent: "space-between"}}>
-                    <PlayerZone playerName={clientPlayer.name} chips={clientPlayer.chips}/>
+                    <PlayerZone 
+                        player={players[2] !== undefined ? players[2] : undefined}
+                        clientUsername={playerUsername}
+                    />
                     <CardPotZone potTotal={potTotal} communityCards={communityCards}/>
-                    <PlayerZone playerName={clientPlayer.name} chips={clientPlayer.chips}/>
+                    <PlayerZone 
+                        player={players[6] !== undefined ? players[6] : undefined}
+                        clientUsername={playerUsername}
+                    />
                 </div>
                 <div className="game-rowOfPlayers">
                     <PlayerZone 
-                        playerName={clientPlayer.name} 
-                        chips={clientPlayer.chips} 
-                        card1={{suit: "hearts", rank: {value: 10, toString: "ten", toChar: "10"}}} 
-                        card2={{suit: "spades", rank: {value: 10, toString: "ten", toChar: "10"}}}
+                        player={players[1] !== undefined ? players[1] : undefined}
+                        clientUsername={playerUsername}
+                    />
+                    <PlayerZone 
+                        player={players[0] !== undefined ? players[0] : undefined}
+                        clientUsername={playerUsername}
+                    />
+                    <PlayerZone 
+                        player={players[7] !== undefined ? players[7] : undefined}
+                        clientUsername={playerUsername}
                     />
                 </div>
             </div>

@@ -17,6 +17,10 @@
     width: 30%;
 }
 
+.gameControls-button-active {
+    background-color: darkslategray;
+}
+
 .gameControls-button span {
     font-size: 2vw;
 }

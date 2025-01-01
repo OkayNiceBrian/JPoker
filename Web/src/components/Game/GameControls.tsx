@@ -1,26 +1,27 @@
-import { useState } from "react";
+import { memo } from "react";
+import { ButtonOne, ButtonThree, ButtonTwo } from "@/types/GameButtons";
 import "./styles/GameControls.css"
-
-type ButtonOne = "Check/Fold" | "Fold";
-type ButtonTwo = "Check" | "Call";
-type ButtonThree = "Call Any" | "Raise" | "All In";
 
 interface Props {
     button1: Function;
+    button1Value: ButtonOne;
+    isButton1Active: boolean;
+    button2: Function;
+    button2Value: ButtonTwo;
+    isButton2Active: boolean;
+    button3: Function;
+    button3Value: ButtonThree;
+    isButton3Active: boolean;
 }
 
-const GameControls = ({ button1 }: Props) => {
-    const [buttonOneValue, setButtonOneValue] = useState<ButtonOne>("Check/Fold");
-    const [buttonTwoValue, setButtonTwoValue] = useState<ButtonTwo>("Check");
-    const [buttonThreeValue, setButtonThreeValue] = useState<ButtonThree>("Call Any");
-
+const GameControls = memo(function GameControls(props: Props) {
     return (
         <div className="gameControls-container">
-            <button className="gameControls-button" onClick={() => button1(true)}><span>{buttonOneValue}</span></button>
-            <button className="gameControls-button"><span>{buttonTwoValue}</span></button>
-            <button className="gameControls-button"><span>{buttonThreeValue}</span></button>
+            <button className={`gameControls-button ${props.isButton1Active && "gameControls-button-active"}`} onClick={() => props.button1()}><span>{props.button1Value}</span></button>
+            <button className={`gameControls-button ${props.isButton2Active && "gameControls-button-active"}`} onClick={() => props.button2()}><span>{props.button2Value}</span></button>
+            <button className={`gameControls-button ${props.isButton3Active && "gameControls-button-active"}`} onClick={() => props.button3()}><span>{props.button3Value}</span></button>
         </div>
     );
-};
+});
 
 export default GameControls;

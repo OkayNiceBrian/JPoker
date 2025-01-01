@@ -4,4 +4,5 @@ export type Player = {
     name: string;
     cards: Card[];
     chips: number;
+    isActive?: boolean;
 }

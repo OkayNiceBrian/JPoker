@@ -28,6 +28,8 @@ const Game = ({playerUsername}: Props) => {
 
     const [connection, setConnection] = useState<signalr.HubConnection>();
 
+    const userConnection = {username: "JPokerStar", lobbyId: 3174};
+
     useEffect(() => {
         const conn = new signalr.HubConnectionBuilder().withUrl("https://localhost:44392/gameHub").build();
 
@@ -51,13 +53,21 @@ const Game = ({playerUsername}: Props) => {
 
     useEffect(() => {
         if (connection) {
-            JoinLobby("JPokerStar", "3174");
+            JoinLobby();
         }
     }, [connection]);
 
-    const JoinLobby = (username: string, lobbyId: string) => {
+    useEffect(() => {
+        if (connection && players[turnIndex].name === playerUsername) {
+            if (isButton1Active) {
+                connection?.invoke("GameAction", { userConnection: userConnection, action: "check" });
+            }
+        }
+    }, [turnIndex, connection]);
+
+    const JoinLobby = () => {
         if (connection) {
-            connection.invoke("JoinLobby", { username: username, lobbyId: lobbyId });
+            connection.invoke("JoinLobby", userConnection);
         }
     };
 

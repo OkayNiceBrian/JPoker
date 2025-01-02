@@ -9,6 +9,7 @@ namespace Api.Hubs;
 public class GameHub : Hub
 {
     public List<Card> deck;
+    public Dictionary<string, Lobby> lobbies;
     public GameHub()
     {
         this.deck = CardFactory.CreateDeck();
@@ -22,11 +23,36 @@ public class GameHub : Hub
     public async Task JoinLobby(UserConnection connection)
     {
         await Groups.AddToGroupAsync(Context.ConnectionId, connection.LobbyId);
+        
+        // If lobby doesn't exist, create it.
+        if (!lobbies.ContainsKey(connection.LobbyId))
+        {
+            lobbies.Add(connection.LobbyId, 
+                new Lobby { 
+                    Id = connection.LobbyId, 
+                    IsPrivate = false, 
+                    Players = [new Player { Username = connection.Username }] 
+                }); 
+
+        }
+
         await Clients.Group(connection.LobbyId)
             .SendAsync("ReceiveMessage", "admin", $"{connection.Username} has joined the lobby.");
     }
     public async Task SendMessage(UserConnection connection, string message)
     {
         await Clients.Group(connection.LobbyId).SendAsync("ReceiveMessage", connection.Username, message);
+    }
+
+    // GAME
+    // =============================
+    public async Task GameAction(UserConnection connection, string action)
+    {
+
+    }
+
+    public void NextTurn()
+    {
+
     }
 }

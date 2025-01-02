@@ -5,5 +5,6 @@ export type Player = {
     card1?: Card;
     card2?: Card;
     chips: number;
+    currentBet?: number;
     isActive: boolean;
 }

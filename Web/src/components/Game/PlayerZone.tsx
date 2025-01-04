@@ -33,14 +33,14 @@ const PlayerZone = memo(function PlayerZone({ player, clientUsername, isTurn }: 
             <div className="playerChips-container">
                 <div className="playerChips-image"></div>
                 <ChipGraphics chips={player?.chips} />
-                <span className="playerChips-count">{abbreviateChips(player?.chips)}</span>
+                <span className="player-text">{abbreviateChips(player?.chips)}</span>
             </div>
         );
     }
 
     return (
         <div className="player-container">
-            <span style={clientUsername === player.name ? {color: "green"} : {}}>{player.name}</span>
+            <span className="player-text" style={clientUsername === player.name ? {color: "green"} : {}}>{player.name}</span>
             <Cards/>
             <Chips/>
         </div>

@@ -3,6 +3,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: end;
+    flex: 1;
     height: 100%;
 }
 

@@ -39,7 +39,7 @@ const PlayerZone = memo(function PlayerZone({ player, clientUsername, isTurn }: 
     }
 
     return (
-        <div className="player-container">
+        <div className="player-container" style={isTurn ? {backgroundColor: "rgba(255, 255, 255, .4)"} : {}}>
             <span className="player-text" style={clientUsername === player.name ? {color: "green"} : {}}>{player.name}</span>
             <Cards/>
             <Chips/>

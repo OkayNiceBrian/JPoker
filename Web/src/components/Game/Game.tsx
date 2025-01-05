@@ -13,12 +13,13 @@ interface Props {
 }
 
 const Game = ({/*playerUsername*/}: Props) => {
-    const playerUsername = "JPokerStar";
+    const [playerUsername, setPlayerUsername] = useState<string>("");
+    const [lobbyId, setLobbyId] = useState<string>("");
     const [inLobby, setInLobby] = useState<boolean>(true);
 
-    const [players, setPlayers] = useState<Array<Player>>([{name: "JPokerStar", chips: 25000, isActive: false}, {name: "Ronnie", chips: 25000, isActive: false}, {name: "Fanny", chips: 25000, isActive: false}]);
+    const [players, setPlayers] = useState<Array<Player>>([]);
     const [communityCards, setCommunityCards] = useState<Card[]>([]);
-    const [potTotal, setPotTotal] = useState<number>(1296400);
+    const [potTotal, setPotTotal] = useState<number>(0);
 
     const [turnIndex, setTurnIndex] = useState<number>(0);
 
@@ -31,7 +32,7 @@ const Game = ({/*playerUsername*/}: Props) => {
 
     const [connection, setConnection] = useState<signalr.HubConnection>();
 
-    const userConnection = { Username: "JPokerStar", LobbyId: "3174" }; // property names must be the EXACT same on client and server, including case.
+    const userConnection = { Username: playerUsername, LobbyId: lobbyId }; // property names must be the EXACT same on client and server, including case.
 
     useEffect(() => {
         const conn = new signalr.HubConnectionBuilder().withUrl("https://localhost:44392/gameHub").build();
@@ -107,7 +108,11 @@ const Game = ({/*playerUsername*/}: Props) => {
     if (inLobby) {
         return (
             <div className="game-container">
-                <button onClick={clickJoinLobby}>Join Lobby</button>
+                <label>Lobby Id</label>
+                <input value={lobbyId} onChange={(e) => setLobbyId(e.target.value)}></input>
+                <label>Username</label>
+                <input value={playerUsername} onChange={(e) => setPlayerUsername(e.target.value)}></input>
+                <button onClick={clickJoinLobby} disabled={lobbyId === "" || playerUsername === ""}>Join Lobby</button>
             </div>
         );
     }

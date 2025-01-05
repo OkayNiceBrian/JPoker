@@ -8,11 +8,11 @@ namespace Api.Hubs;
 
 public class GameHub : Hub
 {
-    public List<Card> deck;
     public Dictionary<string, Lobby> lobbies;
+
     public GameHub()
     {
-        this.deck = CardFactory.CreateDeck();
+        lobbies = []; 
     }
 
     public async Task JoinGlobal(UserConnection connection)
@@ -33,7 +33,6 @@ public class GameHub : Hub
                     IsPrivate = false, 
                     Players = [new Player { Username = connection.Username }] 
                 }); 
-
         }
 
         await Clients.Group(connection.LobbyId)

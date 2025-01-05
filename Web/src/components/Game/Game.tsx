@@ -13,6 +13,8 @@ interface Props {
 }
 
 const Game = ({playerUsername}: Props) => {
+    const [inLobby, setInLobby] = useState<boolean>(true);
+
     const [players, setPlayers] = useState<Array<Player>>([{name: "JPokerStar", chips: 25000, isActive: false}, {name: "Ronnie", chips: 25000, isActive: false}, {name: "Fanny", chips: 25000, isActive: false}]);
     const [communityCards, setCommunityCards] = useState<Card[]>([]);
     const [potTotal, setPotTotal] = useState<number>(1296400);
@@ -28,7 +30,7 @@ const Game = ({playerUsername}: Props) => {
 
     const [connection, setConnection] = useState<signalr.HubConnection>();
 
-    const userConnection = {username: "JPokerStar", lobbyId: 3174};
+    const userConnection = { Username: "JPokerStar", LobbyId: "3174" };
 
     useEffect(() => {
         const conn = new signalr.HubConnectionBuilder().withUrl("https://localhost:44392/gameHub").build();
@@ -50,12 +52,6 @@ const Game = ({playerUsername}: Props) => {
         conn.start().catch((e) => console.error(e));
         setConnection(conn);
     }, []);
-
-    useEffect(() => {
-        if (connection) {
-            JoinLobby();
-        }
-    }, [connection]);
 
     useEffect(() => {
         if (connection && players[turnIndex].name === playerUsername) {
@@ -104,8 +100,18 @@ const Game = ({playerUsername}: Props) => {
         }
     };
 
-    useEffect(() => {
-    }, []);
+    const clickJoinLobby = () => {
+        JoinLobby();
+        setInLobby(false);
+    }
+
+    if (inLobby) {
+        return (
+            <div className="game-container">
+                <button onClick={clickJoinLobby}>Join Lobby</button>
+            </div>
+        );
+    }
 
     return (
         <div className="game-container">

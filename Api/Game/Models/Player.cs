@@ -6,6 +6,6 @@ public class Player
     public int Chips { get; set; } = 25000;
     public Card? Card1 { get; set; }
     public Card? Card2 { get; set; }
-    public int? CurrentBet { get; set; } = 0;
+    public int CurrentBet { get; set; } = 0;
     public bool isActive { get; set; } = false;
 }

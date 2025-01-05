@@ -12,7 +12,8 @@ interface Props {
     playerUsername: string; // Should probably be in redux when I get that in the project
 }
 
-const Game = ({playerUsername}: Props) => {
+const Game = ({/*playerUsername*/}: Props) => {
+    const playerUsername = "JPokerStar";
     const [inLobby, setInLobby] = useState<boolean>(true);
 
     const [players, setPlayers] = useState<Array<Player>>([{name: "JPokerStar", chips: 25000, isActive: false}, {name: "Ronnie", chips: 25000, isActive: false}, {name: "Fanny", chips: 25000, isActive: false}]);
@@ -30,7 +31,7 @@ const Game = ({playerUsername}: Props) => {
 
     const [connection, setConnection] = useState<signalr.HubConnection>();
 
-    const userConnection = { Username: "JPokerStar", LobbyId: "3174" };
+    const userConnection = { Username: "JPokerStar", LobbyId: "3174" }; // property names must be the EXACT same on client and server, including case.
 
     useEffect(() => {
         const conn = new signalr.HubConnectionBuilder().withUrl("https://localhost:44392/gameHub").build();
@@ -54,12 +55,13 @@ const Game = ({playerUsername}: Props) => {
     }, []);
 
     useEffect(() => {
-        if (connection && players[turnIndex].name === playerUsername) {
-            if (isButton1Active) {
-                connection?.invoke("GameAction", { userConnection: userConnection, action: "check" });
+        if (isButton1Active && players[turnIndex].name === playerUsername) {
+            if (connection) {
+                connection?.invoke("GameAction", userConnection, "check");
+                setIsButton1Active(false);
             }
         }
-    }, [turnIndex, connection]);
+    }, [turnIndex, connection, players, playerUsername, isButton1Active]);
 
     const JoinLobby = () => {
         if (connection) {
@@ -68,7 +70,6 @@ const Game = ({playerUsername}: Props) => {
     };
 
     const button1 = () => {
-        console.log("button 1 pressed");
         if (isButton1Active) {
             setIsButton1Active(false);
         } else {
@@ -79,7 +80,6 @@ const Game = ({playerUsername}: Props) => {
     };
 
     const button2 = () => {
-        console.log("button 2 pressed");
         if (isButton2Active) {
             setIsButton2Active(false);
         } else {
@@ -90,7 +90,6 @@ const Game = ({playerUsername}: Props) => {
     };
 
     const button3 = () => {
-        console.log("button 3 pressed");
         if (isButton3Active) {
             setIsButton3Active(false);
         } else {

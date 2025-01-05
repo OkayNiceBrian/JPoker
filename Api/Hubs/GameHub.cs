@@ -17,7 +17,7 @@ public class GameHub : Hub
 
     public async Task JoinGlobal(UserConnection connection)
     {
-        await Clients.All.SendAsync("ReceiveMessage", "admin", $"{connection.Username} has joined.");
+        await Clients.All.SendAsync("ReceiveMessage", "server", $"{connection.Username} has joined.");
     }
 
     public async Task JoinLobby(UserConnection connection)
@@ -36,7 +36,7 @@ public class GameHub : Hub
         }
 
         await Clients.Group(connection.LobbyId)
-            .SendAsync("ReceiveMessage", "admin", $"{connection.Username} has joined the lobby.");
+            .SendAsync("ReceiveMessage", "server", $"{connection.Username} has joined the lobby.");
     }
     public async Task SendMessage(UserConnection connection, string message)
     {
@@ -47,7 +47,17 @@ public class GameHub : Hub
     // =============================
     public async Task GameAction(UserConnection connection, string action)
     {
+        if (!Types.GameActions.Contains(action))
+        {
+            await Clients.Group(connection.LobbyId)
+                .SendAsync("ReceiveMessage", "server", "Invalid game action.");
+        }
 
+        if (action == "check")
+        {
+            await Clients.Group(connection.LobbyId)
+                .SendAsync("ReceiveMessage", "server", $"{connection.Username} checks.");
+        }
     }
 
     public void NextTurn()

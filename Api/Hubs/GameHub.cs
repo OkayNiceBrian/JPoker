@@ -43,7 +43,7 @@ public class GameHub : Hub
 
         var lobby = _ctx.Lobbies[connection.LobbyId];
         await Clients.Group(connection.LobbyId)
-            .SendAsync("ReceivePlayers", lobby.Players);
+            .SendAsync("ReceiveLobbyInfo", lobby);
     }
 
     public async Task SendMessage(UserConnection connection, string message)
@@ -68,7 +68,7 @@ public class GameHub : Hub
         }
     }
 
-    public void NextTurn()
+    public async void NextTurn()
     {
 
     }

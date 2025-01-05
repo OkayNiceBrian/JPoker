@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import * as signalr from "@microsoft/signalr";
 import { Player } from "@/types/Player";
 import { Card } from "@/types/Card";
+import { Lobby } from "@/types/Lobby";
 import { ButtonOne, ButtonTwo, ButtonThree, GameAction } from "@/types/GameActions";
 import CardPotZone from "./CardPotZone";
 import GameControls from "./GameControls";
@@ -22,6 +23,7 @@ const Game = ({/*playerUsername*/}: Props) => {
     const [potTotal, setPotTotal] = useState<number>(0);
 
     const [turnIndex, setTurnIndex] = useState<number>(0);
+    const [turnTimerSeconds, setTurnTimerSeconds] = useState<number>(30);
 
     const [button1Value, setButton1Value] = useState<ButtonOne>("Check/Fold");
     const [button2Value, setButton2Value] = useState<ButtonTwo>("Check");
@@ -39,6 +41,14 @@ const Game = ({/*playerUsername*/}: Props) => {
 
         conn.on("ReceiveMessage", (username: string, message: string) => {
             console.log(username + ": " + message);
+        });
+
+        conn.on("ReceiveLobbyInfo", (lobby: Lobby) => {
+            setPlayers(lobby.players);
+            setTurnIndex(lobby.turnIndex);
+            setTurnTimerSeconds(lobby.turnTimerSeconds);
+            setCommunityCards(lobby.communityCards);
+            console.log(lobby);
         });
 
         conn.on("ReceivePlayers", (players: Player[]) => {

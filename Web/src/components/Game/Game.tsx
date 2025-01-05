@@ -43,7 +43,7 @@ const Game = ({/*playerUsername*/}: Props) => {
 
         conn.on("ReceivePlayers", (players: Player[]) => {
             setPlayers(players);
-            console.log(players);
+            //console.log(players);
         });
 
         conn.on("Action", (player: Player, action: GameAction, turnIndex: number) => {
@@ -68,6 +68,10 @@ const Game = ({/*playerUsername*/}: Props) => {
             }
         }
     }, [turnIndex, connection, players, playerUsername, isButton1Active]);
+
+    useEffect(() => {
+        console.log(players);
+    }, [players])
 
     const JoinLobby = () => {
         if (connection) {
@@ -121,7 +125,7 @@ const Game = ({/*playerUsername*/}: Props) => {
             </div>
         );
     }
-console.log(players);
+
     return (
         <div className="game-container">
             <div className="gameWindow-container">
@@ -129,47 +133,47 @@ console.log(players);
                 <div className="game-rowOfPlayers">
                     <PlayerZone 
                         player={players[3] !== undefined ? players[3] : undefined}
-                        clientUsername={players[3]?.username}
+                        clientUsername={playerUsername}
                         isTurn={turnIndex === 3}
                     />
                     <PlayerZone 
                         player={players[4] !== undefined ? players[4] : undefined}
-                        clientUsername={players[4]?.username}
+                        clientUsername={playerUsername}
                         isTurn={turnIndex === 4}
                     />
                     <PlayerZone 
                         player={players[5] !== undefined ? players[5] : undefined}
-                        clientUsername={players[5]?.username}
+                        clientUsername={playerUsername}
                         isTurn={turnIndex === 5}
                     />
                 </div>
                 <div className="game-rowOfPlayers" style={{justifyContent: "space-between"}}>
                     <PlayerZone 
                         player={players[2] !== undefined ? players[2] : undefined}
-                        clientUsername={players[2]?.username}
+                        clientUsername={playerUsername}
                         isTurn={turnIndex === 2}
                     />
                     <CardPotZone potTotal={potTotal} communityCards={communityCards}/>
                     <PlayerZone 
                         player={players[6] !== undefined ? players[6] : undefined}
-                        clientUsername={players[6]?.username}
+                        clientUsername={playerUsername}
                         isTurn={turnIndex === 6}
                     />
                 </div>
                 <div className="game-rowOfPlayers">
                     <PlayerZone 
                         player={players[1] !== undefined ? players[1] : undefined}
-                        clientUsername={players[1]?.username}
+                        clientUsername={playerUsername}
                         isTurn={turnIndex === 1}
                     />
                     <PlayerZone 
                         player={players[0] !== undefined ? players[0] : undefined}
-                        clientUsername={players[0] !== undefined ? players[0].username : ""}
+                        clientUsername={playerUsername}
                         isTurn={turnIndex === 0}
                     />
                     <PlayerZone 
                         player={players[7] !== undefined ? players[7] : undefined}
-                        clientUsername={players[7]?.username}
+                        clientUsername={playerUsername}
                         isTurn={turnIndex === 7}
                     />
                 </div>

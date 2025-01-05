@@ -1,3 +1,4 @@
+using Api.Game;
 using Api.Hubs;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -35,6 +36,8 @@ namespace Api
             builder.Services.AddOpenApi();
 
             builder.Services.AddSignalR();
+
+            builder.Services.AddSingleton<ServerContext>();
 
             var app = builder.Build();
 

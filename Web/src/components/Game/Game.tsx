@@ -41,8 +41,13 @@ const Game = ({/*playerUsername*/}: Props) => {
             console.log(username + ": " + message);
         });
 
+        conn.on("ReceivePlayers", (players: Player[]) => {
+            setPlayers(players);
+            console.log(players);
+        });
+
         conn.on("Action", (player: Player, action: GameAction, turnIndex: number) => {
-            setPlayers(prev => prev.map((p) => p.name === player.name ? player : p));
+            setPlayers(prev => prev.map((p) => p.username === player.username ? player : p));
 
             if (action === "bet") {
                 // do something
@@ -56,7 +61,7 @@ const Game = ({/*playerUsername*/}: Props) => {
     }, []);
 
     useEffect(() => {
-        if (isButton1Active && players[turnIndex].name === playerUsername) {
+        if (isButton1Active && players[turnIndex].username === playerUsername) {
             if (connection) {
                 connection?.invoke("GameAction", userConnection, "check");
                 setIsButton1Active(false);
@@ -116,7 +121,7 @@ const Game = ({/*playerUsername*/}: Props) => {
             </div>
         );
     }
-
+console.log(players);
     return (
         <div className="game-container">
             <div className="gameWindow-container">
@@ -124,47 +129,47 @@ const Game = ({/*playerUsername*/}: Props) => {
                 <div className="game-rowOfPlayers">
                     <PlayerZone 
                         player={players[3] !== undefined ? players[3] : undefined}
-                        clientUsername={playerUsername}
+                        clientUsername={players[3]?.username}
                         isTurn={turnIndex === 3}
                     />
                     <PlayerZone 
                         player={players[4] !== undefined ? players[4] : undefined}
-                        clientUsername={playerUsername}
+                        clientUsername={players[4]?.username}
                         isTurn={turnIndex === 4}
                     />
                     <PlayerZone 
                         player={players[5] !== undefined ? players[5] : undefined}
-                        clientUsername={playerUsername}
+                        clientUsername={players[5]?.username}
                         isTurn={turnIndex === 5}
                     />
                 </div>
                 <div className="game-rowOfPlayers" style={{justifyContent: "space-between"}}>
                     <PlayerZone 
                         player={players[2] !== undefined ? players[2] : undefined}
-                        clientUsername={playerUsername}
+                        clientUsername={players[2]?.username}
                         isTurn={turnIndex === 2}
                     />
                     <CardPotZone potTotal={potTotal} communityCards={communityCards}/>
                     <PlayerZone 
                         player={players[6] !== undefined ? players[6] : undefined}
-                        clientUsername={playerUsername}
+                        clientUsername={players[6]?.username}
                         isTurn={turnIndex === 6}
                     />
                 </div>
                 <div className="game-rowOfPlayers">
                     <PlayerZone 
                         player={players[1] !== undefined ? players[1] : undefined}
-                        clientUsername={playerUsername}
+                        clientUsername={players[1]?.username}
                         isTurn={turnIndex === 1}
                     />
                     <PlayerZone 
                         player={players[0] !== undefined ? players[0] : undefined}
-                        clientUsername={playerUsername}
+                        clientUsername={players[0] !== undefined ? players[0].username : ""}
                         isTurn={turnIndex === 0}
                     />
                     <PlayerZone 
                         player={players[7] !== undefined ? players[7] : undefined}
-                        clientUsername={playerUsername}
+                        clientUsername={players[7]?.username}
                         isTurn={turnIndex === 7}
                     />
                 </div>

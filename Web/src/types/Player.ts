@@ -1,7 +1,7 @@
 import { Card } from "./Card";
 
 export type Player = {
-    name: string;
+    username: string;
     card1?: Card;
     card2?: Card;
     chips: number;

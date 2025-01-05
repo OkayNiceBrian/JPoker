@@ -3,16 +3,16 @@ using Microsoft.AspNetCore.SignalR;
 using Api.Game.Helpers;
 using Api.Game.Models;
 using Api.Models;
+using Api.Game;
 
 namespace Api.Hubs;
 
 public class GameHub : Hub
 {
-    public Dictionary<string, Lobby> lobbies;
-
-    public GameHub()
+    ServerContext _ctx;
+    public GameHub(ServerContext ctx)
     {
-        lobbies = []; 
+        _ctx = ctx;
     }
 
     public async Task JoinGlobal(UserConnection connection)
@@ -25,19 +25,27 @@ public class GameHub : Hub
         await Groups.AddToGroupAsync(Context.ConnectionId, connection.LobbyId);
         
         // If lobby doesn't exist, create it.
-        if (!lobbies.ContainsKey(connection.LobbyId))
+        if (!_ctx.lobbies.ContainsKey(connection.LobbyId))
         {
-            lobbies.Add(connection.LobbyId, 
+            _ctx.lobbies.Add(connection.LobbyId, 
                 new Lobby { 
                     Id = connection.LobbyId, 
                     IsPrivate = false, 
                     Players = [new Player { Username = connection.Username }] 
                 }); 
+        } else
+        {
+            _ctx.lobbies[connection.LobbyId].Players.Add(new Player { Username = connection.Username });
         }
 
         await Clients.Group(connection.LobbyId)
             .SendAsync("ReceiveMessage", "server", $"{connection.Username} has joined the lobby.");
+
+        var lobby = _ctx.lobbies[connection.LobbyId];
+        await Clients.Group(connection.LobbyId)
+            .SendAsync("ReceivePlayers", lobby.Players);
     }
+
     public async Task SendMessage(UserConnection connection, string message)
     {
         await Clients.Group(connection.LobbyId).SendAsync("ReceiveMessage", connection.Username, message);

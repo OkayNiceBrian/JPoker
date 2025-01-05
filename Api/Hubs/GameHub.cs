@@ -25,9 +25,9 @@ public class GameHub : Hub
         await Groups.AddToGroupAsync(Context.ConnectionId, connection.LobbyId);
         
         // If lobby doesn't exist, create it.
-        if (!_ctx.lobbies.ContainsKey(connection.LobbyId))
+        if (!_ctx.Lobbies.ContainsKey(connection.LobbyId))
         {
-            _ctx.lobbies.Add(connection.LobbyId, 
+            _ctx.Lobbies.Add(connection.LobbyId, 
                 new Lobby { 
                     Id = connection.LobbyId, 
                     IsPrivate = false, 
@@ -35,13 +35,13 @@ public class GameHub : Hub
                 }); 
         } else
         {
-            _ctx.lobbies[connection.LobbyId].Players.Add(new Player { Username = connection.Username });
+            _ctx.Lobbies[connection.LobbyId].Players.Add(new Player { Username = connection.Username });
         }
 
         await Clients.Group(connection.LobbyId)
             .SendAsync("ReceiveMessage", "server", $"{connection.Username} has joined the lobby.");
 
-        var lobby = _ctx.lobbies[connection.LobbyId];
+        var lobby = _ctx.Lobbies[connection.LobbyId];
         await Clients.Group(connection.LobbyId)
             .SendAsync("ReceivePlayers", lobby.Players);
     }

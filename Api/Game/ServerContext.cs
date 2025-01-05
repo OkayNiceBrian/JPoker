@@ -4,11 +4,6 @@ namespace Api.Game
 {
     public class ServerContext
     {
-        public Dictionary<string, Lobby> lobbies;
-
-        public ServerContext()
-        {
-            lobbies = [];
-        }
+        public Dictionary<string, Lobby> Lobbies { get; set; } = [];
     }
 }

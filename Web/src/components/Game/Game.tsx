@@ -48,6 +48,7 @@ const Game = ({/*playerUsername*/}: Props) => {
             setTurnIndex(lobby.turnIndex);
             setTurnTimerSeconds(lobby.turnTimerSeconds);
             setCommunityCards(lobby.communityCards);
+            setPotTotal(lobby.pot);
             console.log(lobby);
         });
 

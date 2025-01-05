@@ -6,6 +6,7 @@ export type Lobby = {
     isPrivate: boolean;
     players: Player[];
     communityCards: Card[];
+    pot: number;
     turnIndex: number;
     turnTimerSeconds: number;
 }

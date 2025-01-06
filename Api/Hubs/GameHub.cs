@@ -15,6 +15,8 @@ public class GameHub : Hub
         _ctx = ctx;
     }
 
+    // Server Tasks
+    // ====================
     public async Task JoinGlobal(UserConnection connection)
     {
         await Clients.All.SendAsync("ReceiveMessage", "server", $"{connection.Username} has joined.");
@@ -55,7 +57,7 @@ public class GameHub : Hub
         await Clients.Group(connection.LobbyId).SendAsync("ReceiveMessage", connection.Username, message);
     }
 
-    // GAME
+    // Game Tasks
     // =============================
     public async Task GameAction(UserConnection connection, string action)
     {

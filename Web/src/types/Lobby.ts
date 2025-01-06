@@ -7,6 +7,9 @@ export type Lobby = {
     players: Player[];
     communityCards: Card[];
     pot: number;
+    smallBlind: number;
+    bigBlind: number;
     turnIndex: number;
+    smallBlindIndex: number;
     turnTimerSeconds: number;
 }

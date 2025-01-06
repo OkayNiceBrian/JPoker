@@ -21,8 +21,12 @@ const Game = ({/*playerUsername*/}: Props) => {
     const [players, setPlayers] = useState<Array<Player>>([]);
     const [communityCards, setCommunityCards] = useState<Card[]>([]);
     const [potTotal, setPotTotal] = useState<number>(0);
+    
+    const [smallBlind, setSmallBlind] = useState<number>(500);
+    const [bigBlind, setBigBlind] = useState<number>(1000);
 
     const [turnIndex, setTurnIndex] = useState<number>(0);
+    const [smallBlindIndex, setSmallBlindIndex] = useState<number>(0);
     const [turnTimerSeconds, setTurnTimerSeconds] = useState<number>(30);
 
     const [button1Value, setButton1Value] = useState<ButtonOne>("Check/Fold");
@@ -45,7 +49,10 @@ const Game = ({/*playerUsername*/}: Props) => {
 
         conn.on("ReceiveLobbyInfo", (lobby: Lobby) => {
             setPlayers(lobby.players);
+            setSmallBlind(lobby.smallBlind);
+            setBigBlind(lobby.bigBlind);
             setTurnIndex(lobby.turnIndex);
+            setSmallBlindIndex(lobby.smallBlindIndex);
             setTurnTimerSeconds(lobby.turnTimerSeconds);
             setCommunityCards(lobby.communityCards);
             setPotTotal(lobby.pot);

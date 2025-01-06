@@ -9,7 +9,7 @@ namespace Api.Hubs;
 
 public class GameHub : Hub
 {
-    ServerContext _ctx;
+    private readonly ServerContext _ctx;
     public GameHub(ServerContext ctx)
     {
         _ctx = ctx;
@@ -91,7 +91,7 @@ public class GameHub : Hub
         }
     }
 
-    public void StartRound(Lobby lobby)
+    private static void StartRound(Lobby lobby)
     {
         var players = lobby.Players;
         // Set all players in lobby to active
@@ -117,7 +117,7 @@ public class GameHub : Hub
         lobby.TurnIndex = (lobby.SmallBlindIndex + 2) % players.Count;
     }
 
-    public void EndRound(Lobby lobby)
+    private static void EndRound(Lobby lobby)
     {
         var players = lobby.Players;
 
@@ -140,7 +140,7 @@ public class GameHub : Hub
         }
     }
 
-    public void MakeBet(Player player, int bet, Lobby lobby)
+    private static void MakeBet(Player player, int bet, Lobby lobby)
     {
         player.CurrentBet = bet;
         if (lobby.ActiveBet < bet)
@@ -150,7 +150,7 @@ public class GameHub : Hub
         }
     }
 
-    public void SetupTurns(Lobby lobby)
+    private static void SetupTurns(Lobby lobby)
     {
         var players = lobby.Players;
         foreach (var player in players)

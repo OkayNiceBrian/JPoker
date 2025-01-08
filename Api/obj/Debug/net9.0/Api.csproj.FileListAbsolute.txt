@@ -207,3 +207,4 @@ C:\dev\JPoker\Api\obj\Debug\net9.0\refint\Api.dll
 C:\dev\JPoker\Api\obj\Debug\net9.0\Api.pdb
 C:\dev\JPoker\Api\obj\Debug\net9.0\Api.genruntimeconfig.cache
 C:\dev\JPoker\Api\obj\Debug\net9.0\ref\Api.dll
+C:\dev\JPoker\Api\bin\Debug\net9.0\Newtonsoft.Json.dll

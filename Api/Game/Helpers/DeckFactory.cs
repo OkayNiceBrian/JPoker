@@ -3,7 +3,7 @@ using Api.Game.Models;
 
 namespace Api.Game.Helpers;
 
-public static class CardFactory
+public static class DeckFactory
 {
     private static readonly int RankCount = 13;
     private static readonly string[] Suits =
@@ -52,7 +52,30 @@ public static class CardFactory
                 });
             }
         }
-        
+
+        deck.ShuffleDeck();
         return deck;
+    }
+
+    public static void ShuffleDeck(this List<Card> deck)
+    {
+        Random r = new();
+        for (int i = 0; i < deck.Count - 1; i++)
+        {
+            int j = r.Next(0, deck.Count);
+            var temp = deck[i];
+            deck[i] = deck[j];
+            deck[j] = temp;
+        }
+    }
+
+    public static Card? PopCard(this List<Card> deck)
+    {
+        if (deck.Count <= 0)
+            return null;
+
+        var card = deck[0];
+        deck.RemoveAt(0);
+        return card;
     }
 }

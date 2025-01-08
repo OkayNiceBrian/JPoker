@@ -4,6 +4,8 @@ using Api.Game.Helpers;
 using Api.Game.Models;
 using Api.Models;
 using Api.Game;
+using Newtonsoft.Json;
+using Api.Game.Dtos;
 
 namespace Api.Hubs;
 
@@ -33,11 +35,11 @@ public class GameHub : Hub
                 new Lobby { 
                     Id = connection.LobbyId, 
                     IsPrivate = false, 
-                    Players = [new Player { Username = connection.Username }] 
+                    Players = [new Player { Username = connection.Username, ConnectionId = Context.ConnectionId }] 
                 }); 
         } else
         {
-            _ctx.Lobbies[connection.LobbyId].Players.Add(new Player { Username = connection.Username });
+            _ctx.Lobbies[connection.LobbyId].Players.Add(new Player { Username = connection.Username, ConnectionId = Context.ConnectionId });
         }
 
         await Clients.Group(connection.LobbyId)
@@ -46,10 +48,10 @@ public class GameHub : Hub
         var lobby = _ctx.Lobbies[connection.LobbyId];
         if (lobby.Players.Count == 2)
         {
-            StartRound(lobby);
+            StartGame(lobby);
         }
-        await Clients.Group(connection.LobbyId)
-            .SendAsync("ReceiveLobbyInfo", lobby);
+        
+        await ReceiveLobbyInfo(lobby);
     }
 
     public async Task SendMessage(UserConnection connection, string message)
@@ -64,7 +66,7 @@ public class GameHub : Hub
         var lobby = _ctx.Lobbies[connection.LobbyId];
         var player = lobby.Players.Where(p => p.Username == connection.Username).FirstOrDefault();
 
-        if (player == null || !player.isActive || player != lobby.Players[lobby.TurnIndex])
+        if (player == null || !player.IsActive || player != lobby.Players[lobby.TurnIndex])
             return;
 
         if (!Types.GameActions.Contains(action))
@@ -89,15 +91,17 @@ public class GameHub : Hub
         {
             EndRound(lobby);
         }
+
+        await ReceiveLobbyInfo(lobby);
     }
 
-    private static void StartRound(Lobby lobby)
+    private static void StartGame(Lobby lobby)
     {
         var players = lobby.Players;
         // Set all players in lobby to active
         foreach (var player in players)
         {
-            player.isActive = true;
+            player.IsActive = true;
         }
 
         // Set the new small blind player
@@ -113,6 +117,13 @@ public class GameHub : Hub
         var bigBlindBet = Math.Min(lobby.BigBlind, bigBlindPlayer.Chips);
         MakeBet(bigBlindPlayer, bigBlindBet, lobby); // This sets up the turns as well
 
+        // Deal Cards
+        lobby.Deck = DeckFactory.CreateDeck(); // Shuffles as well
+        foreach (var player in players.Where(p => p.IsActive)) {
+            player.Card1 = lobby.Deck.PopCard();
+            player.Card2 = lobby.Deck.PopCard();
+        }
+
         // Set the turnIndex to the player after the big blind (can be small blind with 2 players)
         lobby.TurnIndex = (lobby.SmallBlindIndex + 2) % players.Count;
     }
@@ -123,7 +134,7 @@ public class GameHub : Hub
 
         // Handle chips going into the pot
         int totalChipsAddedToPot = 0;
-        foreach (var player in players)
+        foreach (var player in players.Where(p => p.IsActive))
         {
             totalChipsAddedToPot += player.CurrentBet;
             player.Chips -= player.CurrentBet;
@@ -131,12 +142,19 @@ public class GameHub : Hub
         }
         lobby.Pot += totalChipsAddedToPot;
 
-        if (lobby.CurrentBettingRound == BettingRound.River)
+        if (lobby.CurrentBettingRound == BettingRound.PreFlop)
+        {
+            lobby.CommunityCards.Add(lobby.Deck.PopCard()!);
+            lobby.CommunityCards.Add(lobby.Deck.PopCard()!);
+            lobby.CommunityCards.Add(lobby.Deck.PopCard()!);
+        }
+        else if (lobby.CurrentBettingRound == BettingRound.Flop || lobby.CurrentBettingRound == BettingRound.Turn)
+        {
+            lobby.CommunityCards.Add(lobby.Deck.PopCard()!);
+        }
+        else if (lobby.CurrentBettingRound == BettingRound.River)
         {
             // TODO: See who wins the pot
-        } else
-        {
-            // TODO: Handle other Betting Rounds
         }
     }
 
@@ -153,7 +171,7 @@ public class GameHub : Hub
     private static void SetupTurns(Lobby lobby)
     {
         var players = lobby.Players;
-        foreach (var player in players)
+        foreach (var player in players.Where(p => p.IsActive))
         {
             if (lobby.ActiveBet == 0 || (lobby.ActiveBet > player.CurrentBet && player.CurrentBet < player.Chips))
             {
@@ -165,8 +183,19 @@ public class GameHub : Hub
         }
     }
 
-    public async void NextTurn()
+    private async Task ReceiveLobbyInfo(Lobby lobby)
     {
+        var lobbyDto = lobby.ToLobbyDto();
+        foreach (var player in lobby.Players)
+        {
+            lobbyDto.Players.Where(p => p.Username == player.Username).First().Card1 = player.Card1;
+            lobbyDto.Players.Where(p => p.Username == player.Username).First().Card2 = player.Card2;
 
-    }
+            await Clients.Client(player.ConnectionId)
+                .SendAsync("ReceiveLobbyInfo", lobbyDto);
+
+            lobbyDto.Players.Where(p => p.Username == player.Username).First().Card1 = null;
+            lobbyDto.Players.Where(p => p.Username == player.Username).First().Card2 = null;
+        }
+    } 
 }

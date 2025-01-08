@@ -59,11 +59,6 @@ const Game = ({/*playerUsername*/}: Props) => {
             console.log(lobby);
         });
 
-        conn.on("ReceivePlayers", (players: Player[]) => {
-            setPlayers(players);
-            //console.log(players);
-        });
-
         conn.on("Action", (player: Player, action: GameAction, turnIndex: number) => {
             setPlayers(prev => prev.map((p) => p.username === player.username ? player : p));
 
@@ -88,7 +83,7 @@ const Game = ({/*playerUsername*/}: Props) => {
     }, [turnIndex, connection, players, playerUsername, isButton1Active]);
 
     useEffect(() => {
-        console.log(players);
+        //console.log(players);
     }, [players])
 
     const JoinLobby = () => {

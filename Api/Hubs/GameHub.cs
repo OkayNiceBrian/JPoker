@@ -115,7 +115,7 @@ public class GameHub : Hub
         // Big Blind bet
         var bigBlindPlayer = players[(lobby.SmallBlindIndex + 1) % players.Count];
         var bigBlindBet = Math.Min(lobby.BigBlind, bigBlindPlayer.Chips);
-        MakeBet(bigBlindPlayer, bigBlindBet, lobby); // This sets up the turns as well
+        MakeBet(bigBlindPlayer, bigBlindBet, lobby);
 
         // Deal Cards
         lobby.Deck = DeckFactory.CreateDeck(); // Shuffles as well
@@ -126,11 +126,14 @@ public class GameHub : Hub
 
         // Set the turnIndex to the player after the big blind (can be small blind with 2 players)
         lobby.TurnIndex = (lobby.SmallBlindIndex + 2) % players.Count;
+        lobby.TurnQueue.Clear();
+        SetupTurns(lobby);
     }
 
     private static void EndRound(Lobby lobby)
     {
         var players = lobby.Players;
+        lobby.ActiveBet = 0;
 
         // Handle chips going into the pot
         int totalChipsAddedToPot = 0;
@@ -156,6 +159,9 @@ public class GameHub : Hub
         {
             // TODO: See who wins the pot
         }
+
+        lobby.CurrentBettingRound++;
+        SetupTurns(lobby);
     }
 
     private static void MakeBet(Player player, int bet, Lobby lobby)
@@ -181,6 +187,7 @@ public class GameHub : Hub
                 }
             }
         }
+        lobby.TurnIndex = players.IndexOf(lobby.TurnQueue.Peek());
     }
 
     private async Task ReceiveLobbyInfo(Lobby lobby)

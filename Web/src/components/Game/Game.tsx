@@ -13,7 +13,7 @@ interface Props {
     playerUsername: string; // Should probably be in redux when I get that in the project
 }
 
-const Game = ({/*playerUsername*/}: Props) => {
+const Game = () => {
     const [playerUsername, setPlayerUsername] = useState<string>("");
     const [lobbyId, setLobbyId] = useState<string>("");
     const [inLobby, setInLobby] = useState<boolean>(true);

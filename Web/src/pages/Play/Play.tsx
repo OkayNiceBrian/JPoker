@@ -1,4 +1,5 @@
-import Game from "../../components/Game/Game";
+import Game from "@/components/Game/Game";
+import Chat from "@/components/Chat/Chat";
 import "./Play.css";
 
 const Play = () => {
@@ -6,6 +7,7 @@ const Play = () => {
     return (
         <div className="play-container">
             <Game/>
+            <Chat/>
         </div>
     );
 };

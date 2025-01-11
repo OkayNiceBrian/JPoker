@@ -33,6 +33,26 @@ public class HighCard : Hand
     {
         Rank = rank;
     }
+
+    public static bool operator >(HighCard a, HighCard b)
+    {
+        return a.Rank.Value > b.Rank.Value;
+    }
+    
+    public static bool operator <(HighCard a, HighCard b)
+    {
+        return a.Rank.Value < b.Rank.Value;
+    }
+    
+    public static bool operator ==(HighCard a, HighCard b)
+    {
+        return a.Rank.Value == b.Rank.Value;
+    }
+    
+    public static bool operator !=(HighCard a, HighCard b)
+    {
+        return a.Rank.Value != b.Rank.Value;
+    }
 }
 
 public class Pair : Hand
@@ -42,6 +62,26 @@ public class Pair : Hand
     public Pair(Rank rank) : base(HandType.Pair)
     {
         Rank = rank;
+    }
+    
+    public static bool operator >(Pair a, Pair b)
+    {
+        return a.Rank.Value > b.Rank.Value;
+    }
+    
+    public static bool operator <(Pair a, Pair b)
+    {
+        return a.Rank.Value < b.Rank.Value;
+    }
+    
+    public static bool operator ==(Pair a, Pair b)
+    {
+        return a.Rank.Value == b.Rank.Value;
+    }
+    
+    public static bool operator !=(Pair a, Pair b)
+    {
+        return a.Rank.Value != b.Rank.Value;
     }
 }
 
@@ -54,6 +94,26 @@ public class TwoPair : Hand
     {
         HighRank = highRank;
         LowRank = lowRank;
+    }
+    
+    public static bool operator >(Pair a, Pair b)
+    {
+        return a.Rank.Value > b.Rank.Value;
+    }
+    
+    public static bool operator <(Pair a, Pair b)
+    {
+        return a.Rank.Value < b.Rank.Value;
+    }
+    
+    public static bool operator ==(Pair a, Pair b)
+    {
+        return a.Rank.Value == b.Rank.Value;
+    }
+    
+    public static bool operator !=(Pair a, Pair b)
+    {
+        return a.Rank.Value != b.Rank.Value;
     }
 }
 

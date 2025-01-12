@@ -96,24 +96,32 @@ public class TwoPair : Hand
         LowRank = lowRank;
     }
     
-    public static bool operator >(Pair a, Pair b)
+    public static bool operator >(TwoPair a, TwoPair b)
     {
-        return a.Rank.Value > b.Rank.Value;
+        if (a.HighRank.Value == b.HighRank.Value)
+        {
+            return a.LowRank.Value > b.LowRank.Value;
+        }
+        return a.HighRank.Value > b.HighRank.Value;
     }
     
-    public static bool operator <(Pair a, Pair b)
+    public static bool operator <(TwoPair a, TwoPair b)
     {
-        return a.Rank.Value < b.Rank.Value;
+        if (a.HighRank.Value == b.HighRank.Value)
+        {
+            return a.LowRank.Value < b.LowRank.Value;
+        }
+        return a.HighRank.Value < b.HighRank.Value;
     }
     
-    public static bool operator ==(Pair a, Pair b)
+    public static bool operator ==(TwoPair a, TwoPair b)
     {
-        return a.Rank.Value == b.Rank.Value;
+        return (a.HighRank.Value == b.HighRank.Value) && (a.LowRank.Value == b.LowRank.Value);
     }
     
-    public static bool operator !=(Pair a, Pair b)
+    public static bool operator !=(TwoPair a, TwoPair b)
     {
-        return a.Rank.Value != b.Rank.Value;
+        return !(a.HighRank.Value == b.HighRank.Value) || !(a.LowRank.Value == b.LowRank.Value);
     }
 }
 
@@ -125,6 +133,26 @@ public class ThreeOfAKind : Hand
     {
         Rank = rank;
     }
+
+    public static bool operator >(ThreeOfAKind a, ThreeOfAKind b)
+    {
+        return a.Rank.Value > b.Rank.Value;
+    }
+
+    public static bool operator <(ThreeOfAKind a, ThreeOfAKind b)
+    {
+        return a.Rank.Value < b.Rank.Value;
+    }
+
+    public static bool operator ==(ThreeOfAKind a, ThreeOfAKind b)
+    {
+        return a.Rank.Value == b.Rank.Value;
+    }
+
+    public static bool operator !=(ThreeOfAKind a, ThreeOfAKind b)
+    {
+        return a.Rank.Value != b.Rank.Value;
+    }
 }
 
 public class Straight : Hand
@@ -135,6 +163,26 @@ public class Straight : Hand
     {
         HighRank = highRank;
     }
+
+    public static bool operator >(Straight a, Straight b)
+    {
+        return a.HighRank.Value > b.HighRank.Value;
+    }
+
+    public static bool operator <(Straight a, Straight b)
+    {
+        return a.HighRank.Value < b.HighRank.Value;
+    }
+
+    public static bool operator ==(Straight a, Straight b)
+    {
+        return a.HighRank.Value == b.HighRank.Value;
+    }
+
+    public static bool operator !=(Straight a, Straight b)
+    {
+        return a.HighRank.Value != b.HighRank.Value;
+    }
 }
 
 public class Flush : Hand
@@ -144,6 +192,26 @@ public class Flush : Hand
     public Flush(Rank highRank) : base(HandType.Flush)
     {
         HighRank = highRank;
+    }
+
+    public static bool operator >(Flush a, Flush b)
+    {
+        return a.HighRank.Value > b.HighRank.Value;
+    }
+
+    public static bool operator <(Flush a, Flush b)
+    {
+        return a.HighRank.Value < b.HighRank.Value;
+    }
+
+    public static bool operator ==(Flush a, Flush b)
+    {
+        return a.HighRank.Value == b.HighRank.Value;
+    }
+
+    public static bool operator !=(Flush a, Flush b)
+    {
+        return a.HighRank.Value != b.HighRank.Value;
     }
 }
 
@@ -157,6 +225,34 @@ public class FullHouse : Hand
         HighRank = highRank;
         LowRank = lowRank;
     }
+
+    public static bool operator >(FullHouse a, FullHouse b)
+    {
+        if (a.HighRank.Value == b.HighRank.Value)
+        {
+            return a.LowRank.Value > b.LowRank.Value;
+        }
+        return a.HighRank.Value > b.HighRank.Value;
+    }
+
+    public static bool operator <(FullHouse a, FullHouse b)
+    {
+        if (a.HighRank.Value == b.HighRank.Value)
+        {
+            return a.LowRank.Value < b.LowRank.Value;
+        }
+        return a.HighRank.Value < b.HighRank.Value;
+    }
+
+    public static bool operator ==(FullHouse a, FullHouse b)
+    {
+        return (a.HighRank.Value == b.HighRank.Value) && (a.LowRank.Value == b.LowRank.Value);
+    }
+
+    public static bool operator !=(FullHouse a, FullHouse b)
+    {
+        return !(a.HighRank.Value == b.HighRank.Value) || !(a.LowRank.Value == b.LowRank.Value);
+    }
 }
 
 public class Quads : Hand
@@ -167,6 +263,26 @@ public class Quads : Hand
     {
         Rank = rank;
     }
+
+    public static bool operator >(Quads a, Quads b)
+    {
+        return a.Rank.Value > b.Rank.Value;
+    }
+
+    public static bool operator <(Quads a, Quads b)
+    {
+        return a.Rank.Value < b.Rank.Value;
+    }
+
+    public static bool operator ==(Quads a, Quads b)
+    {
+        return a.Rank.Value == b.Rank.Value;
+    }
+
+    public static bool operator !=(Quads a, Quads b)
+    {
+        return a.Rank.Value != b.Rank.Value;
+    }
 }
 
 public class StraightFlush : Hand
@@ -176,5 +292,25 @@ public class StraightFlush : Hand
     public StraightFlush(Rank highRank) : base(HandType.StraightFlush)
     {
         HighRank = highRank;
+    }
+
+    public static bool operator >(StraightFlush a, StraightFlush b)
+    {
+        return a.HighRank.Value > b.HighRank.Value;
+    }
+
+    public static bool operator <(StraightFlush a, StraightFlush b)
+    {
+        return a.HighRank.Value < b.HighRank.Value;
+    }
+
+    public static bool operator ==(StraightFlush a, StraightFlush b)
+    {
+        return a.HighRank.Value == b.HighRank.Value;
+    }
+
+    public static bool operator !=(StraightFlush a, StraightFlush b)
+    {
+        return a.HighRank.Value != b.HighRank.Value;
     }
 }

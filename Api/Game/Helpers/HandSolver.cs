@@ -116,4 +116,63 @@ public static class HandSolver
 
         return new HighCard(maxRank);
     }
+
+    private static Hand? CheckStraight(List<Card> cardPool)
+    {
+        cardPool.Sort();
+
+        Rank? highestRank = null;
+        int sequence = 0;
+        int flushSequence = 0;
+        bool straightFlush = false;
+        for (int i = 0; i <= 2; i++)
+        {
+            for (int j = i + 1; j < i + 5; j++)
+            {
+                if (cardPool[j - 1].Rank.Value == cardPool[j].Rank.Value - 1)
+                {
+                    sequence++;
+                    if (cardPool[j - 1].Suit == cardPool[j].Suit)
+                    {
+                        flushSequence++;
+                    }
+                    if (sequence == 5)
+                    {
+                        if (flushSequence >= 5)
+                        {
+                            straightFlush = true;
+                        }
+
+                        if (flushSequence < 5 && straightFlush)
+                        {
+                            return new StraightFlush(highestRank!);
+                        }
+
+                        highestRank = cardPool[j].Rank;
+                    }
+                }
+            } 
+
+            if (cardPool[i].Rank.Value == 2 && cardPool[cardPool.Count - 1].Rank.ToChar == "A" && sequence == 4)
+            {
+                sequence++;
+                highestRank = cardPool[i + 3].Rank;
+            }
+            
+            sequence = 0;
+            flushSequence = 0;
+        }
+
+        if (highestRank != null)
+        {
+            return new Straight(highestRank);
+        }
+
+        if (highestRank != null && straightFlush == true)
+        {
+            return new StraightFlush(highestRank);
+        }
+
+        return null;
+    }
 }

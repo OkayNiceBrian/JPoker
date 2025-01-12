@@ -18,13 +18,27 @@ public class Rank
         return a.Value < b.Value;
     }
 
-    public static bool operator ==(Rank a, Rank b)
+    public static bool operator ==(Rank? a, Rank? b)
     {
+        if (a == null && b == null)
+        {
+            return true;
+        } 
+        else if (a == null || b == null)
+        {
+            return false;
+        }
+
         return a.Value == b.Value;
     }
 
-    public static bool operator !=(Rank a, Rank b)
+    public static bool operator !=(Rank? a, Rank? b)
     {
+        if (b == null || a == null)
+        {
+            return true;
+        }
+
         return a.Value != b.Value;
     }
 }

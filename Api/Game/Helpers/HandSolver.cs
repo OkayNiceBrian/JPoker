@@ -4,13 +4,13 @@ namespace Api.Game.Helpers;
 
 public static class HandSolver
 {
-    public static Player DetermineWinner(this Lobby lobby)
+    public static List<Player> DetermineWinner(this Lobby lobby)
     {
         var players = lobby.Players;
         var communityCards = lobby.CommunityCards;
         List<Card> cardPool = communityCards.Select(c => c).ToList();
 
-        Player winningPlayer = players[0];
+        List<Player> winningPlayers = [];
         Hand winningHand = new HighCard(new Rank
         {
             Value = 2,
@@ -25,12 +25,36 @@ public static class HandSolver
 
             // Logic to figure out hands right here :)
             Hand? hand = CheckPairs(cardPool);
+            Hand? tempHand = CheckStraight(cardPool);
+            if (tempHand != null && tempHand.HandType > hand.HandType)
+            {
+                hand = tempHand;
+            }
+
+            if (hand.HandType < HandType.Flush)
+            {
+                tempHand = CheckFlush(cardPool);
+                if (tempHand != null)
+                {
+                    hand = tempHand;
+                }
+            }
+
+            // Figure out the currently winning player
+            if (hand.HandType > winningHand.HandType || (hand.HandType == winningHand.HandType && hand > winningHand)) // TODO: Figure out how to make this work.
+            {
+                winningPlayers.Clear();
+                winningPlayers.Add(player);
+            } else if (hand.HandType == winningHand.HandType && hand == winningHand) // TODO: hand == winningHand is gonna compare by reference, need to get this figured out with above todo.
+            {
+                winningPlayers.Add(player);
+            }
 
             cardPool.Remove(player.Card1!);
             cardPool.Remove(player.Card2!);
         }
 
-        return winningPlayer;
+        return winningPlayers;
     }
 
     private static Hand CheckPairs(List<Card> cardPool)
@@ -155,7 +179,6 @@ public static class HandSolver
 
             if (cardPool[i].Rank.Value == 2 && cardPool[cardPool.Count - 1].Rank.ToChar == "A" && sequence == 4)
             {
-                sequence++;
                 highestRank = cardPool[i + 3].Rank;
             }
             
@@ -171,6 +194,41 @@ public static class HandSolver
         if (highestRank != null && straightFlush == true)
         {
             return new StraightFlush(highestRank);
+        }
+
+        return null;
+    }
+
+    private static Hand? CheckFlush(List<Card> cardPool)
+    {
+        cardPool.Sort();
+        Rank? highestRank = null;
+        int flushSequence = 0;
+        for (int i = 0; i <= 2; i++)
+        {
+            for (int j = i + 1; j < i + 5; j++)
+            {
+                if (cardPool[j - 1].Suit == cardPool[j].Suit)
+                {
+                    highestRank = cardPool[j].Rank;
+                    flushSequence++;
+                }
+                else
+                {
+                    if (flushSequence >= 5)
+                    {
+                        return new Flush(highestRank!);
+                    }
+                    highestRank = null;
+                    flushSequence = 0;
+                    break;
+                }
+            }
+        }
+
+        if (flushSequence >= 5)
+        {
+            return new Flush(highestRank!);
         }
 
         return null;

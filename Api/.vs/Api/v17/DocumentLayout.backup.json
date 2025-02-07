@@ -3,12 +3,28 @@
   "WorkspaceRootPath": "C:\\dev\\JPoker\\Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|c:\\dev\\jpoker\\api\\hubs\\gamehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:hubs\\gamehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|c:\\dev\\jpoker\\api\\game\\helpers\\handsolver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:game\\helpers\\handsolver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|c:\\dev\\jpoker\\api\\game\\models\\rank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:game\\models\\rank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|c:\\dev\\jpoker\\api\\game\\models\\hand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:game\\models\\hand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|c:\\dev\\jpoker\\api\\game\\models\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:game\\models\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|c:\\dev\\jpoker\\api\\game\\models\\lobby.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:game\\models\\lobby.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|c:\\dev\\jpoker\\api\\hubs\\gamehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:hubs\\gamehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|c:\\dev\\jpoker\\api\\game\\models\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -25,10 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|c:\\dev\\jpoker\\api\\game\\dtos\\lobbydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:game\\dtos\\lobbydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|c:\\dev\\jpoker\\api\\game\\models\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:game\\models\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|c:\\dev\\jpoker\\api\\game\\servercontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,11 +62,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 186,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "HandSolver.cs",
+              "DocumentMoniker": "C:\\dev\\JPoker\\Api\\Game\\Helpers\\HandSolver.cs",
+              "RelativeDocumentMoniker": "Game\\Helpers\\HandSolver.cs",
+              "ToolTip": "C:\\dev\\JPoker\\Api\\Game\\Helpers\\HandSolver.cs",
+              "RelativeToolTip": "Game\\Helpers\\HandSolver.cs",
+              "ViewState": "AgIAAIsAAAAAAAAAAAAYwKAAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-12T04:25:10.418Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Rank.cs",
+              "DocumentMoniker": "C:\\dev\\JPoker\\Api\\Game\\Models\\Rank.cs",
+              "RelativeDocumentMoniker": "Game\\Models\\Rank.cs",
+              "ToolTip": "C:\\dev\\JPoker\\Api\\Game\\Models\\Rank.cs",
+              "RelativeToolTip": "Game\\Models\\Rank.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAA9wCYAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-12T04:51:05.598Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Hand.cs",
+              "DocumentMoniker": "C:\\dev\\JPoker\\Api\\Game\\Models\\Hand.cs",
+              "RelativeDocumentMoniker": "Game\\Models\\Hand.cs",
+              "ToolTip": "C:\\dev\\JPoker\\Api\\Game\\Models\\Hand.cs",
+              "RelativeToolTip": "Game\\Models\\Hand.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAiwCkAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-12T04:25:14.928Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "PlayerDto.cs",
               "DocumentMoniker": "C:\\dev\\JPoker\\Api\\Game\\Dtos\\PlayerDto.cs",
               "RelativeDocumentMoniker": "Game\\Dtos\\PlayerDto.cs",
@@ -66,7 +117,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "LobbyDto.cs",
               "DocumentMoniker": "C:\\dev\\JPoker\\Api\\Game\\Dtos\\LobbyDto.cs",
               "RelativeDocumentMoniker": "Game\\Dtos\\LobbyDto.cs",
@@ -78,7 +129,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "ServerContext.cs",
               "DocumentMoniker": "C:\\dev\\JPoker\\Api\\Game\\ServerContext.cs",
               "RelativeDocumentMoniker": "Game\\ServerContext.cs",
@@ -90,7 +141,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "Types.cs",
               "DocumentMoniker": "C:\\dev\\JPoker\\Api\\Game\\Helpers\\Types.cs",
               "RelativeDocumentMoniker": "Game\\Helpers\\Types.cs",
@@ -102,7 +153,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "UserConnection.cs",
               "DocumentMoniker": "C:\\dev\\JPoker\\Api\\Models\\UserConnection.cs",
               "RelativeDocumentMoniker": "Models\\UserConnection.cs",
@@ -114,7 +165,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "DeckFactory.cs",
               "DocumentMoniker": "C:\\dev\\JPoker\\Api\\Game\\Helpers\\DeckFactory.cs",
               "RelativeDocumentMoniker": "Game\\Helpers\\DeckFactory.cs",
@@ -126,19 +177,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "Card.cs",
               "DocumentMoniker": "C:\\dev\\JPoker\\Api\\Game\\Models\\Card.cs",
               "RelativeDocumentMoniker": "Game\\Models\\Card.cs",
               "ToolTip": "C:\\dev\\JPoker\\Api\\Game\\Models\\Card.cs",
               "RelativeToolTip": "Game\\Models\\Card.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-02T03:16:58.878Z"
+              "WhenOpened": "2025-01-02T03:16:58.878Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "Player.cs",
               "DocumentMoniker": "C:\\dev\\JPoker\\Api\\Game\\Models\\Player.cs",
               "RelativeDocumentMoniker": "Game\\Models\\Player.cs",
@@ -150,28 +202,27 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Lobby.cs",
               "DocumentMoniker": "C:\\dev\\JPoker\\Api\\Game\\Models\\Lobby.cs",
               "RelativeDocumentMoniker": "Game\\Models\\Lobby.cs",
               "ToolTip": "C:\\dev\\JPoker\\Api\\Game\\Models\\Lobby.cs",
               "RelativeToolTip": "Game\\Models\\Lobby.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAADwvygAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAABoAAAAAAAAAAAAswCgAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-30T01:07:50.355Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "GameHub.cs",
               "DocumentMoniker": "C:\\dev\\JPoker\\Api\\Hubs\\GameHub.cs",
               "RelativeDocumentMoniker": "Hubs\\GameHub.cs",
               "ToolTip": "C:\\dev\\JPoker\\Api\\Hubs\\GameHub.cs",
               "RelativeToolTip": "Hubs\\GameHub.cs",
-              "ViewState": "AgIAAIEAAAAAAAAAAAAEwKIAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAKEAAAAAAAAAAAAawJ4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-25T09:30:11.637Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-25T09:30:11.637Z"
             }
           ]
         }

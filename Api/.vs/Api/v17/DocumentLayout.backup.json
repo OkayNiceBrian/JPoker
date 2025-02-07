@@ -72,7 +72,7 @@
               "RelativeDocumentMoniker": "Game\\Helpers\\HandSolver.cs",
               "ToolTip": "C:\\dev\\JPoker\\Api\\Game\\Helpers\\HandSolver.cs",
               "RelativeToolTip": "Game\\Helpers\\HandSolver.cs",
-              "ViewState": "AgIAAIsAAAAAAAAAAAAYwKAAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKAAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-12T04:25:10.418Z",
               "EditorCaption": ""
@@ -87,8 +87,7 @@
               "RelativeToolTip": "Game\\Models\\Rank.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAA9wCYAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-12T04:51:05.598Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-12T04:51:05.598Z"
             },
             {
               "$type": "Document",
@@ -100,8 +99,7 @@
               "RelativeToolTip": "Game\\Models\\Hand.cs",
               "ViewState": "AgIAAEgAAAAAAAAAAAAiwCkAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-12T04:25:14.928Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-12T04:25:14.928Z"
             },
             {
               "$type": "Document",
@@ -185,8 +183,7 @@
               "RelativeToolTip": "Game\\Models\\Card.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-02T03:16:58.878Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-02T03:16:58.878Z"
             },
             {
               "$type": "Document",

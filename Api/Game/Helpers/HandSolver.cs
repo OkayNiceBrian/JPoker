@@ -36,16 +36,16 @@ public static class HandSolver
                 tempHand = CheckFlush(cardPool);
                 if (tempHand != null)
                 {
-                    hand = tempHand;
+                    hand = tempHand; 
                 }
             }
 
             // Figure out the currently winning player
-            if (hand.HandType > winningHand.HandType || (hand.HandType == winningHand.HandType && hand > winningHand)) // TODO: Figure out how to make this work.
+            if (hand.HandType > winningHand.HandType || (hand.HandType == winningHand.HandType && hand > winningHand))
             {
                 winningPlayers.Clear();
                 winningPlayers.Add(player);
-            } else if (hand.HandType == winningHand.HandType && hand == winningHand) // TODO: hand == winningHand is gonna compare by reference, need to get this figured out with above todo.
+            } else if (hand.HandType == winningHand.HandType && hand == winningHand) // TODO: Not sure if this compares by reference but I think it's good
             {
                 winningPlayers.Add(player);
             }

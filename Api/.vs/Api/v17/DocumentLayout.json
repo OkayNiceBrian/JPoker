@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:game\\helpers\\handsolver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|c:\\dev\\jpoker\\api\\game\\models\\rank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:game\\models\\rank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|c:\\dev\\jpoker\\api\\game\\models\\hand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:game\\models\\hand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|c:\\dev\\jpoker\\api\\game\\models\\rank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|solutionrelative:game\\models\\rank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{360D50ED-59D7-4E5A-B59C-90A8BAAA2AF3}|Api.csproj|c:\\dev\\jpoker\\api\\game\\models\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -72,14 +72,14 @@
               "RelativeDocumentMoniker": "Game\\Helpers\\HandSolver.cs",
               "ToolTip": "C:\\dev\\JPoker\\Api\\Game\\Helpers\\HandSolver.cs",
               "RelativeToolTip": "Game\\Helpers\\HandSolver.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKAAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAKoAAAAAAAAAAAAAwCgAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-12T04:25:10.418Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Rank.cs",
               "DocumentMoniker": "C:\\dev\\JPoker\\Api\\Game\\Models\\Rank.cs",
               "RelativeDocumentMoniker": "Game\\Models\\Rank.cs",
@@ -91,15 +91,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Hand.cs",
               "DocumentMoniker": "C:\\dev\\JPoker\\Api\\Game\\Models\\Hand.cs",
               "RelativeDocumentMoniker": "Game\\Models\\Hand.cs",
               "ToolTip": "C:\\dev\\JPoker\\Api\\Game\\Models\\Hand.cs",
               "RelativeToolTip": "Game\\Models\\Hand.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAiwCkAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAACEAAAAAAAAAAAAmwCkAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-12T04:25:14.928Z"
+              "WhenOpened": "2025-01-12T04:25:14.928Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",

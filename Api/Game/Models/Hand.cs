@@ -23,6 +23,206 @@ public abstract class Hand
     {
         HandType = handType;
     }
+
+    public static bool operator <(Hand a, Hand b)
+    {
+        if (a is HighCard && b is HighCard)
+        {
+            return (HighCard)a < (HighCard)b;
+        }
+
+        if (a is Pair && b is Pair)
+        {
+            return (Pair)a < (Pair)b;
+        }
+
+        if (a is TwoPair && b is TwoPair)
+        {
+            return (TwoPair)a < (TwoPair)b;
+        }
+
+        if (a is ThreeOfAKind && b is ThreeOfAKind)
+        {
+            return (ThreeOfAKind)a < (ThreeOfAKind)b;
+        }
+
+        if (a is Straight && b is Straight)
+        {
+            return (Straight)a < (Straight)b;
+        }
+
+        if (a is Flush && b is Flush)
+        {
+            return (Flush)a < (Flush)b;
+        }
+
+        if (a is FullHouse && b is FullHouse)
+        {
+            return (FullHouse)a < (FullHouse)b;
+        }
+
+        if (a is Quads && b is Quads)
+        {
+            return (Quads)a < (Quads)b;
+        }
+
+        if (a is StraightFlush && b is StraightFlush)
+        {
+            return (StraightFlush)a < (StraightFlush)b;
+        }
+
+        return false;
+    }
+
+    public static bool operator >(Hand a, Hand b)
+    {
+        if (a is HighCard && b is HighCard)
+        {
+            return (HighCard)a > (HighCard)b;
+        }
+
+        if (a is Pair && b is Pair)
+        {
+            return (Pair)a > (Pair)b;
+        }
+
+        if (a is TwoPair && b is TwoPair)
+        {
+            return (TwoPair)a > (TwoPair)b;
+        }
+
+        if (a is ThreeOfAKind && b is ThreeOfAKind)
+        {
+            return (ThreeOfAKind)a > (ThreeOfAKind)b;
+        }
+
+        if (a is Straight && b is Straight)
+        {
+            return (Straight)a > (Straight)b;
+        }
+
+        if (a is Flush && b is Flush)
+        {
+            return (Flush)a > (Flush)b;
+        }
+
+        if (a is FullHouse && b is FullHouse)
+        {
+            return (FullHouse)a > (FullHouse)b;
+        }
+
+        if (a is Quads && b is Quads)
+        {
+            return (Quads)a > (Quads)b;
+        }
+
+        if (a is StraightFlush && b is StraightFlush)
+        {
+            return (StraightFlush)a > (StraightFlush)b;
+        }
+
+        return false;
+    }
+
+    public static bool operator ==(Hand a, Hand b)
+    {
+        if (a is HighCard && b is HighCard)
+        {
+            return (HighCard)a == (HighCard)b;
+        }
+
+        if (a is Pair && b is Pair)
+        {
+            return (Pair)a == (Pair)b;
+        }
+
+        if (a is TwoPair && b is TwoPair)
+        {
+            return (TwoPair)a == (TwoPair)b;
+        }
+
+        if (a is ThreeOfAKind && b is ThreeOfAKind)
+        {
+            return (ThreeOfAKind)a == (ThreeOfAKind)b;
+        }
+
+        if (a is Straight && b is Straight)
+        {
+            return (Straight)a == (Straight)b;
+        }
+
+        if (a is Flush && b is Flush)
+        {
+            return (Flush)a == (Flush)b;
+        }
+
+        if (a is FullHouse && b is FullHouse)
+        {
+            return (FullHouse)a == (FullHouse)b;
+        }
+
+        if (a is Quads && b is Quads)
+        {
+            return (Quads)a == (Quads)b;
+        }
+
+        if (a is StraightFlush && b is StraightFlush)
+        {
+            return (StraightFlush)a == (StraightFlush)b;
+        }
+
+        return false;
+    }
+
+    public static bool operator !=(Hand a, Hand b)
+    {
+        if (a is HighCard && b is HighCard)
+        {
+            return (HighCard)a != (HighCard)b;
+        }
+
+        if (a is Pair && b is Pair)
+        {
+            return (Pair)a != (Pair)b;
+        }
+
+        if (a is TwoPair && b is TwoPair)
+        {
+            return (TwoPair)a != (TwoPair)b;
+        }
+
+        if (a is ThreeOfAKind && b is ThreeOfAKind)
+        {
+            return (ThreeOfAKind)a != (ThreeOfAKind)b;
+        }
+
+        if (a is Straight && b is Straight)
+        {
+            return (Straight)a != (Straight)b;
+        }
+
+        if (a is Flush && b is Flush)
+        {
+            return (Flush)a != (Flush)b;
+        }
+
+        if (a is FullHouse && b is FullHouse)
+        {
+            return (FullHouse)a != (FullHouse)b;
+        }
+
+        if (a is Quads && b is Quads)
+        {
+            return (Quads)a != (Quads)b;
+        }
+
+        if (a is StraightFlush && b is StraightFlush)
+        {
+            return (StraightFlush)a != (StraightFlush)b;
+        }
+
+        return false;
+    }
 }
 
 public class HighCard : Hand

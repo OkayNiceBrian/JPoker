@@ -174,8 +174,18 @@ public abstract class Hand
         return false;
     }
 
-    public static bool operator !=(Hand a, Hand b)
+    public static bool operator !=(Hand? a, Hand? b)
     {
+        if (a is null && b is null)
+        {
+            return false;
+        }
+
+        if (b is null)
+        {
+            return true;
+        }
+
         if (a is HighCard && b is HighCard)
         {
             return (HighCard)a != (HighCard)b;

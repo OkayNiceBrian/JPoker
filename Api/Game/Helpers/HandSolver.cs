@@ -18,7 +18,7 @@ public static class HandSolver
             ToString = "two"
         });
         
-        foreach(var player in players)
+        foreach(var player in players.Where(p => p.IsActive))
         {
             cardPool.Add(player.Card1!);
             cardPool.Add(player.Card2!);
@@ -69,7 +69,7 @@ public static class HandSolver
         for (int i = 0; i < cardPool.Count; i++)
         {
             int occurences = 0;
-            Rank? rank = null;
+            Rank? rank = cardPool[i].Rank;
             for (int j = 0; j < cardPool.Count; j++)
             {
                 if (cardPool[i].Rank == cardPool[j].Rank)
@@ -81,9 +81,9 @@ public static class HandSolver
             {
                 maxOccurences = occurences;
                 maxRank = cardPool[i].Rank;
-            } else if (occurences == maxOccurences && rank! > maxRank)
+            } else if (occurences == maxOccurences && rank > maxRank)
             {
-                maxRank = rank!;
+                maxRank = rank;
             }
         }
 
@@ -104,7 +104,7 @@ public static class HandSolver
             for (int i = 0; i < cardPool.Count; i++)
             {
                 int occurences = 0;
-                Rank? rank = null;
+                Rank? rank = cardPool[i].Rank;
                 for (int j = 0; j < cardPool.Count; j++)
                 {
                     if (cardPool[i].Rank == cardPool[j].Rank && cardPool[i].Rank != maxRank)
@@ -117,9 +117,9 @@ public static class HandSolver
                     maxOccurences2 = occurences;
                     maxRank2 = cardPool[i].Rank;
                 }
-                else if (occurences == maxOccurences2 && rank! > maxRank2)
+                else if (occurences == maxOccurences2 && rank > maxRank2)
                 {
-                    maxRank2 = rank!;
+                    maxRank2 = rank;
                 }
             }
 
@@ -133,6 +133,9 @@ public static class HandSolver
                 {
                     return new TwoPair(maxRank, maxRank2);
                 }
+            } else if (maxOccurences == 3)
+            {
+                return new ThreeOfAKind(maxRank);
             }
 
             return new Pair(maxRank);

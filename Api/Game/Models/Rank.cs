@@ -20,11 +20,11 @@ public class Rank
 
     public static bool operator ==(Rank? a, Rank? b)
     {
-        if (a == null && b == null)
+        if (a is null && b is null)
         {
             return true;
         } 
-        else if (a == null || b == null)
+        else if (a is null || b is null)
         {
             return false;
         }
@@ -34,7 +34,7 @@ public class Rank
 
     public static bool operator !=(Rank? a, Rank? b)
     {
-        if (b == null || a == null)
+        if (b is null || a is null)
         {
             return true;
         }

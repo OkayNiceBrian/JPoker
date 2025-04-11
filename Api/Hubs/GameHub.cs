@@ -157,7 +157,16 @@ public class GameHub : Hub
         }
         else if (lobby.CurrentBettingRound == BettingRound.River)
         {
-            // TODO: See who wins the pot
+            var winners = HandSolver.DetermineWinner(lobby);
+            foreach(var winner in winners)
+            {
+                winner.Chips += lobby.Pot / winners.Count();
+            }
+            lobby.Pot = 0;
+            lobby.CommunityCards = [];
+            lobby.CurrentBettingRound = 0;
+            StartGame(lobby); // Resets game, TODO: should change this so we send winnerInfo to frontend and then waits for frontend to request next round start
+            return;
         }
 
         lobby.CurrentBettingRound++;
@@ -205,4 +214,9 @@ public class GameHub : Hub
             lobbyDto.Players.Where(p => p.Username == player.Username).First().Card2 = null;
         }
     } 
+
+    private async Task ReceiveResults(Lobby lobby)
+    {
+
+    }
 }

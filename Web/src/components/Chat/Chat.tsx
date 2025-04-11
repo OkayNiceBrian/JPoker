@@ -1,11 +1,18 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { chatState } from "@/reducers/chatSlice";
 import "./styles/Chat.css";
 
 const Chat = () => {
     const [input, setInput] = useState<string>("");
+    const chatMessages = useSelector((state: chatState) => state.messages);
  
     const renderMessages = () => {
-        return <div></div>;
+        return chatMessages.map((message) =>
+            <div className="chat-message">
+                <p>{message}</p>
+            </div>
+        );
     };
 
     const onClickSend = () => {

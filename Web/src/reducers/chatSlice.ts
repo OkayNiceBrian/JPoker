@@ -1,11 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export interface chatState {
+    messages: string[]
+};
+
+const initialChat: string[] = [];
+
 const chatSlice = createSlice({
     name: 'chat',
-    initialState: [],
+    initialState: {
+        messages: initialChat
+    } as chatState,
     reducers: {
         addMessage(state, action) {
-            state.push(action.payload);
+            state.messages.push(action.payload);
         }
     }
 });

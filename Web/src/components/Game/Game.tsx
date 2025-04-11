@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import * as signalr from "@microsoft/signalr";
+import { useDispatch } from "react-redux";
+import { addMessage } from "@/reducers/chatSlice";
 import { Player } from "@/types/Player";
 import { Card } from "@/types/Card";
 import { Lobby } from "@/types/Lobby";
@@ -14,6 +16,8 @@ interface Props {
 }
 
 const Game = () => {
+    const dispatch = useDispatch();
+
     const [playerUsername, setPlayerUsername] = useState<string>("");
     const [lobbyId, setLobbyId] = useState<string>("");
     const [inLobby, setInLobby] = useState<boolean>(true);
@@ -45,6 +49,7 @@ const Game = () => {
 
         conn.on("ReceiveMessage", (username: string, message: string) => {
             console.log(username + ": " + message);
+            dispatch(addMessage(`${username}: ${message}`));
         });
 
         conn.on("ReceiveLobbyInfo", (lobby: Lobby) => {

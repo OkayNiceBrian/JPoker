@@ -12,6 +12,17 @@
     justify-content: end;
     align-items: start;
     height: 90%;
+    overflow-y: scroll;
+}
+
+.chat-message {
+    width: 100%;
+    overflow-wrap: normal;
+}
+
+.chat-message p {
+    color: white;
+    font-size: 12pt;
 }
 
 .chat-inputContainer {

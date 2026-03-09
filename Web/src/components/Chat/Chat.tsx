@@ -8,7 +8,7 @@ const Chat = () => {
     const chatMessages = useSelector((state: chatState) => state.messages);
  
     const renderMessages = () => {
-        return chatMessages.map((message) =>
+        return chatMessages?.map((message) =>
             <div className="chat-message">
                 <p>{message}</p>
             </div>

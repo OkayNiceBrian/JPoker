@@ -17,8 +17,8 @@ public static class HandSolver
             ToChar = "2",
             ToString = "two"
         });
-        
-        foreach(var player in players.Where(p => p.IsActive))
+
+        foreach (var player in players.Where(p => p.IsActive).ToList())
         {
             cardPool.Add(player.Card1!);
             cardPool.Add(player.Card2!);

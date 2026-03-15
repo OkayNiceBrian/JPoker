@@ -4,3 +4,6 @@ package-lock.json
 Api/bin/
 Api/obj/
 Api/.vs/
+ApiTests/bin/
+ApiTests/obj/
+ApiTests/.vs/

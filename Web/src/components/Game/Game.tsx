@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import * as signalr from "@microsoft/signalr";
-import { useDispatch } from "react-redux";
-import { addMessage } from "@/reducers/chatSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addMessage, addUserConnection, selectUserConnection } from "@/reducers/chatSlice";
 import { Player } from "@/types/Player";
 import { Card } from "@/types/Card";
 import { Lobby } from "@/types/Lobby";
@@ -10,6 +10,7 @@ import CardPotZone from "./CardPotZone";
 import GameControls from "./GameControls";
 import PlayerZone from "./PlayerZone";
 import "./styles/Game.css";
+import { UserConnection } from "@/types/NetworkTypes";
 
 interface Props {
     playerUsername: string; // Should probably be in redux when I get that in the project
@@ -42,7 +43,7 @@ const Game = () => {
 
     const [connection, setConnection] = useState<signalr.HubConnection>();
 
-    const userConnection = { Username: playerUsername, LobbyId: lobbyId }; // property names must be the EXACT same on client and server, including case.
+    const userConnection = useSelector(selectUserConnection);
 
     useEffect(() => {
         const conn = new signalr.HubConnectionBuilder().withUrl("https://localhost:44392/gameHub").build();
@@ -91,8 +92,8 @@ const Game = () => {
         //console.log(players);
     }, [players])
 
-    const JoinLobby = () => {
-        if (connection) {
+    const JoinLobby = (userConnection: UserConnection) => {
+        if (connection && userConnection) {
             connection.invoke("JoinLobby", userConnection);
         }
     };
@@ -128,7 +129,10 @@ const Game = () => {
     };
 
     const clickJoinLobby = () => {
-        JoinLobby();
+        const userConnection: UserConnection = { LobbyId: lobbyId, Username: playerUsername }
+        dispatch(addUserConnection(userConnection));
+
+        JoinLobby(userConnection);
         setInLobby(false);
     }
 

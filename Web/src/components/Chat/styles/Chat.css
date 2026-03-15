@@ -6,21 +6,22 @@
 }
 
 .chat-messagesContainer {
-    background-color: darkgreen;
+    background-color: midnightblue;
     display: flex;
     flex-direction: column;
     justify-content: end;
     align-items: start;
     height: 90%;
     overflow-y: scroll;
+    padding: 1rem;
 }
 
 .chat-message {
-    width: 100%;
     overflow-wrap: normal;
 }
 
 .chat-message p {
+    margin: 0;
     color: white;
     font-size: 12pt;
 }
@@ -29,15 +30,20 @@
     background-color: gray;
     display: flex;
     flex-direction: row;
-    height: 10%;
+    height: 4rem;
     justify-content: center;
     align-items: center;
 }
 
 .chat-input {
-
+    height: 100%;
+    width: 80%;
+    border-width: 0;
+    padding-left: 1rem;
 }
 
 .chat-sendButton {
-
+    height: 100%;
+    width: 20%;
+    border-radius: 0;
 }

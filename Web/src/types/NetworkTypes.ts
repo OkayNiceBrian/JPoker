@@ -1,0 +1,1 @@
+export type UserConnection = { Username: string, LobbyId: string };

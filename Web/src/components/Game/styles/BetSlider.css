@@ -1,0 +1,27 @@
+.bet-container {
+    position: relative;
+}
+
+.betSlider-container {
+    position: absolute;
+    left: 36vw;
+    bottom: 0px;
+    height: 50vh;
+    width: 4vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: midnightblue;
+    border-color: gray;
+    border-width: 1px;
+    border-style: solid;
+    z-index: 1000;
+}
+
+.betSlider-slider {
+    writing-mode: vertical-lr;
+    direction: rtl;
+    height: 100%;
+    width: max-content;
+}

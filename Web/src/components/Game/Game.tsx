@@ -14,7 +14,7 @@ import { UserConnection } from "@/types/NetworkTypes";
 import BetSlider from "./BetSlider";
 
 interface Props {
-    playerUsername: string; // Should probably be in redux when I get that in the project
+    //playerUsername: string; // Should probably be in redux when I get that in the project
 }
 
 const Game = () => {
@@ -30,6 +30,7 @@ const Game = () => {
     
     const [smallBlind, setSmallBlind] = useState<number>(500);
     const [bigBlind, setBigBlind] = useState<number>(1000);
+    const [minBet, setMinBet] = useState<number>(100);
 
     const [turnIndex, setTurnIndex] = useState<number>(0);
     const [smallBlindIndex, setSmallBlindIndex] = useState<number>(0);
@@ -38,6 +39,7 @@ const Game = () => {
 
     const [activeBet, setActiveBet] = useState<number>(0);
     const [playerBet, setPlayerBet] = useState<number>(0);
+    const [pendingBet, setPendingBet] = useState<number>(0);
 
     const [button1Value, setButton1Value] = useState<ButtonOne>("Check/Fold");
     const [button2Value, setButton2Value] = useState<ButtonTwo>("Check");
@@ -45,6 +47,7 @@ const Game = () => {
     const [isButton1Active, setIsButton1Active] = useState<boolean>(false);
     const [isButton2Active, setIsButton2Active] = useState<boolean>(false);
     const [isButton3Active, setIsButton3Active] = useState<boolean>(false);
+    const [isBetSliderActive, setIsBetSliderActive] = useState<boolean>(false);
 
     const [connection, setConnection] = useState<signalr.HubConnection>();
 
@@ -68,7 +71,7 @@ const Game = () => {
             setTurnTimerSeconds(lobby.turnTimerSeconds);
             setCommunityCards(lobby.communityCards);
             setPotTotal(lobby.pot);
-            setPlayerChips(lobby.players.find(p => p.username == playerUsername)!.chips);
+            setPlayerChips(lobby.players.find(p => p.username === playerUsername)!.chips);
             console.log(lobby);
         });
 
@@ -84,7 +87,7 @@ const Game = () => {
 
         conn.start().catch((e) => console.error(e));
         setConnection(conn);
-    }, []);
+    }, [playerUsername]);
 
     useEffect(() => { // On the start of a new turn...
         if (activeBet == 0) {
@@ -112,8 +115,8 @@ const Game = () => {
     }, [turnIndex, connection, players, playerUsername, isButton1Active]);
 
     useEffect(() => {
-        //console.log(players);
-    }, [players])
+        // console.log(playerChips);
+    }, [playerChips])
 
     const JoinLobby = (userConnection: UserConnection) => {
         if (connection && userConnection) {
@@ -142,18 +145,23 @@ const Game = () => {
     };
 
     const button3 = () => {
-        if (isButton3Active) {
-            setIsButton3Active(false);
-        } else {
-            setIsButton1Active(false);
-            setIsButton2Active(false);
-            button3Value == "All In" ? setIsButton3Active(true) : setIsButton3Active(false);
+        setIsButton1Active(false);
+        setIsButton2Active(false);
+        button3Value == "All In" ? setIsButton3Active(true) : setIsButton3Active(false);
 
-            if (button3Value == "Bet" || button3Value == "Raise") {
-                
-            }
+        if (button3Value == "Bet" || button3Value == "Raise") {
+            setIsBetSliderActive(prev => !prev.valueOf());
         }
+
+        if (isButton3Active) {
+            setPendingBet(0);
+        }
+        
     };
+
+    useEffect(() => { // If PendingBet changes
+        setIsButton3Active(pendingBet > 0);
+    }, [pendingBet]);
 
     const clickJoinLobby = () => {
         const userConnection: UserConnection = { LobbyId: lobbyId, Username: playerUsername }
@@ -227,6 +235,15 @@ const Game = () => {
                     />
                 </div>
             </div>
+            <BetSlider 
+                active={isBetSliderActive}
+                setActive={setIsBetSliderActive}
+                activeBet={activeBet}
+                playerChips={playerChips}
+                minBet={minBet}
+                pendingBet={pendingBet}
+                setPendingBet={setPendingBet}
+            />
             <GameControls 
                 button1={button1} 
                 button2={button2} 
@@ -240,8 +257,8 @@ const Game = () => {
                 activeBet={activeBet}
                 playerChips={playerChips}
                 playerBet={playerBet}
+                pendingBet={pendingBet}
             />
-            <BetSlider />
         </div>
     );
 };

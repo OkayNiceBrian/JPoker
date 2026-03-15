@@ -17,8 +17,8 @@ const Chat = () => {
     }, [])
  
     const renderMessages = () => {
-        return chatMessages?.map((message) =>
-            <div className="chat-message">
+        return chatMessages?.map((message, index) =>
+            <div key={index} className="chat-message">
                 <p>{message}</p>
             </div>
         );

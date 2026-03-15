@@ -5,11 +5,11 @@ namespace Api.Game.Helpers
 {
     public class CardFactory
     {
-        public static Card? CreateCard(int rank, string suit)
+        public static Card CreateCard(int rank, string suit)
         {
             if (!Types.RankValues.Contains(rank) || !Types.Suits.Contains(suit))
             {
-                return null;
+                throw new Exception("Invalid Rank or Suit.");
             }
 
             int rankIndex = Array.IndexOf(Types.RankValues, rank);

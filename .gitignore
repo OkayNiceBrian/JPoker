@@ -1,9 +1,10 @@
 .vs/
-.vscode/
 package-lock.json
 Api/bin/
 Api/obj/
 Api/.vs/
 ApiTests/bin/
-ApiTests/obj/
+ApiTests/obj/*
 ApiTests/.vs/
+.idea/
+.config/

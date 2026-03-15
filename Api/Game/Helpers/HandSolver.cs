@@ -26,7 +26,7 @@ public static class HandSolver
             // Logic to figure out hands right here :)
             Hand? hand = CheckPairs(cardPool);
             Hand? tempHand = CheckStraight(cardPool);
-            if (tempHand != null && tempHand.HandType > hand.HandType)
+            if (tempHand is not null && tempHand.HandType > hand.HandType)
             {
                 hand = tempHand;
             }
@@ -34,7 +34,7 @@ public static class HandSolver
             if (hand.HandType < HandType.Flush)
             {
                 tempHand = CheckFlush(cardPool);
-                if (tempHand != null)
+                if (tempHand is not null)
                 {
                     hand = tempHand; 
                 }
@@ -45,6 +45,7 @@ public static class HandSolver
             {
                 winningPlayers.Clear();
                 winningPlayers.Add(player);
+                winningHand = hand;
             } else if (hand.HandType == winningHand.HandType && hand == winningHand) // TODO: Not sure if this compares by reference but I think it's good
             {
                 winningPlayers.Add(player);
@@ -149,15 +150,15 @@ public static class HandSolver
         cardPool.Sort();
 
         Rank? highestRank = null;
-        int sequence = 0;
-        int flushSequence = 0;
+        int sequence = 1;
+        int flushSequence = 1;
         bool straightFlush = false;
         for (int i = 0; i <= 2; i++)
         {
             for (int j = i + 1; j < i + 5; j++)
             {
                 if (cardPool[j - 1].Rank.Value == cardPool[j].Rank.Value - 1)
-                {
+                 {
                     sequence++;
                     if (cardPool[j - 1].Suit == cardPool[j].Suit)
                     {
@@ -185,16 +186,16 @@ public static class HandSolver
                 highestRank = cardPool[i + 3].Rank;
             }
             
-            sequence = 0;
-            flushSequence = 0;
+            sequence = 1;
+            flushSequence = 1;
         }
 
-        if (highestRank != null)
+        if (highestRank is not null)
         {
             return new Straight(highestRank);
         }
 
-        if (highestRank != null && straightFlush == true)
+        if (highestRank is not null && straightFlush == true)
         {
             return new StraightFlush(highestRank);
         }
@@ -206,32 +207,38 @@ public static class HandSolver
     {
         cardPool.Sort();
         Rank? highestRank = null;
-        int flushSequence = 0;
+        Rank? highestRankFlush = null;
+        int flushSequence = 1;
+        int highestFlushSequence = 1;
         for (int i = 0; i <= 2; i++)
         {
-            for (int j = i + 1; j < i + 5; j++)
+            highestRank = cardPool[i].Rank;
+            for (int j = i + 1; j < cardPool.Count; j++)
             {
-                if (cardPool[j - 1].Suit == cardPool[j].Suit)
+                if (cardPool[j].Suit == cardPool[i].Suit)
                 {
-                    highestRank = cardPool[j].Rank;
                     flushSequence++;
-                }
-                else
-                {
-                    if (flushSequence >= 5)
+                    if (cardPool[j].Rank > highestRank!)
                     {
-                        return new Flush(highestRank!);
+                        highestRank = cardPool[j].Rank;
                     }
-                    highestRank = null;
-                    flushSequence = 0;
-                    break;
                 }
             }
+
+            if (flushSequence > highestFlushSequence)
+            {
+                highestFlushSequence = flushSequence;
+            }
+            if (flushSequence == 5)
+            {
+                highestRankFlush = highestRank;
+            }
+            flushSequence = 1;
         }
 
-        if (flushSequence >= 5)
+        if (highestFlushSequence >= 5)
         {
-            return new Flush(highestRank!);
+            return new Flush(highestRankFlush!);
         }
 
         return null;

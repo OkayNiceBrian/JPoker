@@ -11,6 +11,7 @@ import GameControls from "./GameControls";
 import PlayerZone from "./PlayerZone";
 import "./styles/Game.css";
 import { UserConnection } from "@/types/NetworkTypes";
+import BetSlider from "./BetSlider";
 
 interface Props {
     playerUsername: string; // Should probably be in redux when I get that in the project
@@ -33,10 +34,14 @@ const Game = () => {
     const [turnIndex, setTurnIndex] = useState<number>(0);
     const [smallBlindIndex, setSmallBlindIndex] = useState<number>(0);
     const [turnTimerSeconds, setTurnTimerSeconds] = useState<number>(30);
+    const [playerChips, setPlayerChips] = useState<number>(0);
+
+    const [activeBet, setActiveBet] = useState<number>(0);
+    const [playerBet, setPlayerBet] = useState<number>(0);
 
     const [button1Value, setButton1Value] = useState<ButtonOne>("Check/Fold");
     const [button2Value, setButton2Value] = useState<ButtonTwo>("Check");
-    const [button3Value, setButton3Value] = useState<ButtonThree>("Call Any");
+    const [button3Value, setButton3Value] = useState<ButtonThree>("Bet");
     const [isButton1Active, setIsButton1Active] = useState<boolean>(false);
     const [isButton2Active, setIsButton2Active] = useState<boolean>(false);
     const [isButton3Active, setIsButton3Active] = useState<boolean>(false);
@@ -55,6 +60,7 @@ const Game = () => {
 
         conn.on("ReceiveLobbyInfo", (lobby: Lobby) => {
             setPlayers(lobby.players);
+            setActiveBet(lobby.activeBet);
             setSmallBlind(lobby.smallBlind);
             setBigBlind(lobby.bigBlind);
             setTurnIndex(lobby.turnIndex);
@@ -62,6 +68,7 @@ const Game = () => {
             setTurnTimerSeconds(lobby.turnTimerSeconds);
             setCommunityCards(lobby.communityCards);
             setPotTotal(lobby.pot);
+            setPlayerChips(lobby.players.find(p => p.username == playerUsername)!.chips);
             console.log(lobby);
         });
 
@@ -78,6 +85,22 @@ const Game = () => {
         conn.start().catch((e) => console.error(e));
         setConnection(conn);
     }, []);
+
+    useEffect(() => { // On the start of a new turn...
+        if (activeBet == 0) {
+            setButton1Value("Check/Fold");
+            setButton2Value("Check");
+            setButton3Value("Raise");
+        } else if (activeBet > 0) {
+            setButton1Value("Fold");
+            setButton2Value("Call");
+            setButton3Value("Raise");
+
+            if (activeBet >= players.find(p => p.username == playerUsername)!.chips) {
+                setButton3Value("All In");
+            }
+        }
+    }, [turnIndex]);
 
     useEffect(() => {
         if (isButton1Active && players[turnIndex].username === playerUsername) {
@@ -124,7 +147,11 @@ const Game = () => {
         } else {
             setIsButton1Active(false);
             setIsButton2Active(false);
-            setIsButton3Active(true);
+            button3Value == "All In" ? setIsButton3Active(true) : setIsButton3Active(false);
+
+            if (button3Value == "Bet" || button3Value == "Raise") {
+                
+            }
         }
     };
 
@@ -210,7 +237,11 @@ const Game = () => {
                 isButton1Active={isButton1Active} 
                 isButton2Active={isButton2Active} 
                 isButton3Active={isButton3Active} 
+                activeBet={activeBet}
+                playerChips={playerChips}
+                playerBet={playerBet}
             />
+            <BetSlider />
         </div>
     );
 };

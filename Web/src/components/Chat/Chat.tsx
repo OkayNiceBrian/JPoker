@@ -37,7 +37,7 @@ const Chat = () => {
                 {renderMessages()}
             </div>
             <div className="chat-inputContainer">
-                <input className="chat-input" type="text" placeholder="Send a message." value={input} onChange={(e) => setInput(e.target.value)}/>
+                <input className="chat-input" type="text" placeholder="Send a message." value={input} onKeyDown={(e) => e.key == "Enter" ? onClickSend() : null} onChange={(e) => setInput(e.target.value)}/>
                 <button className="chat-sendButton" onClick={() => onClickSend()} disabled={input.length <= 0}>Send</button>
             </div>
         </div>

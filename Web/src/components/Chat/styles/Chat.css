@@ -6,7 +6,7 @@
 }
 
 .chat-messagesContainer {
-    background-color: midnightblue;
+    background-color: black;
     display: flex;
     flex-direction: column;
     justify-content: end;

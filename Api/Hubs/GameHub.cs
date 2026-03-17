@@ -81,6 +81,42 @@ public class GameHub : Hub
                 .SendAsync("ReceiveMessage", "server", $"{connection.Username} checks.");
         }
 
+        if (action == "fold")
+        {
+            player.IsActive = false;
+            await Clients.Group(connection.LobbyId)
+                .SendAsync("ReceiveMessage", "server", $"{connection.Username} folds.");
+        }
+
+        if (action == "call")
+        {
+            if (player.Chips >= lobby.ActiveBet)
+            {
+                player.CurrentBet = lobby.ActiveBet;
+                player.Chips -= lobby.ActiveBet;
+            }
+        }
+
+        if (action.StartsWith("bet"))
+        {
+            int bet = int.Parse(action.Split(" ")[1]);
+            MakeBet(player, bet, lobby);
+        }
+
+        if (action.StartsWith("raise"))
+        {
+            int raise = int.Parse(action.Split(" ")[1]);
+            MakeRaise(player, raise, lobby);
+        }
+
+        if (action == "all in")
+        {
+            player.CurrentBet += player.Chips;
+            player.Chips = 0;
+            lobby.ActiveBet = player.CurrentBet;
+            SetupTurns(lobby);
+        }
+
         // Dequeue this player at end of turn
         lobby.TurnQueue.Dequeue();
         if (lobby.TurnQueue.Count > 0)
@@ -140,7 +176,6 @@ public class GameHub : Hub
         foreach (var player in players.Where(p => p.IsActive))
         {
             totalChipsAddedToPot += player.CurrentBet;
-            player.Chips -= player.CurrentBet;
             player.CurrentBet = 0;
         }
         lobby.Pot += totalChipsAddedToPot;
@@ -179,8 +214,17 @@ public class GameHub : Hub
         if (lobby.ActiveBet < bet)
         {
             lobby.ActiveBet = bet;
+            player.Chips -= bet;
             SetupTurns(lobby);
         }
+    }
+
+    private static void MakeRaise(Player player, int raise, Lobby lobby)
+    {
+        player.CurrentBet = lobby.ActiveBet + raise;
+        lobby.ActiveBet += raise;
+        player.Chips -= (lobby.ActiveBet - player.CurrentBet);
+        SetupTurns(lobby);
     }
 
     private static void SetupTurns(Lobby lobby)

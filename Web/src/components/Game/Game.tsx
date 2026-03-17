@@ -103,13 +103,41 @@ const Game = () => {
                 setButton3Value("All In");
             }
         }
-    }, [turnIndex]);
+    }, [turnIndex, activeBet, players]);
 
     useEffect(() => {
-        if (isButton1Active && players[turnIndex].username === playerUsername) {
-            if (connection) {
-                connection?.invoke("GameAction", userConnection, "check");
-                setIsButton1Active(false);
+        if (connection && players[turnIndex].username === playerUsername) {
+            if (isButton1Active) {
+                if (button1Value == "Check/Fold") {
+                    connection?.invoke("GameAction", userConnection, "check");
+                    setIsButton1Active(false);
+                }
+                if (button1Value == "Fold") {
+                    connection?.invoke("GameAction", userConnection, "fold");
+                    setIsButton1Active(false);
+                }
+            } else if (isButton2Active) {
+                if (button2Value == "Check") {
+                    connection?.invoke("GameAction", userConnection, "check");
+                    setIsButton2Active(false);
+                }
+                if (button2Value == "Call") {
+                    connection?.invoke("GameAction", userConnection, "call");
+                    setIsButton2Active(false);
+                }
+            } else if (isButton3Active) {
+                if (button3Value == "Bet") {
+                    connection?.invoke("GameAction", userConnection, `bet ${pendingBet}`);
+                    setIsButton3Active(false);
+                }
+                if (button3Value == "Raise") {
+                    connection?.invoke("GameAction", userConnection, `raise ${pendingBet}`);
+                    setIsButton3Active(false);
+                }
+                if (button3Value == "All In") {
+                    connection?.invoke("GameAction", userConnection, "all in");
+                    setIsButton3Active(false);
+                }
             }
         }
     }, [turnIndex, connection, players, playerUsername, isButton1Active]);

@@ -9,9 +9,21 @@ interface Props {
     player?: Player;
     clientUsername: string;
     isTurn: boolean;
+    isDealer: boolean;
+    isSmallBlind: boolean;
+    isBigBlind: boolean;
 }
 
-const PlayerZone = memo(function PlayerZone({ player, clientUsername, isTurn }: Props) {
+const PlayerZone = memo(function PlayerZone(props: Props) {
+
+    const {
+        player,
+        clientUsername,
+        isTurn,
+        isDealer,
+        isSmallBlind,
+        isBigBlind
+    } = props;
     
     if (!player) {
         return (
@@ -20,13 +32,13 @@ const PlayerZone = memo(function PlayerZone({ player, clientUsername, isTurn }: 
     }
 
     const Cards = () => {
-        return (
+        return player.isActive ? (
             <div className="playerCards-container">
                 <CardComponent card={player?.card1}/>
                 <CardComponent card={player?.card2}/>
             </div>
-        );
-    }
+        ) : null;
+    };
 
     const Chips = () => {
         return (
@@ -36,13 +48,30 @@ const PlayerZone = memo(function PlayerZone({ player, clientUsername, isTurn }: 
                 <span className="player-text">{abbreviateChips(player?.chips)}</span>
             </div>
         );
-    }
+    };
+
+    const PositionChip = () => {
+        return isDealer ? (
+            <div className="positionChip-container">
+                D
+            </div>
+        ) : isSmallBlind ? (
+            <div className="positionChip-container" style={{ backgroundColor: "blue" }}>
+                SB
+            </div>
+        ) : isBigBlind ? (
+            <div className="positionChip-container" style={{ backgroundColor: "red" }}>
+                BB
+            </div>
+        ) : null;
+    };
 
     return (
         <div className="player-container" style={isTurn ? {backgroundColor: "rgba(255, 255, 255, .4)"} : {}}>
-            <span className="player-text" style={clientUsername === player.username ? {fontWeight: "bold", color: "turquoise"} : {}}>{player.username}</span>
+            <span className="player-text" style={clientUsername === player.username ? {fontWeight: "bold", color: "turquoise"} : {}}>{player.username}{player.username == clientUsername && " (ME)"}</span>
             <Cards/>
             <Chips/>
+            <PositionChip />
         </div>
     );
 });

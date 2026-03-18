@@ -69,11 +69,11 @@ public class GameHub : Hub
         if (player == null || !player.IsActive || player != lobby.Players[lobby.TurnIndex])
             return;
 
-        if (!Types.GameActions.Contains(action))
-        {
-            await Clients.Group(connection.LobbyId)
-                .SendAsync("ReceiveMessage", "server", "Invalid game action.");
-        }
+        //if (!Types.GameActions.Contains(action))
+        //{
+        //    await Clients.Group(connection.LobbyId)
+        //        .SendAsync("ReceiveMessage", "server", "Invalid game action.");
+        //}
 
         if (action == "check")
         {
@@ -86,6 +86,10 @@ public class GameHub : Hub
             player.IsActive = false;
             await Clients.Group(connection.LobbyId)
                 .SendAsync("ReceiveMessage", "server", $"{connection.Username} folds.");
+            if (lobby.Players.Select(p => p.IsActive).Count() == 1)
+            {
+                await EndRound(lobby);
+            }
         }
 
         if (action == "call")
@@ -125,10 +129,15 @@ public class GameHub : Hub
         }
         else
         {
-            EndRound(lobby);
+            await EndRound(lobby);
         }
 
         await ReceiveLobbyInfo(lobby);
+    }
+
+    public async Task StartGame(UserConnection connection, string action)
+    {
+        StartGame(_ctx.Lobbies[connection.LobbyId]);
     }
 
     private static void StartGame(Lobby lobby)
@@ -140,8 +149,10 @@ public class GameHub : Hub
             player.IsActive = true;
         }
 
-        // Set the new small blind player
+        // Set the new dealer, small blind player, big blind player
+        lobby.DealerIndex = lobby.SmallBlindIndex;
         lobby.SmallBlindIndex = (lobby.SmallBlindIndex + 1) % players.Count;
+        lobby.BigBlindIndex = (lobby.SmallBlindIndex + 1) % players.Count;
 
         // Small Blind bet
         var smallBlindPlayer = players[lobby.SmallBlindIndex];
@@ -149,7 +160,7 @@ public class GameHub : Hub
         MakeBet(smallBlindPlayer, smallBlindBet, lobby);
 
         // Big Blind bet
-        var bigBlindPlayer = players[(lobby.SmallBlindIndex + 1) % players.Count];
+        var bigBlindPlayer = players[lobby.BigBlindIndex];
         var bigBlindBet = Math.Min(lobby.BigBlind, bigBlindPlayer.Chips);
         MakeBet(bigBlindPlayer, bigBlindBet, lobby);
 
@@ -166,19 +177,27 @@ public class GameHub : Hub
         SetupTurns(lobby);
     }
 
-    private static void EndRound(Lobby lobby)
+    private async Task EndRound(Lobby lobby)
     {
         var players = lobby.Players;
         lobby.ActiveBet = 0;
 
+        List<Player> activePlayers = players.Where(p => p.IsActive).ToList();
+
         // Handle chips going into the pot
         int totalChipsAddedToPot = 0;
-        foreach (var player in players.Where(p => p.IsActive))
+        foreach (var player in players)
         {
             totalChipsAddedToPot += player.CurrentBet;
             player.CurrentBet = 0;
         }
         lobby.Pot += totalChipsAddedToPot;
+
+        if (activePlayers.Count() == 1)
+        {
+            await settleWinnings(lobby, activePlayers);
+            return;
+        }
 
         if (lobby.CurrentBettingRound == BettingRound.PreFlop)
         {
@@ -193,19 +212,29 @@ public class GameHub : Hub
         else if (lobby.CurrentBettingRound == BettingRound.River)
         {
             var winners = HandSolver.DetermineWinner(lobby);
-            foreach(var winner in winners)
-            {
-                winner.Chips += lobby.Pot / winners.Count();
-            }
-            lobby.Pot = 0;
-            lobby.CommunityCards = [];
-            lobby.CurrentBettingRound = 0;
-            StartGame(lobby); // Resets game, TODO: should change this so we send winnerInfo to frontend and then waits for frontend to request next round start
+            await settleWinnings(lobby, winners);
+
             return;
         }
 
         lobby.CurrentBettingRound++;
         SetupTurns(lobby);
+    }
+
+    private async Task settleWinnings(Lobby lobby, List<Player> winners)
+    {
+        foreach (var winner in winners)
+        {
+            winner.Chips += lobby.Pot / winners.Count();
+        }
+        lobby.Pot = 0;
+        lobby.CurrentBettingRound = 0;
+        await Clients.Group(lobby.Id)
+            .SendAsync("ReceiveWinner", lobby);
+
+        Thread.Sleep(5000); // Sleep for five seconds, this is probably wrong loL!
+        lobby.CommunityCards = [];
+        StartGame(lobby); // Resets game
     }
 
     private static void MakeBet(Player player, int bet, Lobby lobby)
@@ -214,9 +243,9 @@ public class GameHub : Hub
         if (lobby.ActiveBet < bet)
         {
             lobby.ActiveBet = bet;
-            player.Chips -= bet;
-            SetupTurns(lobby);
         }
+        player.Chips -= bet;
+        SetupTurns(lobby);
     }
 
     private static void MakeRaise(Player player, int raise, Lobby lobby)

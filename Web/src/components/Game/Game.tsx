@@ -33,7 +33,9 @@ const Game = () => {
     const [minBet, setMinBet] = useState<number>(100);
 
     const [turnIndex, setTurnIndex] = useState<number>(0);
+    const [dealerIndex, setDealerIndex] = useState<number>(0);
     const [smallBlindIndex, setSmallBlindIndex] = useState<number>(0);
+    const [bigBlindIndex, setBigBlindIndex] = useState<number>(0);
     const [turnTimerSeconds, setTurnTimerSeconds] = useState<number>(30);
     const [playerChips, setPlayerChips] = useState<number>(0);
 
@@ -62,17 +64,11 @@ const Game = () => {
         });
 
         conn.on("ReceiveLobbyInfo", (lobby: Lobby) => {
-            setPlayers(lobby.players);
-            setActiveBet(lobby.activeBet);
-            setSmallBlind(lobby.smallBlind);
-            setBigBlind(lobby.bigBlind);
-            setTurnIndex(lobby.turnIndex);
-            setSmallBlindIndex(lobby.smallBlindIndex);
-            setTurnTimerSeconds(lobby.turnTimerSeconds);
-            setCommunityCards(lobby.communityCards);
-            setPotTotal(lobby.pot);
-            setPlayerChips(lobby.players.find(p => p.username === playerUsername)!.chips);
-            console.log(lobby);
+            setLobby(lobby);
+        });
+
+        conn.on("ReceiveWinner", (lobby: Lobby) => {
+            setLobby(lobby);
         });
 
         conn.on("Action", (player: Player, action: GameAction, turnIndex: number) => {
@@ -89,11 +85,26 @@ const Game = () => {
         setConnection(conn);
     }, [playerUsername]);
 
-    useEffect(() => { // On the start of a new turn...
+    const setLobby = (lobby: Lobby) => {
+        setPlayers(lobby.players);
+        setActiveBet(lobby.activeBet);
+        setSmallBlind(lobby.smallBlind);
+        setBigBlind(lobby.bigBlind);
+        setTurnIndex(lobby.turnIndex);
+        setDealerIndex(lobby.dealerIndex);
+        setSmallBlindIndex(lobby.smallBlindIndex);
+        setBigBlindIndex(lobby.bigBlindIndex);
+        setTurnTimerSeconds(lobby.turnTimerSeconds);
+        setCommunityCards(lobby.communityCards);
+        setPotTotal(lobby.pot);
+        setPlayerChips(lobby.players.find(p => p.username === playerUsername)!.chips);
+    }
+
+    useEffect(() => { // On the start of a new turn or when the bet changes...
         if (activeBet == 0) {
             setButton1Value("Check/Fold");
             setButton2Value("Check");
-            setButton3Value("Raise");
+            setButton3Value("Bet");
         } else if (activeBet > 0) {
             setButton1Value("Fold");
             setButton2Value("Call");
@@ -106,7 +117,7 @@ const Game = () => {
     }, [turnIndex, activeBet, players]);
 
     useEffect(() => {
-        if (connection && players[turnIndex].username === playerUsername) {
+        if (players.length > 0 && connection && players[turnIndex].username === playerUsername) {
             if (isButton1Active) {
                 if (button1Value == "Check/Fold") {
                     connection?.invoke("GameAction", userConnection, "check");
@@ -128,10 +139,12 @@ const Game = () => {
             } else if (isButton3Active) {
                 if (button3Value == "Bet") {
                     connection?.invoke("GameAction", userConnection, `bet ${pendingBet}`);
+                    setPendingBet(0);
                     setIsButton3Active(false);
                 }
                 if (button3Value == "Raise") {
                     connection?.invoke("GameAction", userConnection, `raise ${pendingBet}`);
+                    setPendingBet(0);
                     setIsButton3Active(false);
                 }
                 if (button3Value == "All In") {
@@ -140,7 +153,7 @@ const Game = () => {
                 }
             }
         }
-    }, [turnIndex, connection, players, playerUsername, isButton1Active]);
+    }, [turnIndex, connection, players, playerUsername, isButton1Active, isButton2Active, isButton3Active]);
 
     useEffect(() => {
         // console.log(playerChips);
@@ -220,16 +233,25 @@ const Game = () => {
                         player={players[3] !== undefined ? players[3] : undefined}
                         clientUsername={playerUsername}
                         isTurn={turnIndex === 3}
+                        isDealer={dealerIndex === 3}
+                        isSmallBlind={smallBlindIndex === 3}
+                        isBigBlind={bigBlindIndex === 3}
                     />
                     <PlayerZone 
                         player={players[4] !== undefined ? players[4] : undefined}
                         clientUsername={playerUsername}
                         isTurn={turnIndex === 4}
+                        isDealer={dealerIndex === 4}
+                        isSmallBlind={smallBlindIndex === 4}
+                        isBigBlind={bigBlindIndex === 4}
                     />
                     <PlayerZone 
                         player={players[5] !== undefined ? players[5] : undefined}
                         clientUsername={playerUsername}
                         isTurn={turnIndex === 5}
+                        isDealer={dealerIndex === 5}
+                        isSmallBlind={smallBlindIndex === 5}
+                        isBigBlind={bigBlindIndex === 5}
                     />
                 </div>
                 <div className="game-rowOfPlayers" style={{justifyContent: "space-between"}}>
@@ -237,12 +259,18 @@ const Game = () => {
                         player={players[2] !== undefined ? players[2] : undefined}
                         clientUsername={playerUsername}
                         isTurn={turnIndex === 2}
+                        isDealer={dealerIndex === 2}
+                        isSmallBlind={smallBlindIndex === 2}
+                        isBigBlind={bigBlindIndex === 2}
                     />
                     <CardPotZone potTotal={potTotal} communityCards={communityCards}/>
                     <PlayerZone 
                         player={players[6] !== undefined ? players[6] : undefined}
                         clientUsername={playerUsername}
                         isTurn={turnIndex === 6}
+                        isDealer={dealerIndex === 6}
+                        isSmallBlind={smallBlindIndex === 6}
+                        isBigBlind={bigBlindIndex === 6}
                     />
                 </div>
                 <div className="game-rowOfPlayers">
@@ -250,16 +278,25 @@ const Game = () => {
                         player={players[1] !== undefined ? players[1] : undefined}
                         clientUsername={playerUsername}
                         isTurn={turnIndex === 1}
+                        isDealer={dealerIndex === 1}
+                        isSmallBlind={smallBlindIndex === 1}
+                        isBigBlind={bigBlindIndex === 1}
                     />
                     <PlayerZone 
                         player={players[0] !== undefined ? players[0] : undefined}
                         clientUsername={playerUsername}
                         isTurn={turnIndex === 0}
+                        isDealer={dealerIndex === 0}
+                        isSmallBlind={smallBlindIndex === 0}
+                        isBigBlind={bigBlindIndex === 0}
                     />
                     <PlayerZone 
                         player={players[7] !== undefined ? players[7] : undefined}
                         clientUsername={playerUsername}
                         isTurn={turnIndex === 7}
+                        isDealer={dealerIndex === 7}
+                        isSmallBlind={smallBlindIndex === 7}
+                        isBigBlind={bigBlindIndex === 7}
                     />
                 </div>
             </div>

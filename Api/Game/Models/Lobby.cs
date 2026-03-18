@@ -25,7 +25,9 @@ public class Lobby
     public int ActiveBet { get; set; } = 0;
     public Queue<Player> TurnQueue { get; set; } = [];
     public int TurnIndex { get; set; } = 0;
+    public int DealerIndex { get; set; } = 0;
     public int SmallBlindIndex { get; set; } = 0;
+    public int BigBlindIndex { get; set; } = 0;
     public int TurnTimerSeconds { get; set; } = 30;
 
     public LobbyDto ToLobbyDto()

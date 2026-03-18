@@ -11,6 +11,8 @@ export type Lobby = {
     smallBlind: number;
     bigBlind: number;
     turnIndex: number;
+    dealerIndex: number;
     smallBlindIndex: number;
+    bigBlindIndex: number;
     turnTimerSeconds: number;
 }

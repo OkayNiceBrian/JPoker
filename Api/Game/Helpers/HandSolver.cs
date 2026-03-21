@@ -4,7 +4,7 @@ namespace Api.Game.Helpers;
 
 public static class HandSolver
 {
-    public static List<Player> DetermineWinner(this Lobby lobby)
+    public static WinnerResult DetermineWinner(this Lobby lobby)
     {
         var players = lobby.Players;
         var communityCards = lobby.CommunityCards;
@@ -55,7 +55,11 @@ public static class HandSolver
             cardPool.Remove(player.Card2!);
         }
 
-        return winningPlayers;
+        return new WinnerResult
+        {
+            Winners = winningPlayers,
+            WinningHand = winningHand
+        };
     }
 
     private static Hand CheckPairs(List<Card> cardPool)

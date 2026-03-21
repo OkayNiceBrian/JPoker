@@ -12,6 +12,7 @@ interface Props {
     isDealer: boolean;
     isSmallBlind: boolean;
     isBigBlind: boolean;
+    isWinner: boolean;
 }
 
 const PlayerZone = memo(function PlayerZone(props: Props) {
@@ -22,7 +23,8 @@ const PlayerZone = memo(function PlayerZone(props: Props) {
         isTurn,
         isDealer,
         isSmallBlind,
-        isBigBlind
+        isBigBlind,
+        isWinner
     } = props;
     
     if (!player) {
@@ -33,7 +35,7 @@ const PlayerZone = memo(function PlayerZone(props: Props) {
 
     const Cards = () => {
         return player.isActive ? (
-            <div className="playerCards-container">
+            <div  className="playerCards-container">
                 <CardComponent card={player?.card1}/>
                 <CardComponent card={player?.card2}/>
             </div>
@@ -45,7 +47,7 @@ const PlayerZone = memo(function PlayerZone(props: Props) {
             <div className="playerChips-container">
                 <div className="playerChips-image"></div>
                 <ChipGraphics chips={player?.chips} />
-                <span className="player-text">{abbreviateChips(player?.chips)}</span>
+                <span className="player-text">{abbreviateChips(player?.chips)} {player.currentBet > 0 ? `(${abbreviateChips(player.currentBet)})` : null}</span>
             </div>
         );
     };
@@ -67,7 +69,7 @@ const PlayerZone = memo(function PlayerZone(props: Props) {
     };
 
     return (
-        <div className="player-container" style={isTurn ? {backgroundColor: "rgba(255, 255, 255, .4)"} : {}}>
+        <div className="player-container" style={ isWinner ? { backgroundColor: "rgba(200, 50, 0, .4)" } : isTurn ? {backgroundColor: "rgba(255, 255, 255, .4)"} : {}}>
             <span className="player-text" style={clientUsername === player.username ? {fontWeight: "bold", color: "turquoise"} : {}}>{player.username}{player.username == clientUsername && " (ME)"}</span>
             <Cards/>
             <Chips/>

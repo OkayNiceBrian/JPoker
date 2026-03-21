@@ -24,6 +24,11 @@ public abstract class Hand
         HandType = handType;
     }
 
+    public override string ToString()
+    {
+        return HandType.ToString();
+    }
+
     public static bool operator <(Hand a, Hand b)
     {
         if (a is HighCard && b is HighCard)

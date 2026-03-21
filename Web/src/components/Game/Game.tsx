@@ -43,6 +43,8 @@ const Game = () => {
     const [playerBet, setPlayerBet] = useState<number>(0);
     const [pendingBet, setPendingBet] = useState<number>(0);
 
+    const [isWinner, setIsWinner] = useState<boolean>(false);
+
     const [button1Value, setButton1Value] = useState<ButtonOne>("Check/Fold");
     const [button2Value, setButton2Value] = useState<ButtonTwo>("Check");
     const [button3Value, setButton3Value] = useState<ButtonThree>("Bet");
@@ -65,10 +67,12 @@ const Game = () => {
 
         conn.on("ReceiveLobbyInfo", (lobby: Lobby) => {
             setLobby(lobby);
+            setIsWinner(false);
         });
 
         conn.on("ReceiveWinner", (lobby: Lobby) => {
             setLobby(lobby);
+            setIsWinner(true);
         });
 
         conn.on("Action", (player: Player, action: GameAction, turnIndex: number) => {
@@ -210,7 +214,7 @@ const Game = () => {
 
         JoinLobby(userConnection);
         setInLobby(false);
-    }
+    };
 
     if (inLobby) {
         return (
@@ -236,6 +240,7 @@ const Game = () => {
                         isDealer={dealerIndex === 3}
                         isSmallBlind={smallBlindIndex === 3}
                         isBigBlind={bigBlindIndex === 3}
+                        isWinner={isWinner}
                     />
                     <PlayerZone 
                         player={players[4] !== undefined ? players[4] : undefined}
@@ -244,6 +249,7 @@ const Game = () => {
                         isDealer={dealerIndex === 4}
                         isSmallBlind={smallBlindIndex === 4}
                         isBigBlind={bigBlindIndex === 4}
+                        isWinner={isWinner}
                     />
                     <PlayerZone 
                         player={players[5] !== undefined ? players[5] : undefined}
@@ -252,6 +258,7 @@ const Game = () => {
                         isDealer={dealerIndex === 5}
                         isSmallBlind={smallBlindIndex === 5}
                         isBigBlind={bigBlindIndex === 5}
+                        isWinner={isWinner}
                     />
                 </div>
                 <div className="game-rowOfPlayers" style={{justifyContent: "space-between"}}>
@@ -262,6 +269,7 @@ const Game = () => {
                         isDealer={dealerIndex === 2}
                         isSmallBlind={smallBlindIndex === 2}
                         isBigBlind={bigBlindIndex === 2}
+                        isWinner={isWinner}
                     />
                     <CardPotZone potTotal={potTotal} communityCards={communityCards}/>
                     <PlayerZone 
@@ -271,6 +279,7 @@ const Game = () => {
                         isDealer={dealerIndex === 6}
                         isSmallBlind={smallBlindIndex === 6}
                         isBigBlind={bigBlindIndex === 6}
+                        isWinner={isWinner}
                     />
                 </div>
                 <div className="game-rowOfPlayers">
@@ -281,6 +290,7 @@ const Game = () => {
                         isDealer={dealerIndex === 1}
                         isSmallBlind={smallBlindIndex === 1}
                         isBigBlind={bigBlindIndex === 1}
+                        isWinner={isWinner}
                     />
                     <PlayerZone 
                         player={players[0] !== undefined ? players[0] : undefined}
@@ -289,6 +299,7 @@ const Game = () => {
                         isDealer={dealerIndex === 0}
                         isSmallBlind={smallBlindIndex === 0}
                         isBigBlind={bigBlindIndex === 0}
+                        isWinner={isWinner}
                     />
                     <PlayerZone 
                         player={players[7] !== undefined ? players[7] : undefined}
@@ -297,6 +308,7 @@ const Game = () => {
                         isDealer={dealerIndex === 7}
                         isSmallBlind={smallBlindIndex === 7}
                         isBigBlind={bigBlindIndex === 7}
+                        isWinner={isWinner}
                     />
                 </div>
             </div>

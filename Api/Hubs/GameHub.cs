@@ -98,6 +98,7 @@ public class GameHub : Hub
             {
                 player.CurrentBet = lobby.ActiveBet;
                 player.Chips -= lobby.ActiveBet;
+                lobby.Pot += lobby.ActiveBet;
             }
         }
 
@@ -118,6 +119,7 @@ public class GameHub : Hub
             player.CurrentBet += player.Chips;
             player.Chips = 0;
             lobby.ActiveBet = player.CurrentBet;
+            lobby.Pot += lobby.ActiveBet;
             SetupTurns(lobby);
         }
 
@@ -184,18 +186,17 @@ public class GameHub : Hub
 
         List<Player> activePlayers = players.Where(p => p.IsActive).ToList();
 
-        // Handle chips going into the pot
-        int totalChipsAddedToPot = 0;
         foreach (var player in players)
         {
-            totalChipsAddedToPot += player.CurrentBet;
             player.CurrentBet = 0;
         }
-        lobby.Pot += totalChipsAddedToPot;
 
         if (activePlayers.Count() == 1)
         {
-            await settleWinnings(lobby, activePlayers);
+            await settleWinnings(lobby, new WinnerResult
+            { 
+                Winners = activePlayers
+            });
             return;
         }
 
@@ -211,8 +212,8 @@ public class GameHub : Hub
         }
         else if (lobby.CurrentBettingRound == BettingRound.River)
         {
-            var winners = HandSolver.DetermineWinner(lobby);
-            await settleWinnings(lobby, winners);
+            var winnerResult = HandSolver.DetermineWinner(lobby);
+            await settleWinnings(lobby, winnerResult);
 
             return;
         }
@@ -221,16 +222,19 @@ public class GameHub : Hub
         SetupTurns(lobby);
     }
 
-    private async Task settleWinnings(Lobby lobby, List<Player> winners)
+    private async Task settleWinnings(Lobby lobby, WinnerResult wr)
     {
-        foreach (var winner in winners)
+        foreach (var winner in wr.Winners)
         {
-            winner.Chips += lobby.Pot / winners.Count();
+            winner.Chips += lobby.Pot / wr.Winners.Count();
+
+            await Clients.Group(lobby.Id)
+                .SendAsync("ReceiveMessage", "server", $"{winner.Username} wins the pot with a {wr.WinningHand.ToString()}.");
         }
         lobby.Pot = 0;
         lobby.CurrentBettingRound = 0;
         await Clients.Group(lobby.Id)
-            .SendAsync("ReceiveWinner", lobby);
+            .SendAsync("ReceiveWinner", lobby, wr);
 
         Thread.Sleep(5000); // Sleep for five seconds, this is probably wrong loL!
         lobby.CommunityCards = [];
@@ -245,14 +249,16 @@ public class GameHub : Hub
             lobby.ActiveBet = bet;
         }
         player.Chips -= bet;
+        lobby.Pot += bet;
         SetupTurns(lobby);
     }
 
     private static void MakeRaise(Player player, int raise, Lobby lobby)
     {
-        player.CurrentBet = lobby.ActiveBet + raise;
         lobby.ActiveBet += raise;
         player.Chips -= (lobby.ActiveBet - player.CurrentBet);
+        player.CurrentBet = lobby.ActiveBet;
+        lobby.Pot += raise;
         SetupTurns(lobby);
     }
 

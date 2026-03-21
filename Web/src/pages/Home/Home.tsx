@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import "./Home.css";
 import bgImg from "@/assets/background.jpg";
 import { setUsername, selectUsername } from "@/reducers/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const Home = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const username = useSelector(selectUsername);
 
     const [usernameInput, setUsernameInput] = useState<string>("");
@@ -18,13 +20,13 @@ const Home = () => {
                 <input type="button" value={"Submit"} onClick={() => usernameInput.trim() != "" && dispatch(setUsername(usernameInput.trim()))}/>
             </div>
         );
-    }
+    };
 
     const CreateOrFindLobby = () => {
         return (
             <div className="enterUsername-container">
-                <input type="button" value={"Create Lobby"} />
-                <input type="button" value={"Find Lobby"} />
+                <input type="button" value={"Create Lobby"} onClick={() => navigate("createLobby")}/>
+                <input type="button" value={"Find Lobby"} onClick={() => navigate("findLobby")}/>
             </div>
         );
     };
@@ -37,10 +39,13 @@ const Home = () => {
                     <p className="jpoker-logo-typography">JPoker</p>
                     <p className="">The World's #1 (shitty) Poker Website!</p>
                 </div>
-                { username == null ? <EnterUsername /> : 
+                { username == null ? EnterUsername() :  
                 <>
                     <CreateOrFindLobby />
-                    <input type="button" value={"Reset Username"} onClick={() => dispatch(setUsername(null))}/>
+                    <div className="enterUsername-container">
+                        <p>{username}</p>
+                        <input type="button" value={"Reset Username"} onClick={() => dispatch(setUsername(null))}/>
+                    </div>
                 </>}
             </div>
         </>

@@ -1,0 +1,19 @@
+.createLobby-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.createLobby-formContainer {
+    background-color: green;
+    min-width: 20rem;
+    min-height: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-color: gray;
+    border-width: 5px;
+    border-style: solid;
+}

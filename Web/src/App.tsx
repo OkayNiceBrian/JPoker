@@ -1,6 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router';
 import './App.css';
-import Home from './pages/Home/Home';
+import Home from '@/pages/Home/Home';
+import Lobby from '@/pages/Lobby/Lobby';
+import FindLobby from '@/pages/Lobby/FindLobby';
+import CreateLobby from '@/pages/Lobby/CreateLobby';
 
 function App() {
 
@@ -8,6 +11,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Home />}/>
+        <Route path='lobby/:id' element={<Lobby />}/>
+        <Route path='createLobby' element={<CreateLobby />}/>
+        <Route path='findLobby' element={<FindLobby />}/>
       </Routes>
     </BrowserRouter>
   )

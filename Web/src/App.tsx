@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes } from 'react-router';
-import Play from './pages/Play/Play';
 import './App.css';
+import Home from './pages/Home/Home';
 
 function App() {
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Play />}/>
+        <Route index element={<Home />}/>
       </Routes>
     </BrowserRouter>
   )

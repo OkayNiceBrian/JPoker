@@ -1,0 +1,52 @@
+.home-backgroundImage {
+    position: absolute;
+    top: -10vh;
+    left: 0vw;
+    z-index: -100;
+}
+
+.home-container {
+    background-color: transparent;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 6rem;
+    gap: 16rem;
+}
+
+.jpoker-logo-background {
+    width: 20rem;
+    height: 10rem;
+    border-radius: 100%;
+    background-color: green;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-color: gray;
+    border-width: 5px;
+    border-style: solid;
+}
+
+.jpoker-logo-typography {
+    font-size: 60pt;
+    font-family: 'Times New Roman', Times, serif;
+    margin-bottom: -1.6rem;
+}
+
+.enterUsername-container {
+    width: 20rem;
+    height: 10rem;
+    background-color: green;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-color: gray;
+    border-width: 5px;
+    border-style: solid;
+    gap: 1rem;
+}

@@ -27,29 +27,28 @@ public class GameHub : Hub
     public async Task JoinLobby(UserConnection connection)
     {
         await Groups.AddToGroupAsync(Context.ConnectionId, connection.LobbyId);
-        
+
         // If lobby doesn't exist, create it.
         if (!_ctx.Lobbies.ContainsKey(connection.LobbyId))
         {
-            _ctx.Lobbies.Add(connection.LobbyId, 
-                new Lobby { 
-                    Id = connection.LobbyId, 
-                    IsPrivate = false, 
-                    Players = [new Player { Username = connection.Username, ConnectionId = Context.ConnectionId }] 
-                }); 
-        } else
+            _ctx.Lobbies.Add(connection.LobbyId,
+                new Lobby {
+                    Id = connection.LobbyId,
+                    IsPrivate = false,
+                    Players = [new Player { Username = connection.Username, ConnectionId = Context.ConnectionId }]
+                });
+        } else if (!_ctx.Lobbies[connection.LobbyId].Players.Select(p => p.Username).Contains(connection.Username))
         {
             _ctx.Lobbies[connection.LobbyId].Players.Add(new Player { Username = connection.Username, ConnectionId = Context.ConnectionId });
+        } else
+        {
+            _ctx.Lobbies[connection.LobbyId].Players.First(p => p.Username == connection.Username).ConnectionId = Context.ConnectionId;
         }
 
         await Clients.Group(connection.LobbyId)
             .SendAsync("ReceiveMessage", "server", $"{connection.Username} has joined the lobby.");
 
         var lobby = _ctx.Lobbies[connection.LobbyId];
-        //if (lobby.Players.Count == 2)
-        //{
-        //    StartGame(lobby);
-        //}
         
         await ReceiveLobbyInfo(lobby);
     }

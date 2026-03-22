@@ -1,19 +1,19 @@
 import bgImg from "@/assets/background.jpg";
-import "./Lobby.css";
-import { useNavigate } from "react-router";
+import useConnection from "@/hooks/useConnection";
+import { addUserConnection } from "@/reducers/chatSlice";
+import { selectUsername } from "@/reducers/userSlice";
+import { UserConnection } from "@/types/NetworkTypes";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addUserConnection } from "@/reducers/chatSlice";
-import { UserConnection } from "@/types/NetworkTypes";
-import { selectUsername } from "@/reducers/userSlice";
-import { Connection } from "@/network/Connection";
+import { useNavigate } from "react-router";
+import "./Lobby.css";
 
 const CreateLobby = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     
     const username = useSelector(selectUsername);
-    const connection = Connection.getConnection();
+    const connection = useConnection();
 
     const [lobbyName, setLobbyName] = useState<string>("");
     const [hasTurnTimer, setHasTurnTimer] = useState<boolean>(false);
@@ -31,17 +31,16 @@ const CreateLobby = () => {
         return null;
     };
 
-    const onClickSubmit = () => {
+    const onClickSubmit = async () => {
         const userConnection: UserConnection = { LobbyId: lobbyName.trim(), Username: username! }
-        dispatch(addUserConnection(userConnection));
-        connection.getHubConnection().invoke("JoinLobby", userConnection);
-        navigate(`lobby/${userConnection.LobbyId}`);
+        await dispatch(addUserConnection(userConnection));
+        navigate(`/lobby/${userConnection.LobbyId}`);
     }
 
     return (
         <div className="lobby-container">
             <img src={bgImg} className="home-backgroundImage" />
-            <div className="createLobby-formContainer">
+            <div className="lobby-formContainer">
                 <input type="button" value={"<- Back to Home"} onClick={() => navigate("/")} />
                 <div className="lobby-inputContainer">
                     <label>Lobby Name</label>

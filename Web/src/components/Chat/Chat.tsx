@@ -1,20 +1,14 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import useConnection from "@/hooks/useConnection";
 import { selectMessages, selectUserConnection } from "@/reducers/chatSlice";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import "./styles/Chat.css";
-import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 
 const Chat = () => {
     const [input, setInput] = useState<string>("");
-    const [connection, setConnection] = useState<HubConnection | null>(null);
+    const connection = useConnection();
     const userConnection = useSelector(selectUserConnection);
     const chatMessages = useSelector(selectMessages);
-
-    useEffect(() => {
-        const conn = new HubConnectionBuilder().withUrl("https://localhost:44392/gameHub").build();
-        conn.start().catch((e) => console.error(e));
-        setConnection(conn);
-    }, [])
  
     const renderMessages = () => {
         return chatMessages?.map((message, index) =>

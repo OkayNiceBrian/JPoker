@@ -1,8 +1,8 @@
-import { Connection } from "@/network/Connection";
+import useConnection from "@/hooks/useConnection";
 import { addMessage, selectUserConnection } from "@/reducers/chatSlice";
 import { selectUsername } from "@/reducers/userSlice";
 import { Card } from "@/types/Card";
-import { ButtonOne, ButtonThree, ButtonTwo, GameAction } from "@/types/GameActions";
+import { ButtonOne, ButtonThree, ButtonTwo } from "@/types/GameActions";
 import { Lobby } from "@/types/Lobby";
 import { Player } from "@/types/Player";
 import { useEffect, useState } from "react";
@@ -30,7 +30,7 @@ const Game = () => {
         navigate("/");
     }
 
-    const connection = Connection.getConnection().getHubConnection();
+    const connection = useConnection();
 
     const [players, setPlayers] = useState<Array<Player>>([]);
     const [communityCards, setCommunityCards] = useState<Card[]>([]);
@@ -62,33 +62,23 @@ const Game = () => {
     const [isBetSliderActive, setIsBetSliderActive] = useState<boolean>(false);
 
     useEffect(() => {
-        connection.on("ReceiveMessage", (username: string, message: string) => {
-            console.log(username + ": " + message);
-            dispatch(addMessage(`${username}: ${message}`));
-        });
+        if (connection) {
+            connection.on("ReceiveMessage", (username: string, message: string) => {
+                console.log(username + ": " + message);
+                dispatch(addMessage(`${username}: ${message}`));
+            });
 
-        connection.on("ReceiveLobbyInfo", (lobby: Lobby) => {
-            setLobby(lobby);
-            setIsWinner(false);
-        });
+            connection.on("ReceiveLobbyInfo", (lobby: Lobby) => {
+                setLobby(lobby);
+                setIsWinner(false);
+            });
 
-        connection.on("ReceiveWinner", (lobby: Lobby) => {
-            setLobby(lobby);
-            setIsWinner(true);
-        });
-
-        connection.on("Action", (player: Player, action: GameAction, turnIndex: number) => {
-            setPlayers(prev => prev.map((p) => p.username === player.username ? player : p));
-
-            if (action === "bet") {
-                // do something
-            }
-
-            setTurnIndex(turnIndex);
-        });
-
-        connection.start().catch((e) => console.error(e));
-    }, [playerUsername]);
+            connection.on("ReceiveWinner", (lobby: Lobby) => {
+                setLobby(lobby);
+                setIsWinner(true);
+            });
+        }
+    }, [playerUsername, connection]);
 
     const setLobby = (lobby: Lobby) => {
         setPlayers(lobby.players);

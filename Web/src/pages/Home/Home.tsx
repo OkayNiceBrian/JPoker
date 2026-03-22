@@ -43,7 +43,7 @@ const Home = () => {
                 <>
                     <CreateOrFindLobby />
                     <div className="enterUsername-container">
-                        <p>{username}</p>
+                        <p>You are {username}.</p>
                         <input type="button" value={"Reset Username"} onClick={() => dispatch(setUsername(null))}/>
                     </div>
                 </>}

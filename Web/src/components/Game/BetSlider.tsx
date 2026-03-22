@@ -32,6 +32,7 @@ const BetSlider = (props: Props) => {
 
     const onClickSendBet = () => {
         setPendingBet(sliderValue);
+        setSliderValue(minBet);
         setActive(false);
     }
 

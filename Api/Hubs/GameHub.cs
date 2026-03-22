@@ -46,10 +46,10 @@ public class GameHub : Hub
             .SendAsync("ReceiveMessage", "server", $"{connection.Username} has joined the lobby.");
 
         var lobby = _ctx.Lobbies[connection.LobbyId];
-        if (lobby.Players.Count == 2)
-        {
-            StartGame(lobby);
-        }
+        //if (lobby.Players.Count == 2)
+        //{
+        //    StartGame(lobby);
+        //}
         
         await ReceiveLobbyInfo(lobby);
     }

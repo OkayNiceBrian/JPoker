@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
-import * as signalr from "@microsoft/signalr";
-import { useDispatch, useSelector } from "react-redux";
-import { addMessage, addUserConnection, selectUserConnection } from "@/reducers/chatSlice";
-import { Player } from "@/types/Player";
+import { Connection } from "@/network/Connection";
+import { addMessage, selectUserConnection } from "@/reducers/chatSlice";
+import { selectUsername } from "@/reducers/userSlice";
 import { Card } from "@/types/Card";
+import { ButtonOne, ButtonThree, ButtonTwo, GameAction } from "@/types/GameActions";
 import { Lobby } from "@/types/Lobby";
-import { ButtonOne, ButtonTwo, ButtonThree, GameAction } from "@/types/GameActions";
+import { Player } from "@/types/Player";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router";
+import BetSlider from "./BetSlider";
 import CardPotZone from "./CardPotZone";
 import GameControls from "./GameControls";
 import PlayerZone from "./PlayerZone";
 import "./styles/Game.css";
-import { UserConnection } from "@/types/NetworkTypes";
-import BetSlider from "./BetSlider";
 
 interface Props {
     //playerUsername: string; // Should probably be in redux when I get that in the project
@@ -19,10 +20,17 @@ interface Props {
 
 const Game = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const [playerUsername, setPlayerUsername] = useState<string>("");
-    const [lobbyId, setLobbyId] = useState<string>("");
-    const [inLobby, setInLobby] = useState<boolean>(true);
+    const { lobbyId } = useParams();
+    const userConnection = useSelector(selectUserConnection);
+    const playerUsername = useSelector(selectUsername);
+    
+    if (playerUsername == null || playerUsername != userConnection?.Username || lobbyId != userConnection?.LobbyId) {
+        navigate("/");
+    }
+
+    const connection = Connection.getConnection().getHubConnection();
 
     const [players, setPlayers] = useState<Array<Player>>([]);
     const [communityCards, setCommunityCards] = useState<Card[]>([]);
@@ -53,29 +61,23 @@ const Game = () => {
     const [isButton3Active, setIsButton3Active] = useState<boolean>(false);
     const [isBetSliderActive, setIsBetSliderActive] = useState<boolean>(false);
 
-    const [connection, setConnection] = useState<signalr.HubConnection>();
-
-    const userConnection = useSelector(selectUserConnection);
-
     useEffect(() => {
-        const conn = new signalr.HubConnectionBuilder().withUrl("https://localhost:44392/gameHub").build();
-
-        conn.on("ReceiveMessage", (username: string, message: string) => {
+        connection.on("ReceiveMessage", (username: string, message: string) => {
             console.log(username + ": " + message);
             dispatch(addMessage(`${username}: ${message}`));
         });
 
-        conn.on("ReceiveLobbyInfo", (lobby: Lobby) => {
+        connection.on("ReceiveLobbyInfo", (lobby: Lobby) => {
             setLobby(lobby);
             setIsWinner(false);
         });
 
-        conn.on("ReceiveWinner", (lobby: Lobby) => {
+        connection.on("ReceiveWinner", (lobby: Lobby) => {
             setLobby(lobby);
             setIsWinner(true);
         });
 
-        conn.on("Action", (player: Player, action: GameAction, turnIndex: number) => {
+        connection.on("Action", (player: Player, action: GameAction, turnIndex: number) => {
             setPlayers(prev => prev.map((p) => p.username === player.username ? player : p));
 
             if (action === "bet") {
@@ -85,8 +87,7 @@ const Game = () => {
             setTurnIndex(turnIndex);
         });
 
-        conn.start().catch((e) => console.error(e));
-        setConnection(conn);
+        connection.start().catch((e) => console.error(e));
     }, [playerUsername]);
 
     const setLobby = (lobby: Lobby) => {
@@ -163,12 +164,6 @@ const Game = () => {
         // console.log(playerChips);
     }, [playerChips])
 
-    const JoinLobby = (userConnection: UserConnection) => {
-        if (connection && userConnection) {
-            connection.invoke("JoinLobby", userConnection);
-        }
-    };
-
     const button1 = () => {
         if (isButton1Active) {
             setIsButton1Active(false);
@@ -208,26 +203,6 @@ const Game = () => {
         setIsButton3Active(pendingBet > 0);
     }, [pendingBet]);
 
-    const clickJoinLobby = () => {
-        const userConnection: UserConnection = { LobbyId: lobbyId, Username: playerUsername }
-        dispatch(addUserConnection(userConnection));
-
-        JoinLobby(userConnection);
-        setInLobby(false);
-    };
-
-    if (inLobby) {
-        return (
-            <div className="game-container">
-                <label>Lobby Id</label>
-                <input value={lobbyId} onChange={(e) => setLobbyId(e.target.value)}></input>
-                <label>Username</label>
-                <input value={playerUsername} onChange={(e) => setPlayerUsername(e.target.value)}></input>
-                <button onClick={clickJoinLobby} disabled={lobbyId === "" || playerUsername === ""}>Join Lobby</button>
-            </div>
-        );
-    }
-
     return (
         <div className="game-container">
             <div className="gameWindow-container">
@@ -235,7 +210,7 @@ const Game = () => {
                 <div className="game-rowOfPlayers">
                     <PlayerZone 
                         player={players[3] !== undefined ? players[3] : undefined}
-                        clientUsername={playerUsername}
+                        clientUsername={playerUsername!}
                         isTurn={turnIndex === 3}
                         isDealer={dealerIndex === 3}
                         isSmallBlind={smallBlindIndex === 3}
@@ -244,7 +219,7 @@ const Game = () => {
                     />
                     <PlayerZone 
                         player={players[4] !== undefined ? players[4] : undefined}
-                        clientUsername={playerUsername}
+                        clientUsername={playerUsername!}
                         isTurn={turnIndex === 4}
                         isDealer={dealerIndex === 4}
                         isSmallBlind={smallBlindIndex === 4}
@@ -253,7 +228,7 @@ const Game = () => {
                     />
                     <PlayerZone 
                         player={players[5] !== undefined ? players[5] : undefined}
-                        clientUsername={playerUsername}
+                        clientUsername={playerUsername!}
                         isTurn={turnIndex === 5}
                         isDealer={dealerIndex === 5}
                         isSmallBlind={smallBlindIndex === 5}
@@ -264,7 +239,7 @@ const Game = () => {
                 <div className="game-rowOfPlayers" style={{justifyContent: "space-between"}}>
                     <PlayerZone 
                         player={players[2] !== undefined ? players[2] : undefined}
-                        clientUsername={playerUsername}
+                        clientUsername={playerUsername!}
                         isTurn={turnIndex === 2}
                         isDealer={dealerIndex === 2}
                         isSmallBlind={smallBlindIndex === 2}
@@ -274,7 +249,7 @@ const Game = () => {
                     <CardPotZone potTotal={potTotal} communityCards={communityCards}/>
                     <PlayerZone 
                         player={players[6] !== undefined ? players[6] : undefined}
-                        clientUsername={playerUsername}
+                        clientUsername={playerUsername!}
                         isTurn={turnIndex === 6}
                         isDealer={dealerIndex === 6}
                         isSmallBlind={smallBlindIndex === 6}
@@ -285,7 +260,7 @@ const Game = () => {
                 <div className="game-rowOfPlayers">
                     <PlayerZone 
                         player={players[1] !== undefined ? players[1] : undefined}
-                        clientUsername={playerUsername}
+                        clientUsername={playerUsername!}
                         isTurn={turnIndex === 1}
                         isDealer={dealerIndex === 1}
                         isSmallBlind={smallBlindIndex === 1}
@@ -294,7 +269,7 @@ const Game = () => {
                     />
                     <PlayerZone 
                         player={players[0] !== undefined ? players[0] : undefined}
-                        clientUsername={playerUsername}
+                        clientUsername={playerUsername!}
                         isTurn={turnIndex === 0}
                         isDealer={dealerIndex === 0}
                         isSmallBlind={smallBlindIndex === 0}
@@ -303,7 +278,7 @@ const Game = () => {
                     />
                     <PlayerZone 
                         player={players[7] !== undefined ? players[7] : undefined}
-                        clientUsername={playerUsername}
+                        clientUsername={playerUsername!}
                         isTurn={turnIndex === 7}
                         isDealer={dealerIndex === 7}
                         isSmallBlind={smallBlindIndex === 7}

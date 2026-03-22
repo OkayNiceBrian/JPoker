@@ -1,8 +1,16 @@
-.createLobby-container {
+.lobby-container {
+    width: 100vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.lobby-inputContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
 }
 
 .createLobby-formContainer {
@@ -16,4 +24,6 @@
     border-color: gray;
     border-width: 5px;
     border-style: solid;
+    gap: 1rem;
+    padding: 1rem;
 }

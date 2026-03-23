@@ -5,13 +5,11 @@ const useConnection = () => {
     const [connection, setConnection] = useState<HubConnection | null>(null);
 
     useEffect(() => {
-        const startConnection = async (connection: HubConnection) => {
-            await connection.start().catch((e) => console.error(e));
-        }
-
         const conn = new HubConnectionBuilder().withUrl("https://localhost:44392/gameHub").build();
-        startConnection(conn);
-        setConnection(conn);
+        
+        conn.start().then(() => {
+            setConnection(conn);
+        }).catch((e) => console.error(e));
     }, []);
 
     return connection;

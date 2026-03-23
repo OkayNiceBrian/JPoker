@@ -24,7 +24,7 @@ const CreateLobby = () => {
     const submitButton = () => {
         if (lobbyName.trim() != "") {
             return (
-                <input value={"Create Lobby"} onClick={onClickSubmit} />
+                <input type="button" value={"Create Lobby"} onClick={onClickSubmit} />
             )
         }
 

@@ -54,6 +54,8 @@ const Lobby = () => {
         <div className="lobby-container">
             <img src={bgImg} className="home-backgroundImage" />
             <div className="lobby-formContainer">
+                <input type="button" value={"<- Back to Home"} onClick={() => navigate("/")} />
+                <h1>{lobbyId}</h1>
                 {RenderPlayerCell(players)}
                 
                 { players.length > 1 && (

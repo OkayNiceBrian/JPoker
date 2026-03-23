@@ -53,6 +53,16 @@ public class GameHub : Hub
         await ReceiveLobbyInfo(lobby);
     }
 
+    public async Task GetLobbies()
+    {
+        await Clients.User(Context.ConnectionId)
+            .SendAsync("ReceiveLobbies", _ctx.Lobbies.Where(l => !l.Value.IsPrivate).Select(l => new
+            {
+                l.Value.Id,
+                l.Value.Players.Count
+            }).ToList());
+    }
+
     public async Task SendMessage(UserConnection connection, string message)
     {
         await Clients.Group(connection.LobbyId).SendAsync("ReceiveMessage", connection.Username, message);

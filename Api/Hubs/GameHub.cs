@@ -55,11 +55,11 @@ public class GameHub : Hub
 
     public async Task GetLobbies()
     {
-        await Clients.User(Context.ConnectionId)
+        await Clients.Client(Context.ConnectionId)
             .SendAsync("ReceiveLobbies", _ctx.Lobbies.Where(l => !l.Value.IsPrivate).Select(l => new
             {
-                l.Value.Id,
-                l.Value.Players.Count
+                LobbyId = l.Value.Id,
+                PlayerCount = l.Value.Players.Count
             }).ToList());
     }
 

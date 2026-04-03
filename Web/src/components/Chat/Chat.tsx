@@ -1,14 +1,25 @@
 import useConnection from "@/hooks/useConnection";
-import { selectMessages, selectUserConnection } from "@/reducers/chatSlice";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { addMessage, selectMessages, selectUserConnection } from "@/reducers/chatSlice";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./styles/Chat.css";
 
 const Chat = () => {
+    const dispatch = useDispatch();
+
     const [input, setInput] = useState<string>("");
     const connection = useConnection();
     const userConnection = useSelector(selectUserConnection);
     const chatMessages = useSelector(selectMessages);
+
+    useEffect(() => {
+        if (connection) {
+            connection.on("ReceiveMessage", (username: string, message: string) => {
+                console.log(username + ": " + message);
+                dispatch(addMessage(`${username}: ${message}`));
+            });
+        }
+    }, [connection]);
  
     const renderMessages = () => {
         return chatMessages?.map((message, index) =>

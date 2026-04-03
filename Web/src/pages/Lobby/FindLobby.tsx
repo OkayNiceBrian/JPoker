@@ -26,14 +26,18 @@ const FindLobby = () => {
         }
     }, [connection])
 
+    const RenderLobbies = (lobbies: LobbySearchViewModel[]) => {
+        return lobbies.map((lobby: LobbySearchViewModel) => {
+            return <p key={lobby.lobbyId} onClick={() => navigate(`/lobby/${lobby.lobbyId}`)}>{lobby.playerCount}/8 - {lobby.lobbyId}</p>
+        })
+    }
+
     return (
         <div className="lobby-container">
             <img src={bgImg} className="home-backgroundImage" />
             <div className="lobby-formContainer">
                 <input type="button" value={"<- Back to Home"} onClick={() => navigate("/")} />
-                {lobbies.map((lobby) => {
-                    return <p>{lobby.playerCount}/8 - {lobby.lobbyId}</p>
-                })}
+                {RenderLobbies(lobbies)}
             </div>
         </div>
     );

@@ -6,7 +6,10 @@ export interface chatState {
     userConnection: UserConnection | null
 };
 
-const initialState: chatState = { messages: [], userConnection: null } satisfies chatState as chatState;
+const initialState: chatState = { 
+    messages: [],
+    userConnection: null
+} satisfies chatState as chatState;
 
 const chatSlice = createSlice({
     name: 'chat',
@@ -15,7 +18,7 @@ const chatSlice = createSlice({
         addMessage(state, action) {
             state.messages.push(action.payload);
         },
-        addUserConnection(state, action) {
+        setUserConnection(state, action) {
             state.userConnection = action.payload;
         }
     },
@@ -25,7 +28,7 @@ const chatSlice = createSlice({
     }
 });
 
-export const { addMessage, addUserConnection } = chatSlice.actions;
+export const { addMessage, setUserConnection } = chatSlice.actions;
 export const { selectMessages, selectUserConnection } = chatSlice.selectors;
 
 export default chatSlice.reducer;

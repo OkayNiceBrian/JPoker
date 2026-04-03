@@ -53,6 +53,14 @@ public class GameHub : Hub
         await ReceiveLobbyInfo(lobby);
     }
 
+    public async Task LeaveLobby(UserConnection connection)
+    {
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, connection.LobbyId);
+        var player = _ctx.Lobbies[connection.LobbyId].Players.FirstOrDefault(p => p.Username == connection.Username);
+        if (player == null) return;
+        _ctx.Lobbies[connection.LobbyId].Players.Remove(player);
+    }
+
     public async Task GetLobbies()
     {
         await Clients.Client(Context.ConnectionId)
@@ -146,8 +154,14 @@ public class GameHub : Hub
         await ReceiveLobbyInfo(lobby);
     }
 
-    public async Task StartGame(UserConnection connection, string action)
+    public async Task RequestLobbyInfo(UserConnection connection)
     {
+        await Clients.Group(connection.LobbyId).SendAsync("ReceiveLobbyInfo", _ctx.Lobbies[connection.LobbyId]);
+    }
+
+    public async Task StartGame(UserConnection connection)
+    {
+        await Clients.Group(connection.LobbyId).SendAsync("EnterGameRoom");
         StartGame(_ctx.Lobbies[connection.LobbyId]);
     }
 

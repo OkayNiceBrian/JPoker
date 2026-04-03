@@ -1,6 +1,6 @@
 import bgImg from "@/assets/background.jpg";
 import useConnection from "@/hooks/useConnection";
-import { addUserConnection } from "@/reducers/chatSlice";
+import { setUserConnection } from "@/reducers/chatSlice";
 import { selectUsername } from "@/reducers/userSlice";
 import { UserConnection } from "@/types/NetworkTypes";
 import { useState } from "react";
@@ -33,7 +33,7 @@ const CreateLobby = () => {
 
     const onClickSubmit = async () => {
         const userConnection: UserConnection = { LobbyId: lobbyName.trim(), Username: username! }
-        await dispatch(addUserConnection(userConnection));
+        await dispatch(setUserConnection(userConnection));
         navigate(`/lobby/${userConnection.LobbyId}`);
     }
 

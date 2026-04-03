@@ -1,5 +1,5 @@
 import useConnection from "@/hooks/useConnection";
-import { addMessage, selectUserConnection } from "@/reducers/chatSlice";
+import { addMessage, selectUserConnection, setUserConnection } from "@/reducers/chatSlice";
 import { selectUsername } from "@/reducers/userSlice";
 import { Card } from "@/types/Card";
 import { ButtonOne, ButtonThree, ButtonTwo } from "@/types/GameActions";
@@ -13,6 +13,8 @@ import CardPotZone from "./CardPotZone";
 import GameControls from "./GameControls";
 import PlayerZone from "./PlayerZone";
 import "./styles/Game.css";
+import { UserConnection } from "@/types/NetworkTypes";
+import { WinnerResult } from "@/types/WinnerResult";
 
 interface Props {
     //playerUsername: string; // Should probably be in redux when I get that in the project
@@ -25,10 +27,6 @@ const Game = () => {
     const { lobbyId } = useParams();
     const userConnection = useSelector(selectUserConnection);
     const playerUsername = useSelector(selectUsername);
-    
-    if (playerUsername == null || playerUsername != userConnection?.Username || lobbyId != userConnection?.LobbyId) {
-        navigate("/");
-    }
 
     const connection = useConnection();
 
@@ -51,7 +49,7 @@ const Game = () => {
     const [playerBet, setPlayerBet] = useState<number>(0);
     const [pendingBet, setPendingBet] = useState<number>(0);
 
-    const [isWinner, setIsWinner] = useState<boolean>(false);
+    const [winners, setWinners] = useState<string[]>([]);
 
     const [button1Value, setButton1Value] = useState<ButtonOne>("Check/Fold");
     const [button2Value, setButton2Value] = useState<ButtonTwo>("Check");
@@ -62,20 +60,32 @@ const Game = () => {
     const [isBetSliderActive, setIsBetSliderActive] = useState<boolean>(false);
 
     useEffect(() => {
-        if (connection) {
-            connection.on("ReceiveMessage", (username: string, message: string) => {
-                console.log(username + ": " + message);
-                dispatch(addMessage(`${username}: ${message}`));
-            });
+        if (!userConnection && playerUsername && connection) {
+            const userConnection: UserConnection = {
+                LobbyId: lobbyId!,
+                Username: playerUsername
+            }
 
+            dispatch(setUserConnection(userConnection));
+        }
+    }, [userConnection]);
+
+    useEffect(() => { // on join, request lobby info
+        if (connection && userConnection) {
+            connection.invoke("JoinLobby", userConnection)
+        }
+    }, [connection, userConnection]);
+
+    useEffect(() => {
+        if (connection) {
             connection.on("ReceiveLobbyInfo", (lobby: Lobby) => {
                 setLobby(lobby);
-                setIsWinner(false);
+                setWinners([]);
             });
 
-            connection.on("ReceiveWinner", (lobby: Lobby) => {
+            connection.on("ReceiveWinner", (lobby: Lobby, winnerResult: WinnerResult) => {
                 setLobby(lobby);
-                setIsWinner(true);
+                setWinners(winnerResult.winners.map(w => w.username));
             });
         }
     }, [playerUsername, connection]);
@@ -93,6 +103,7 @@ const Game = () => {
         setCommunityCards(lobby.communityCards);
         setPotTotal(lobby.pot);
         setPlayerChips(lobby.players.find(p => p.username === playerUsername)!.chips);
+        setPlayerBet(lobby.players.find(p => p.username === playerUsername)!.currentBet);
     }
 
     useEffect(() => { // On the start of a new turn or when the bet changes...
@@ -205,7 +216,7 @@ const Game = () => {
                         isDealer={dealerIndex === 3}
                         isSmallBlind={smallBlindIndex === 3}
                         isBigBlind={bigBlindIndex === 3}
-                        isWinner={isWinner}
+                        isWinner={players[3] !== undefined && winners.includes(players[3].username)}
                     />
                     <PlayerZone 
                         player={players[4] !== undefined ? players[4] : undefined}
@@ -214,7 +225,7 @@ const Game = () => {
                         isDealer={dealerIndex === 4}
                         isSmallBlind={smallBlindIndex === 4}
                         isBigBlind={bigBlindIndex === 4}
-                        isWinner={isWinner}
+                        isWinner={players[4] !== undefined && winners.includes(players[4].username)}
                     />
                     <PlayerZone 
                         player={players[5] !== undefined ? players[5] : undefined}
@@ -223,7 +234,7 @@ const Game = () => {
                         isDealer={dealerIndex === 5}
                         isSmallBlind={smallBlindIndex === 5}
                         isBigBlind={bigBlindIndex === 5}
-                        isWinner={isWinner}
+                        isWinner={players[5] !== undefined && winners.includes(players[5].username)}
                     />
                 </div>
                 <div className="game-rowOfPlayers" style={{justifyContent: "space-between"}}>
@@ -234,7 +245,7 @@ const Game = () => {
                         isDealer={dealerIndex === 2}
                         isSmallBlind={smallBlindIndex === 2}
                         isBigBlind={bigBlindIndex === 2}
-                        isWinner={isWinner}
+                        isWinner={players[2] !== undefined && winners.includes(players[2].username)}
                     />
                     <CardPotZone potTotal={potTotal} communityCards={communityCards}/>
                     <PlayerZone 
@@ -244,7 +255,7 @@ const Game = () => {
                         isDealer={dealerIndex === 6}
                         isSmallBlind={smallBlindIndex === 6}
                         isBigBlind={bigBlindIndex === 6}
-                        isWinner={isWinner}
+                        isWinner={players[6] !== undefined && winners.includes(players[6].username)}
                     />
                 </div>
                 <div className="game-rowOfPlayers">
@@ -255,7 +266,7 @@ const Game = () => {
                         isDealer={dealerIndex === 1}
                         isSmallBlind={smallBlindIndex === 1}
                         isBigBlind={bigBlindIndex === 1}
-                        isWinner={isWinner}
+                        isWinner={players[1] !== undefined && winners.includes(players[1].username)}
                     />
                     <PlayerZone 
                         player={players[0] !== undefined ? players[0] : undefined}
@@ -264,7 +275,7 @@ const Game = () => {
                         isDealer={dealerIndex === 0}
                         isSmallBlind={smallBlindIndex === 0}
                         isBigBlind={bigBlindIndex === 0}
-                        isWinner={isWinner}
+                        isWinner={players[0] !== undefined && winners.includes(players[0].username)}
                     />
                     <PlayerZone 
                         player={players[7] !== undefined ? players[7] : undefined}
@@ -273,7 +284,7 @@ const Game = () => {
                         isDealer={dealerIndex === 7}
                         isSmallBlind={smallBlindIndex === 7}
                         isBigBlind={bigBlindIndex === 7}
-                        isWinner={isWinner}
+                        isWinner={players[7] !== undefined && winners.includes(players[7].username)}
                     />
                 </div>
             </div>

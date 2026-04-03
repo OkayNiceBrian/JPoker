@@ -4,7 +4,7 @@ import Home from '@/pages/Home/Home';
 import Lobby from '@/pages/Lobby/Lobby';
 import FindLobby from '@/pages/Lobby/FindLobby';
 import CreateLobby from '@/pages/Lobby/CreateLobby';
-import Game from './components/Game/Game';
+import Play from './pages/Play/Play';
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
         <Route path='lobby/:lobbyId' element={<Lobby />}/>
         <Route path='createLobby' element={<CreateLobby />}/>
         <Route path='findLobby' element={<FindLobby />}/>
-        <Route path='game/:lobbyId' element={<Game />}/>
+        <Route path='lobby/:lobbyId/play' element={<Play/>}/>
       </Routes>
     </BrowserRouter>
   )

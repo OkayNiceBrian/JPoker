@@ -22,8 +22,6 @@ const BetSlider = (props: Props) => {
         setPendingBet
     } = props;
 
-    console.log(playerChips)
-
     const [sliderValue, setSliderValue] = useState<number>(Math.max(minBet, pendingBet));
 
     const onChangeSlider = (value: string) => {

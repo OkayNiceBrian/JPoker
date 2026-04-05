@@ -37,6 +37,7 @@ public class GameHub : Hub
                     IsPrivate = false,
                     Players = [new Player { Username = connection.Username, ConnectionId = Context.ConnectionId }]
                 });
+
         } else if (!_ctx.Lobbies[connection.LobbyId].Players.Select(p => p.Username).Contains(connection.Username))
         {
             _ctx.Lobbies[connection.LobbyId].Players.Add(new Player { Username = connection.Username, ConnectionId = Context.ConnectionId });

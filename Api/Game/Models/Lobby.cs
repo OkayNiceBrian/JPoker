@@ -43,7 +43,9 @@ public class Lobby
             Players = this.Players.Select<Player, PlayerDto>(p => p.ToPlayerDto()).ToList(),
             Pot = this.Pot,
             SmallBlind = this.SmallBlind,
+            DealerIndex = this.DealerIndex,
             SmallBlindIndex = this.SmallBlindIndex,
+            BigBlindIndex = this.BigBlindIndex,
             TurnIndex = this.TurnIndex,
             TurnTimerSeconds = this.TurnTimerSeconds,
         };

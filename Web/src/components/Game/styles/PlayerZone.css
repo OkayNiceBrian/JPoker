@@ -23,10 +23,10 @@
 }
 
 .player-text {
-    font-size: 1vw;
 }
 
 .positionChip-container {
+    box-sizing: border-box;
     width: 2vw;
     height: 2vw;
     position: absolute;
@@ -41,4 +41,11 @@
     border-color: white;
     border-width: 2px;
     border-style: solid;
+    text-align: center;
+}
+
+.chip-text {
+    font-size: 1vw;
+    margin-top: -.15vw;
+    margin-left: -.1vw;
 }

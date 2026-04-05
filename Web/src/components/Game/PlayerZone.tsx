@@ -55,15 +55,15 @@ const PlayerZone = memo(function PlayerZone(props: Props) {
     const PositionChip = () => {
         return isDealer ? (
             <div className="positionChip-container">
-                <p className="player-text">D</p>
+                <p className="chip-text">D</p>
             </div>
         ) : isSmallBlind ? (
             <div className="positionChip-container" style={{ backgroundColor: "blue" }}>
-                <p className="player-text">SB</p>
+                <p className="chip-text">SB</p>
             </div>
         ) : isBigBlind ? (
             <div className="positionChip-container" style={{ backgroundColor: "red" }}>
-                <p className="player-text">BB</p>
+                <p className="chip-text">BB</p>
             </div>
         ) : null;
     };

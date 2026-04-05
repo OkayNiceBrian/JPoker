@@ -16,7 +16,9 @@ namespace Api.Game.Dtos
         public int BigBlind { get; set; } = 1000;
         public int ActiveBet { get; set; } = 0;
         public int TurnIndex { get; set; } = 0;
+        public int DealerIndex { get; set; } = 0;
         public int SmallBlindIndex { get; set; } = 0;
+        public int BigBlindIndex { get; set; } = 0;
         public int TurnTimerSeconds { get; set; } = 30;
     }
 }

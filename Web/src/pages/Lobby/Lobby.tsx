@@ -1,4 +1,4 @@
-import bgImg from "@/assets/background.jpg";
+import bgImg from "@/assets/renaissance-poker.jpg";
 import useConnection from "@/hooks/useConnection";
 import { selectUserConnection, setUserConnection } from "@/reducers/chatSlice";
 import { selectUsername } from "@/reducers/userSlice";

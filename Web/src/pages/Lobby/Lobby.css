@@ -14,9 +14,9 @@
 }
 
 .lobby-formContainer {
-    background-color: green;
-    min-width: 20rem;
-    min-height: 20rem;
+    background-color: rgba(50, 150, 100, 0.6);
+    width: 70%;
+    min-height: 70%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -26,4 +26,29 @@
     border-style: solid;
     gap: 1rem;
     padding: 1rem;
+}
+
+
+.findLobby-gridContainer {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.findLobby-gridCellContainer {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 3rem;
+    width: 100%;
+    border-color: rgba(250, 250, 250, 0.4);
+    border-style: solid;
+    border-width: 3px;
+    background-color: rgba(140, 30, 100, 0.6);
+    padding: 1rem;
+}
+
+.findLobby-gridCellContainer:hover {
+    background-color: rgba(140, 12, 230, 0.6);
 }

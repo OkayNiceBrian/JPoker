@@ -21,10 +21,10 @@ const CardComponent = memo(function CardComponent({ card, isDeck = false }: Prop
                 </div>
                 <div className="card-suit-container">
                 { 
-                    card.suit === "hearts" ? <FavouriteIcon style={cardColor} size={"2vw"}/> :
-                    card.suit === "diamonds" ? <Diamond01Icon style={cardColor} size={"2vw"}/> :
-                    card.suit === "spades" ? <SpadesIcon style={cardColor} size={"2vw"}/> :
-                    card.suit === "clubs" ? <Clubs02Icon style={cardColor} size={"2vw"}/> : null
+                    card.suit === "hearts" ? <FavouriteIcon style={cardColor} className="card-suitIcon" size={"2vw"}/> :
+                    card.suit === "diamonds" ? <Diamond01Icon style={cardColor} className="card-suitIcon" size={"2vw"}/> :
+                    card.suit === "spades" ? <SpadesIcon style={cardColor} className="card-suitIcon" size={"2vw"}/> :
+                    card.suit === "clubs" ? <Clubs02Icon style={cardColor} className="card-suitIcon" size={"2vw"}/> : null
                 }
                 {
                     isDeck && <span className="card-suitText">Deck</span>

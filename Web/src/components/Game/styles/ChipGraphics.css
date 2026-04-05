@@ -11,4 +11,5 @@
     display: flex;
     width: 1.5vw;
     border-radius: 3px;
+    box-shadow: 1px 1px 1px black;
 }

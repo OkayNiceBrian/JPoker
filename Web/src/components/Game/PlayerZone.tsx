@@ -47,7 +47,7 @@ const PlayerZone = memo(function PlayerZone(props: Props) {
             <div className="playerChips-container">
                 <div className="playerChips-image"></div>
                 <ChipGraphics chips={player?.chips} />
-                <span className="player-text">{abbreviateChips(player?.chips)} {player.currentBet > 0 ? `(${abbreviateChips(player.currentBet)})` : null}</span>
+                <p className="player-text">{abbreviateChips(player?.chips)} {player.currentBet > 0 ? `(${abbreviateChips(player.currentBet)})` : null}</p>
             </div>
         );
     };
@@ -55,22 +55,22 @@ const PlayerZone = memo(function PlayerZone(props: Props) {
     const PositionChip = () => {
         return isDealer ? (
             <div className="positionChip-container">
-                D
+                <p className="player-text">D</p>
             </div>
         ) : isSmallBlind ? (
             <div className="positionChip-container" style={{ backgroundColor: "blue" }}>
-                SB
+                <p className="player-text">SB</p>
             </div>
         ) : isBigBlind ? (
             <div className="positionChip-container" style={{ backgroundColor: "red" }}>
-                BB
+                <p className="player-text">BB</p>
             </div>
         ) : null;
     };
 
     return (
         <div className="player-container" style={ isWinner ? { backgroundColor: "rgba(200, 50, 0, .4)" } : isTurn ? {backgroundColor: "rgba(255, 255, 255, .4)"} : {}}>
-            <span className="player-text" style={clientUsername === player.username ? {fontWeight: "bold", color: "turquoise"} : {}}>{player.username}{player.username == clientUsername && " (ME)"}</span>
+            <p className="player-text" style={clientUsername === player.username ? {fontWeight: "bold", color: "turquoise"} : {}}>{player.username}{player.username == clientUsername && " (ME)"}</p>
             <Cards/>
             <Chips/>
             <PositionChip />

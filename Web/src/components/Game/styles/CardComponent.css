@@ -11,28 +11,34 @@
 }
 
 .card-rank-container {
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     justify-content: start;
+    align-items: start;
+    height: auto;
     width: 100%;
-    margin-top: -1vh;
     padding-left: .2vw;
+    padding-top: .2vh;
 }
 
 .card-suit-container {
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     width: 100%;
-    margin-top: -.7vh;
+    margin-top: -0.4vh;
 }
 
 .card-rank {
+    margin-top: -1vh;
     font-weight: bold;
     font-size: 2vw;
 }
 
-.card-suitText {
+.card-suitIcon {
     font-weight: bold;
     font-size: 1vw;
 }

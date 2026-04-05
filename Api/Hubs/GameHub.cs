@@ -216,6 +216,8 @@ public class GameHub : Hub
 
         if (activePlayers.Count() == 1)
         {
+            activePlayers[0].Card1 = null;
+            activePlayers[0].Card2 = null;
             await settleWinnings(lobby, new WinnerResult
             { 
                 Winners = activePlayers

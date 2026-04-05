@@ -27,14 +27,18 @@
 }
 
 .positionChip-container {
+    width: 2vw;
+    height: 2vw;
     position: absolute;
     border-radius: 100%;
     background-color: white;
-    right: 1rem;
-    top: 1rem;
-    width: 2rem;
-    height: 2rem;
+    opacity: 40%;
+    left: 0;
+    bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-color: white;
+    border-width: 2px;
+    border-style: solid;
 }

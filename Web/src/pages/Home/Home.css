@@ -1,6 +1,5 @@
 .home-backgroundImage {
     position: absolute;
-    top: -10vh;
     left: 0vw;
     z-index: -100;
     width: 100vw;
@@ -9,14 +8,17 @@
 
 .home-container {
     background-color: transparent;
+}
+
+.home-itemsContainer {
     width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding-top: 6rem;
     gap: 6rem;
+    padding-top: 6rem;
 }
 
 .jpoker-logo-background {

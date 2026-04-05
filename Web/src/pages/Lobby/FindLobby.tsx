@@ -1,4 +1,4 @@
-import bgImg from "@/assets/background.jpg";
+import bgImg from "@/assets/cowboy-poker.jpg";
 import useConnection from "@/hooks/useConnection";
 import { LobbySearchViewModel } from "@/types/LobbySearchViewModel";
 import { useEffect, useState } from "react";
@@ -28,7 +28,12 @@ const FindLobby = () => {
 
     const RenderLobbies = (lobbies: LobbySearchViewModel[]) => {
         return lobbies.map((lobby: LobbySearchViewModel) => {
-            return <p key={lobby.lobbyId} onClick={() => navigate(`/lobby/${lobby.lobbyId}`)}>{lobby.playerCount}/8 - {lobby.lobbyId}</p>
+            return (
+                <div className="findLobby-gridCellContainer" key={lobby.lobbyId} onClick={() => navigate(`/lobby/${lobby.lobbyId}`)}>
+                    <p>{lobby.lobbyId}</p>
+                    <p>{lobby.playerCount}/8</p>
+                </div>
+            )
         })
     }
 
@@ -37,7 +42,9 @@ const FindLobby = () => {
             <img src={bgImg} className="home-backgroundImage" />
             <div className="lobby-formContainer">
                 <input type="button" value={"<- Back to Home"} onClick={() => navigate("/")} />
-                {RenderLobbies(lobbies)}
+                <div className="findLobby-gridContainer">
+                    {RenderLobbies(lobbies)}
+                </div>
             </div>
         </div>
     );

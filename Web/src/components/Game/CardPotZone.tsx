@@ -24,7 +24,7 @@ const CardPotZone = memo(function CardPotZone({ potTotal, communityCards }: Prop
         <div className="cardPotZone-container">
             {renderCommunityCards()}
             <ChipGraphics chips={potTotal} />
-            <span>{abbreviateChips(potTotal)}</span>
+            <p>{abbreviateChips(potTotal)}</p>
         </div>
     );
 });

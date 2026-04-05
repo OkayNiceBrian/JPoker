@@ -12,6 +12,7 @@ public class Player
     public Card? Card2 { get; set; }
     public int CurrentBet { get; set; } = 0;
     public bool IsActive { get; set; } = false;
+    public bool IsConnected { get; set; } = true;
 
     public PlayerDto ToPlayerDto()
     {

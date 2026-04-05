@@ -17,6 +17,22 @@ public class GameHub : Hub
         _ctx = ctx;
     }
 
+    // Connection Mapping
+    // ====================
+    public override Task OnDisconnectedAsync(Exception? exception)
+    {
+        var lobbie = _ctx.Lobbies.FirstOrDefault(l => l.Value.Players.FirstOrDefault(p => p.ConnectionId == Context.ConnectionId) != null).Value;
+        if (lobbie == null)
+        {
+            return base.OnDisconnectedAsync(exception);
+        }
+        
+        var p = lobbie.Players.FirstOrDefault(p => p.ConnectionId == Context.ConnectionId);
+        p!.IsConnected = false;
+
+        return base.OnDisconnectedAsync(exception);
+    }
+
     // Server Tasks
     // ====================
     public async Task JoinGlobal(UserConnection connection)
@@ -43,7 +59,9 @@ public class GameHub : Hub
             _ctx.Lobbies[connection.LobbyId].Players.Add(new Player { Username = connection.Username, ConnectionId = Context.ConnectionId });
         } else
         {
-            _ctx.Lobbies[connection.LobbyId].Players.First(p => p.Username == connection.Username).ConnectionId = Context.ConnectionId;
+            var p = _ctx.Lobbies[connection.LobbyId].Players.First(p => p.Username == connection.Username);
+            p.ConnectionId = Context.ConnectionId;
+            p.IsConnected = true;
         }
 
         await Clients.Group(connection.LobbyId)
@@ -138,7 +156,7 @@ public class GameHub : Hub
             player.Chips = 0;
             lobby.ActiveBet = player.CurrentBet;
             lobby.Pot += lobby.ActiveBet;
-            SetupTurns(lobby);
+            await SetupTurns(lobby);
         }
 
         // Dequeue this player at end of turn
@@ -166,8 +184,11 @@ public class GameHub : Hub
         StartGame(_ctx.Lobbies[connection.LobbyId]);
     }
 
-    private static void StartGame(Lobby lobby)
+    private async void StartGame(Lobby lobby)
     {
+        // Remove all disconnected players
+        lobby.Players.RemoveAll(p => p.IsConnected == false);
+
         var players = lobby.Players;
         // Set all players in lobby to active
         foreach (var player in players)
@@ -200,7 +221,7 @@ public class GameHub : Hub
         // Set the turnIndex to the player after the big blind (can be small blind with 2 players)
         lobby.TurnIndex = (lobby.SmallBlindIndex + 2) % players.Count;
         lobby.TurnQueue.Clear();
-        SetupTurns(lobby);
+        await SetupTurns(lobby);
     }
 
     private async Task EndRound(Lobby lobby)
@@ -208,12 +229,12 @@ public class GameHub : Hub
         var players = lobby.Players;
         lobby.ActiveBet = 0;
 
-        List<Player> activePlayers = players.Where(p => p.IsActive).ToList();
-
         foreach (var player in players)
         {
             player.CurrentBet = 0;
         }
+
+        List<Player> activePlayers = players.Where(p => p.IsActive).ToList();
 
         if (activePlayers.Count() == 1)
         {
@@ -245,7 +266,7 @@ public class GameHub : Hub
         }
 
         lobby.CurrentBettingRound++;
-        SetupTurns(lobby);
+        await SetupTurns(lobby);
     }
 
     private async Task settleWinnings(Lobby lobby, WinnerResult wr)
@@ -267,7 +288,7 @@ public class GameHub : Hub
         StartGame(lobby); // Resets game
     }
 
-    private static void MakeBet(Player player, int bet, Lobby lobby)
+    private async void MakeBet(Player player, int bet, Lobby lobby)
     {
         player.CurrentBet = bet;
         if (lobby.ActiveBet < bet)
@@ -276,21 +297,23 @@ public class GameHub : Hub
         }
         player.Chips -= bet;
         lobby.Pot += bet;
-        SetupTurns(lobby);
+        await SetupTurns(lobby);
     }
 
-    private static void MakeRaise(Player player, int raise, Lobby lobby)
+    private async void MakeRaise(Player player, int raise, Lobby lobby)
     {
         lobby.ActiveBet += raise;
         player.Chips -= (lobby.ActiveBet - player.CurrentBet);
         player.CurrentBet = lobby.ActiveBet;
         lobby.Pot += raise;
-        SetupTurns(lobby);
+        await SetupTurns(lobby);
     }
 
-    private static void SetupTurns(Lobby lobby)
+    private async Task SetupTurns(Lobby lobby)
     {
         var players = lobby.Players;
+
+        // Determine whose turn it's supposed to be next
         foreach (var player in players.Where(p => p.IsActive))
         {
             if (lobby.ActiveBet == 0 || (lobby.ActiveBet > player.CurrentBet && player.CurrentBet < player.Chips))
@@ -301,7 +324,20 @@ public class GameHub : Hub
                 }
             }
         }
+
+        // Set the next player's turn
         lobby.TurnIndex = players.IndexOf(lobby.TurnQueue.Peek());
+
+        //Check if they're still connected. If not, make them fold
+        var nextPlayer = lobby.Players[lobby.TurnIndex];
+        if (!nextPlayer.IsConnected)
+        {
+            await GameAction(new UserConnection
+            {
+                LobbyId = lobby.Id,
+                Username = nextPlayer.Username
+            }, "fold");
+        }
     }
 
     private async Task ReceiveLobbyInfo(Lobby lobby)

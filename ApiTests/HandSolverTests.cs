@@ -38,15 +38,15 @@ namespace Api.Tests
                 ]
             };
 
-            var players = HandSolver.DetermineWinner(mockLobby);
-            Assert.Single(players);
-            Assert.Equal("tom", players[0].Username);
+            var winnerResult = HandSolver.DetermineWinner(mockLobby);
+            Assert.Single(winnerResult.Winners);
+            Assert.Equal("tom", winnerResult.Winners[0].Username);
 
             mockLobby.Players[0].Card1 = CardFactory.CreateCard(11, "spades"); // New High Pair
 
-            players = HandSolver.DetermineWinner(mockLobby);
-            Assert.Single(players);
-            Assert.Equal("brian", players[0].Username);
+            winnerResult = HandSolver.DetermineWinner(mockLobby);
+            Assert.Single(winnerResult.Winners);
+            Assert.Equal("brian", winnerResult.Winners[0].Username);
         }
 
         [Fact]
@@ -80,15 +80,15 @@ namespace Api.Tests
                 ]
             };
 
-            var players = HandSolver.DetermineWinner(mockLobby);
-            Assert.Single(players);
-            Assert.Equal("tom", players[0].Username);
+            var wr = HandSolver.DetermineWinner(mockLobby);
+            Assert.Single(wr.Winners);
+            Assert.Equal("tom", wr.Winners[0].Username);
 
             mockLobby.Players.First(p => p.Username == "brian").Card2 = CardFactory.CreateCard(11, "spades"); // Higher Two Pair
 
-            players = HandSolver.DetermineWinner(mockLobby);
-            Assert.Single(players);
-            Assert.Equal("brian", players[0].Username);
+            wr = HandSolver.DetermineWinner(mockLobby);
+            Assert.Single(wr.Winners);
+            Assert.Equal("brian", wr.Winners[0].Username);
         }
 
         [Fact]
@@ -127,21 +127,21 @@ namespace Api.Tests
                 ]
             };
 
-            var players = HandSolver.DetermineWinner(mockLobby); // straight beats a two pair
-            Assert.Single(players);
-            Assert.Equal("tom", players[0].Username);
+            var wr = HandSolver.DetermineWinner(mockLobby); // straight beats a two pair
+            Assert.Single(wr.Winners);
+            Assert.Equal("tom", wr.Winners[0].Username);
 
             brian.Card1 = CardFactory.CreateCard(5, "spades"); // Higher Straight
             brian.Card2 = CardFactory.CreateCard(6, "spades"); // 
-            players = HandSolver.DetermineWinner(mockLobby);   // Beats Straight
-            Assert.Single(players);
-            Assert.Equal("brian", players[0].Username);
+            wr = HandSolver.DetermineWinner(mockLobby);   // Beats Straight
+            Assert.Single(wr.Winners);
+            Assert.Equal("brian", wr.Winners[0].Username);
 
             tom.Card1 = CardFactory.CreateCard(9, "spades");
             tom.Card2 = CardFactory.CreateCard(9, "diamonds"); // Three of a kind
-            players = HandSolver.DetermineWinner(mockLobby);
-            Assert.Single(players);
-            Assert.Equal("brian", players[0].Username); // Straight beats 3 of a kind
+            wr = HandSolver.DetermineWinner(mockLobby);
+            Assert.Single(wr.Winners);
+            Assert.Equal("brian", wr.Winners[0].Username); // Straight beats 3 of a kind
         }
 
         [Fact]
@@ -180,22 +180,22 @@ namespace Api.Tests
                 ]
             };
 
-            var players = HandSolver.DetermineWinner(mockLobby); // Flush beats a high card
-            Assert.Single(players);
-            Assert.Equal("brian", players[0].Username);
+            var wr = HandSolver.DetermineWinner(mockLobby); // Flush beats a high card
+            Assert.Single(wr.Winners);
+            Assert.Equal("brian", wr.Winners[0].Username);
 
             tom.Card1 = CardFactory.CreateCard(5, "spades"); // 
             tom.Card2 = CardFactory.CreateCard(12, "spades"); //  Higher Flush
-            players = HandSolver.DetermineWinner(mockLobby);   // 
-            Assert.Single(players);
-            Assert.Equal("tom", players[0].Username);
+            wr = HandSolver.DetermineWinner(mockLobby);   // 
+            Assert.Single(wr.Winners);
+            Assert.Equal("tom", wr.Winners[0].Username);
 
 
             brian.Card1 = CardFactory.CreateCard(6, "hearts");
             brian.Card2 = CardFactory.CreateCard(5, "diamonds"); // Straight
-            players = HandSolver.DetermineWinner(mockLobby);   // 
-            Assert.Single(players);
-            Assert.Equal("tom", players[0].Username); // Flush beats a straight
+            wr = HandSolver.DetermineWinner(mockLobby);   // 
+            Assert.Single(wr.Winners);
+            Assert.Equal("tom", wr.Winners[0].Username); // Flush beats a straight
         }
     }
 }

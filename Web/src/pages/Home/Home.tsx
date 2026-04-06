@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import FindLobby from "../Lobby/FindLobby";
 import CreateLobby from "../Lobby/CreateLobby";
+import { clean } from "profanity-cleaner";
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -23,10 +24,16 @@ const Home = () => {
             <div className="homeItems-container">
                 <FindLobby />
                 <div className="home-verticalContainer">
-                    <CreateLobby />
-                    <div className="enterUsername-container">
-                        <p>You are {username}.</p>
-                        <input type="button" className="button" value={"Reset Username"} onClick={() => dispatch(setUsername(null))}/>
+                    <div className="home-titleItemContainer">
+                        <p style={{ fontSize: "16pt" }}>Create Lobby</p>
+                        <CreateLobby />
+                    </div>
+                    <div className="home-titleItemContainer">
+                        <p style={{ fontSize: "16pt" }}>Reset Username</p>
+                        <div className="enterUsername-container">
+                            <p>You are {username}.</p>
+                            <input type="button" className="button" value={"Reset Username"} onClick={() => dispatch(setUsername(null))}/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -37,34 +44,35 @@ const Home = () => {
         <div className="home-container">
             <img src={bgImg} className="home-backgroundImage" />
             <div className="home-itemsContainer">
-                <div className="jpoker-logo-background">
-                    <p className="jpoker-logo-typography">JPoker</p>
-                    <p className="">The World's #1 (shitty) Poker Website</p>
+                <div className="home-headerContainer">
+                    <div className="jpoker-logo-background">
+                        <p className="jpoker-logo-typography">JPoker</p>
+                        <p className="">The World's #1 (shitty) Poker Website</p>
+                    </div>
                 </div>
-                <div className="enterUsername-container">
-                    <p>Enter Username</p>
-                    <input value={usernameInput} onChange={(e) => setUsernameInput(e.target.value)} />
-                    <input type="button" className="button" value={"Submit"} onClick={() => usernameInput.trim() != "" && dispatch(setUsername(usernameInput.trim()))}/>
+                <div className="homeItems-container">
+                    <div className="enterUsername-container">
+                        <p>Enter Username</p>
+                        <input value={usernameInput} onChange={(e) => setUsernameInput(e.target.value)} />
+                        <input type="button" className="button" value={"Submit"} onClick={() => usernameInput.trim() != "" && dispatch(setUsername(clean(usernameInput.trim())))}/>
+                    </div>
                 </div>
             </div>
         </div>
     ) : (
-        <>
-            <div className="home-container">
+        <div className="home-container">
             <img src={bgImg} className="home-backgroundImage" />
-                <div className="home-itemsContainer">
-                    <div className="home-headerContainer">
-                        <div className="jpoker-logo-background">
-                            <p className="jpoker-logo-typography">JPoker</p>
-                            <p className="">The World's #1 (shitty) Poker Website</p>
-                        </div>
-                        
+            <div className="home-itemsContainer">
+                <div className="home-headerContainer">
+                    <div className="jpoker-logo-background">
+                        <p className="jpoker-logo-typography">JPoker</p>
+                        <p className="">The World's #1 (shitty) Poker Website</p>
                     </div>
-                    
-                    <CreateOrFindLobby />
                 </div>
+                
+                <CreateOrFindLobby />
             </div>
-        </>
+        </div>
     );
 };
 

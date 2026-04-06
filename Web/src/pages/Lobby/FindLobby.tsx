@@ -38,8 +38,11 @@ const FindLobby = () => {
     }
 
     return (
-        <div className="findLobby-gridContainer">
-            {RenderLobbies(lobbies)}
+        <div className="findLobby-container">
+            <p style={{ fontSize: "16pt" }}>Lobbies</p>
+            <div className="findLobby-gridContainer">
+                {RenderLobbies(lobbies)}
+            </div>
         </div>
     );
 

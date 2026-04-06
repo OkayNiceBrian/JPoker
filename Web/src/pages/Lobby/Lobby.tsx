@@ -50,11 +50,15 @@ const Lobby = () => {
     });
 
     const RenderPlayerCell = (players: Player[]) => {
-        return <div>
-            {players.map((player, index) => {
-                return <p key={index}>{player.username}</p>
-            })}
-        </div>  
+        return (
+            <div className="lobby-playersContainer">
+                <p>{`${players.length}/8`} Players</p>
+                {players.map((player, index) => {
+                    return <p key={index} style={{ fontSize: "20pt", color: playerUsername == player.username ? "rgb(50, 150, 255)" : "auto" }}>{player.username}</p>
+                })}
+                
+            </div>  
+        );
     };
 
     const onClickBackButton = () => {
@@ -73,12 +77,14 @@ const Lobby = () => {
         <div className="lobby-container">
             <img src={bgImg} className="home-backgroundImage" />
             <div className="lobby-formContainer">
-                <input type="button" value={"<- Back to Home"} onClick={() => onClickBackButton()} />
-                <h1>{lobbyId}</h1>
+                <input type="button" className="button" value={"Back"} onClick={() => onClickBackButton()} />
+                <div className="lobby-nameContainer">
+                    <p>Lobby Name</p>
+                    <p className="lobby-lobbyName">{lobbyId}</p>
+                </div>
                 {RenderPlayerCell(players)}
-                
                 { players.length > 1 && (
-                    <input type="button" value={"Start Game"} onClick={() => onClickStartGame()} />
+                    <input type="button" className="button" style={{alignSelf: "center", marginTop: "2rem"}} value={"Start Game"} onClick={() => onClickStartGame()} />
                 )}
             </div>
         </div>

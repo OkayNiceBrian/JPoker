@@ -15,7 +15,7 @@ function App() {
         <Route path='lobby/:lobbyId' element={<Lobby />}/>
         <Route path='createLobby' element={<CreateLobby />}/>
         <Route path='findLobby' element={<FindLobby />}/>
-        <Route path='lobby/:lobbyId/play' element={<Play/>}/>
+        <Route path='lobby/:lobbyId/play' element={<Play />}/>
       </Routes>
     </BrowserRouter>
   )

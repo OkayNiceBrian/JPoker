@@ -32,6 +32,28 @@
     padding: 1rem;
     max-width: 70rem;
 }
+
+.lobby-nameContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.lobby-lobbyName {
+    margin-top: -1.5rem;
+    font-size: 45pt;
+}
+
+.lobby-playersContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    margin-top: 1rem;
+}
+
 .findLobby-gridContainer {
     box-sizing: border-box;
     width: 170%;

@@ -24,7 +24,7 @@ const CreateLobby = () => {
     const submitButton = () => {
         if (lobbyName.trim() != "") {
             return (
-                <input type="button" value={"Create Lobby"} onClick={onClickSubmit} />
+                <input type="button" className="button" value={"Create Lobby"} onClick={onClickSubmit} />
             )
         }
 
@@ -39,7 +39,6 @@ const CreateLobby = () => {
 
     return (
         <div className="lobby-formContainer">
-            <input type="button" value={"<- Back to Home"} onClick={() => navigate("/")} />
             <div className="lobby-inputContainer">
                 <label>Lobby Name</label>
                 <input value={lobbyName} onChange={(e) => setLobbyName(e.target.value)} />

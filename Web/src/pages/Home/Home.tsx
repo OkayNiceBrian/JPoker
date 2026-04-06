@@ -26,7 +26,7 @@ const Home = () => {
                     <CreateLobby />
                     <div className="enterUsername-container">
                         <p>You are {username}.</p>
-                        <input type="button" value={"Reset Username"} onClick={() => dispatch(setUsername(null))}/>
+                        <input type="button" className="button" value={"Reset Username"} onClick={() => dispatch(setUsername(null))}/>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@ const Home = () => {
                 <div className="enterUsername-container">
                     <p>Enter Username</p>
                     <input value={usernameInput} onChange={(e) => setUsernameInput(e.target.value)} />
-                    <input type="button" value={"Submit"} onClick={() => usernameInput.trim() != "" && dispatch(setUsername(usernameInput.trim()))}/>
+                    <input type="button" className="button" value={"Submit"} onClick={() => usernameInput.trim() != "" && dispatch(setUsername(usernameInput.trim()))}/>
                 </div>
             </div>
         </div>

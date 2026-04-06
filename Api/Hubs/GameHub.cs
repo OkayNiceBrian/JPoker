@@ -19,16 +19,28 @@ public class GameHub : Hub
 
     // Connection Mapping
     // ====================
-    public override Task OnDisconnectedAsync(Exception? exception)
+    public override async Task<Task> OnDisconnectedAsync(Exception? exception)
     {
-        var lobbie = _ctx.Lobbies.FirstOrDefault(l => l.Value.Players.FirstOrDefault(p => p.ConnectionId == Context.ConnectionId) != null).Value;
-        if (lobbie == null)
+        var lobby = _ctx.Lobbies.FirstOrDefault(l => l.Value.Players.FirstOrDefault(p => p.ConnectionId == Context.ConnectionId) != null).Value;
+        if (lobby == null)
         {
             return base.OnDisconnectedAsync(exception);
         }
         
-        var p = lobbie.Players.FirstOrDefault(p => p.ConnectionId == Context.ConnectionId);
-        p!.IsConnected = false;
+        var p = lobby.Players.FirstOrDefault(p => p.ConnectionId == Context.ConnectionId);
+        if (p != null && p.IsConnected)
+        {
+            p.IsConnected = false;
+
+            if (lobby.TurnIndex < lobby.Players.Count && lobby.Players[lobby.TurnIndex] == p)
+            {
+                await GameAction(new UserConnection
+                {
+                    LobbyId = lobby.Id,
+                    Username = p.Username
+                }, "fold");
+            }
+        }
 
         return base.OnDisconnectedAsync(exception);
     }
@@ -125,6 +137,7 @@ public class GameHub : Hub
             if (lobby.Players.Select(p => p.IsActive).Count() == 1)
             {
                 await EndRound(lobby);
+                return;
             }
         }
 
@@ -190,6 +203,14 @@ public class GameHub : Hub
         lobby.Players.RemoveAll(p => p.IsConnected == false);
 
         var players = lobby.Players;
+
+        if (players.Count <= 1)
+        {
+            await Clients.Group(lobby.Id).SendAsync("ReceiveLobbyInfo", lobby);
+            await Clients.Group(lobby.Id).SendAsync("GoHome"); // Implement to kick everyone
+            return;
+        }
+
         // Set all players in lobby to active
         foreach (var player in players)
         {

@@ -38,16 +38,22 @@ const FindLobby = () => {
     }
 
     return (
-        <div className="lobby-container">
-            <img src={bgImg} className="home-backgroundImage" />
-            <div className="lobby-formContainer">
-                <input type="button" value={"<- Back to Home"} onClick={() => navigate("/")} />
-                <div className="findLobby-gridContainer">
-                    {RenderLobbies(lobbies)}
-                </div>
-            </div>
+        <div className="findLobby-gridContainer">
+            {RenderLobbies(lobbies)}
         </div>
     );
+
+    // return (
+    //     <div className="lobby-container">
+    //         <img src={bgImg} className="home-backgroundImage" />
+    //         <div className="lobby-formContainer">
+    //             <input type="button" value={"<- Back to Home"} onClick={() => navigate("/")} />
+    //             <div className="findLobby-gridContainer">
+    //                 {RenderLobbies(lobbies)}
+    //             </div>
+    //         </div>
+    //     </div>
+    // );
 }
 
 export default FindLobby;

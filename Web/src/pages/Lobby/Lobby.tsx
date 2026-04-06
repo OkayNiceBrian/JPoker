@@ -60,7 +60,7 @@ const Lobby = () => {
     const onClickBackButton = () => {
         connection?.invoke("LeaveLobby", userConnection).catch(e => console.error(e));
         setUserConnection(null);
-        navigate("/findLobby");
+        navigate("/");
     }
 
     const onClickStartGame = () => {
@@ -73,7 +73,7 @@ const Lobby = () => {
         <div className="lobby-container">
             <img src={bgImg} className="home-backgroundImage" />
             <div className="lobby-formContainer">
-                <input type="button" value={"<- Back to Find Lobbies"} onClick={() => onClickBackButton()} />
+                <input type="button" value={"<- Back to Home"} onClick={() => onClickBackButton()} />
                 <h1>{lobbyId}</h1>
                 {RenderPlayerCell(players)}
                 

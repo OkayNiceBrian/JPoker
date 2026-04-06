@@ -88,7 +88,7 @@ const Game = () => {
                 setWinners(winnerResult.winners.map(w => w.username));
             });
         }
-    }, [playerUsername, connection]);
+    }, [connection]);
 
     const setLobby = (lobby: Lobby) => {
         setPlayers(lobby.players);

@@ -38,32 +38,57 @@ const CreateLobby = () => {
     }
 
     return (
-        <div className="lobby-container">
-            <img src={bgImg} className="home-backgroundImage" />
-            <div className="lobby-formContainer">
-                <input type="button" value={"<- Back to Home"} onClick={() => navigate("/")} />
-                <div className="lobby-inputContainer">
-                    <label>Lobby Name</label>
-                    <input value={lobbyName} onChange={(e) => setLobbyName(e.target.value)} />
-                </div><div className="lobby-inputContainer">
-                    <label>Turn Timer?</label>
-                    <input type="checkbox" checked={hasTurnTimer} onClick={() => setHasTurnTimer(prev => !prev)}/>
-                    { hasTurnTimer && <input type="number" value={turnTimer} onChange={(e) => setTurnTimer(parseInt(e.target.value))} /> }
-                </div>
-                <div className="lobby-inputContainer">
-                    <label>Is Private?</label>
-                    <input type="checkbox" checked={isPrivate} onClick={() => setIsPrivate(prev => !prev)} />
-                </div>
-                { isPrivate && (
-                    <div className="lobby-inputContainer">
-                        <label>Password</label>
-                        <input value={password} onChange={(e) => setPassword(e.target.value)} />
-                    </div>
-                )}
-                {submitButton()}
+        <div className="lobby-formContainer">
+            <input type="button" value={"<- Back to Home"} onClick={() => navigate("/")} />
+            <div className="lobby-inputContainer">
+                <label>Lobby Name</label>
+                <input value={lobbyName} onChange={(e) => setLobbyName(e.target.value)} />
+            </div><div className="lobby-inputContainer">
+                <label>Turn Timer?</label>
+                <input type="checkbox" checked={hasTurnTimer} onClick={() => setHasTurnTimer(prev => !prev)}/>
+                { hasTurnTimer && <input type="number" value={turnTimer} onChange={(e) => setTurnTimer(parseInt(e.target.value))} /> }
             </div>
+            <div className="lobby-inputContainer">
+                <label>Is Private?</label>
+                <input type="checkbox" checked={isPrivate} onClick={() => setIsPrivate(prev => !prev)} />
+            </div>
+            { isPrivate && (
+                <div className="lobby-inputContainer">
+                    <label>Password</label>
+                    <input value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
+            )}
+            {submitButton()}
         </div>
     );
+
+    // return (
+    //     <div className="lobby-container">
+    //         <img src={bgImg} className="home-backgroundImage" />
+    //         <div className="lobby-formContainer">
+    //             <input type="button" value={"<- Back to Home"} onClick={() => navigate("/")} />
+    //             <div className="lobby-inputContainer">
+    //                 <label>Lobby Name</label>
+    //                 <input value={lobbyName} onChange={(e) => setLobbyName(e.target.value)} />
+    //             </div><div className="lobby-inputContainer">
+    //                 <label>Turn Timer?</label>
+    //                 <input type="checkbox" checked={hasTurnTimer} onClick={() => setHasTurnTimer(prev => !prev)}/>
+    //                 { hasTurnTimer && <input type="number" value={turnTimer} onChange={(e) => setTurnTimer(parseInt(e.target.value))} /> }
+    //             </div>
+    //             <div className="lobby-inputContainer">
+    //                 <label>Is Private?</label>
+    //                 <input type="checkbox" checked={isPrivate} onClick={() => setIsPrivate(prev => !prev)} />
+    //             </div>
+    //             { isPrivate && (
+    //                 <div className="lobby-inputContainer">
+    //                     <label>Password</label>
+    //                     <input value={password} onChange={(e) => setPassword(e.target.value)} />
+    //                 </div>
+    //             )}
+    //             {submitButton()}
+    //         </div>
+    //     </div>
+    // );
 }
 
 export default CreateLobby;

@@ -7,10 +7,12 @@ import "./styles/Chat.css";
 const Chat = () => {
     const dispatch = useDispatch();
 
-    const [input, setInput] = useState<string>("");
-    const connection = useConnection();
     const userConnection = useSelector(selectUserConnection);
     const chatMessages = useSelector(selectMessages);
+
+    const connection = useConnection();
+
+    const [input, setInput] = useState<string>("");
 
     useEffect(() => {
         if (connection) {

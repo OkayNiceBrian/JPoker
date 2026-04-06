@@ -5,6 +5,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
+    padding-top: 20vh;
+    padding-bottom: 20vh;
 }
 
 .lobby-inputContainer {
@@ -14,24 +17,30 @@
 }
 
 .lobby-formContainer {
-    background-color: rgba(50, 150, 100, 0.6);
-    width: 70%;
-    min-height: 70%;
+    box-sizing: border-box;
+    background-color: rgba(50, 150, 100, 0.3);
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     border-color: gray;
-    border-width: 5px;
+    border-width: 1px;
     border-style: solid;
     gap: 1rem;
     padding: 1rem;
+    max-width: 70rem;
 }
-
-
 .findLobby-gridContainer {
     box-sizing: border-box;
-    width: 100%;
+    width: 170%;
+    height: 100%;
+    background-color: rgba(250, 250, 250, 0.1);
+    border-color: gray;
+    border-width: 1px;
+    border-style: solid;
+    overflow-y: scroll;
 }
 
 .findLobby-gridCellContainer {
@@ -44,11 +53,11 @@
     width: 100%;
     border-color: rgba(250, 250, 250, 0.4);
     border-style: solid;
-    border-width: 3px;
-    background-color: rgba(140, 30, 100, 0.6);
+    border-width: 2px;
+    background-color: rgba(140, 0, 50, 0.6);
     padding: 1rem;
 }
 
 .findLobby-gridCellContainer:hover {
-    background-color: rgba(140, 12, 230, 0.6);
+    background-color: rgba(140, 50, 100, 0.5);
 }

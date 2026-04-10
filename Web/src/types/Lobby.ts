@@ -4,6 +4,7 @@ import { Player } from "./Player";
 export type Lobby = {
     id: string;
     isPrivate: boolean;
+    isGameActive: boolean;
     players: Player[];
     communityCards: Card[];
     pot: number;

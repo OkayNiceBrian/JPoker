@@ -15,6 +15,7 @@ public class Lobby
 {
     public required string Id { get; set; }
     public bool IsPrivate { get; set; } = true;
+    public bool IsGameActive { get; set; } = false;
     public List<Player> Players { get; set; } = [];
     public List<Card> Deck { get; set; } = DeckFactory.CreateDeck();
     public List<Card> CommunityCards { get; set; } = [];
@@ -35,6 +36,7 @@ public class Lobby
         return new LobbyDto()
         {
             Id = this.Id,
+            IsGameActive = this.IsGameActive,
             ActiveBet = this.ActiveBet,
             BigBlind = this.BigBlind,
             CommunityCards = this.CommunityCards,

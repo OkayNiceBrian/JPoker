@@ -30,8 +30,14 @@ public class GameHub : Hub
         var p = lobby.Players.FirstOrDefault(p => p.ConnectionId == Context.ConnectionId);
         if (p != null && p.IsConnected)
         {
-            p.IsConnected = false;
+            if (!lobby.IsGameActive)
+            {
+                lobby.Players.Remove(p);
+                return base.OnDisconnectedAsync(exception);
+            }
 
+            p.IsConnected = false;
+            // if it's your turn when you disconnect, fold
             if (lobby.TurnIndex < lobby.Players.Count && lobby.Players[lobby.TurnIndex] == p)
             {
                 await GameAction(new UserConnection
@@ -201,6 +207,8 @@ public class GameHub : Hub
     {
         // Remove all disconnected players
         lobby.Players.RemoveAll(p => p.IsConnected == false);
+
+        lobby.IsGameActive = true;
 
         var players = lobby.Players;
 
